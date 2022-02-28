@@ -223,7 +223,7 @@
 %% argument in box brackets. This is done because the title is part of the 
 %% metadata in the pdf/a file, and the metadata cannot contain linebreaks.
 %%
-\thesistitle{Machine learning approach for combining software logs and support tickets}
+\thesistitle{Machine learning approach to support ticket forecasting from software logs}
 %\thesistitle[Title of the thesis]{Title of\\ the thesis}
 %%
 
@@ -595,21 +595,56 @@ this sort of >>impurities>> needed to be cleared from the data.
 
 <virtual machines etc.>
 
+
+
+
 \subsubsection*{Azure ML Studio components}
 <clusters and data>
-
+\\
 
 <Memory problems>
+\\
 
 During the initial pipeline runs
 the execution came to an abrupt stop
 and Azure notified about memory issues.
 These problems were linked to the data amount
-which had to be reduced to [!!! amount].
+which had to be reduced to 600 megabytes
+before any pipeline could be finished using the data.
 This reduction was against the initial goal
-where preferably all the data could have been used
+where preferably all the data could have been used.
 
+Considerable amount of time was used
+to fix or avoid this issue
+but nothing clear was found
+that would explain the error received.
+While working with with the issue
+it was also noted
+that data needed more cleaning
+in order to ease the preprocessing phase
+as described with more detail in section <!!!4.2>
+Thus,
+the data had to be imported from log archive
+and anonymized once more.
 
+Two choices was possible to take:
+\begin{enumerate}
+  \item Continue working with full data
+  and attempting to fix the memory issue
+  by consulting Azure experts
+  \item  Trim the data to reduce the data size
+  by declaring info-type log messages
+  as unnecessary
+  and working with vastly diminished data
+  until the memory issue would be solved
+  one way or another
+\end{enumerate}
+
+To advance the study more efficiently
+it was decided to trim info-type log messages from data
+hence reducing the data amount considerably.
+Meanwhile,
+<fixing the memory issue>
 
 \subsection{Machine learning methods and pipelines}
 
