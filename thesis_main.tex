@@ -423,7 +423,8 @@ Otaniemi, {\today}
   RPA         & Robotic Process Automation \\
   ML          & Machine Learning \\
   SQL         & Structured Query Language \\
-  JSON        & JavaScript Object Notation
+  JSON        & JavaScript Object Notation \\
+  CSV         & Comma-Separated Values
 \end{tabular}
 
 
@@ -494,13 +495,74 @@ As today more and more concern is set on anonymization
 <Connection for data, ML estimates>
 
 \subsection{Scope}
-<Data anonymization>
 
-<Azure setup>
+In order to limit the study
+to feasible length and content
+it is necessary to define the scope for the thesis.
+As major part of the time used for the study
+was used for data acquiring and anonymizing
+yet the most value comes from
+content considering machine learning,
+the length of the content per section
+does not reflect
+the amount of time used for each section.
 
-<Data requirements>
+\subsubsection*{Data anonymization}
+Anonymization refers to <!!! open up term>
+\\
+In this study we aim to
+create a dataset usable in ML training.
+In this respect
+anonymization is not in the main focus of the study
+but only treated as a sub-phase
+of the data preprocessing in whole.
+Nevertheless,
+anonymization is from the security point of view
+the most important phase of data preprocessing.
+\\
+In this study we <!!!how widely we consider anonymizing?>
 
-<ML methods>
+\subsubsection*{Azure setup}
+The ML training and result scoring
+is done in Azure ML environment.
+As part of the study aims to create
+an initial guideline for
+ML process commissioning
+the Azure setup phase is documented in such detail
+reflecting the importance of this information
+for future developers
+starting Azure ML projects.
+\\
+<!!! what more?>
+
+\subsubsection*{Data requirements}
+In ML point of view
+the data purity in a sense of
+<!!! what is data purity?>
+
+
+
+\subsubsection*{Machine learning methods}
+Several different machine learning algorithms exist
+<!!! source>
+that are aimed for different applications in mind.
+For example,
+to make an algorithm that can predict
+the price of an apartment listed
+we could be using linear regression
+and in order to detect
+possible cyber threats from network traffic
+a two-class support vector machine could be utilized.
+These two methods are very different in usage
+and has their pros and cons in different applications.
+\\
+As different methods can be used in creative ways
+in very different applications
+depending on how the data is presented
+and how the ML problem is formed,
+this study focuses on
+just a few easily approachable training methods.
+
 
 \subsection{Methods}
 <PowerShell anonymization>
@@ -695,6 +757,14 @@ Meanwhile,
 \thesisbibliography
 
 \begin{thebibliography}{99}
+
+
+  housing prices algorithm selection
+  https://www.tandfonline.com/doi/full/10.1080/09599916.2020.1832558
+
+  detecting cyber threats from network data
+  https://ieeexplore.ieee.org/abstract/document/8233268
+
 
 \end{thebibliography}
 
