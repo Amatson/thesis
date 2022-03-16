@@ -471,6 +471,12 @@ some text [2]
 
 
 \subsection{Background and motivation}
+In the field of information technology
+logging is one of the most important methods
+in problem solving,
+be it software or operating system related. \cite{delarosa2018log}
+<importance of logs>
+
 <current state of samlink AI processes>
 
 <Log format>
@@ -552,10 +558,10 @@ Several different machine learning algorithms exist
 that are aimed for different applications in mind.
 For example,
 to make an algorithm that can predict
-the price of an apartment listed
+the price of an apartment listed\cite{Winky}
 we could be using linear regression
 and in order to detect
-possible cyber threats from network traffic
+possible cyber threats from network traffic\cite{Ghanem}
 a two-class support vector machine could be utilized.
 These two methods are very different in usage
 and has their pros and cons in different applications.
@@ -567,13 +573,6 @@ and how the ML problem is formed,
 this study focuses on
 just a few easily approachable training methods.
 
-
-\subsection{Methods}
-<PowerShell anonymization>
-
-<Regex filtering and data preformatting>
-
-<Microsoft Azure ML>
 
 \subsection{Structure}
 <how the thesis is organized>
@@ -630,13 +629,48 @@ the log data produced by the numerous RPA processes.
 The second part complementing the study
 is the support ticket data written by clerks of customer banks.
 
-\subsubsection{RPA log data}
+\subsubsection*{RPA log data}
 <what form was the data in?>
 
 <how it was acquired?>
 
-\subsubsection{Support ticket data}
+\subsubsection*{Support ticket data}
 Samlink
+
+
+\subsection{Data anonymization}
+Samlink handles highly sensitive banking customer data in its processes,
+such as personal identification numbers, home addresses, email addresses and bank account numbers.
+All possibly sensitive data must be removed
+before data can be transferred out from production environment.
+To improve security,
+it was decided to assume
+that personal customer details are not critical information
+while training the ML algorithm.
+This way it was not necessary to achieve adequate security
+by less secure and more effort consuming ways
+like pseudonymisation or k-anonymization,
+%%<!!! references>
+which would have also required strict inspections
+before data could have been approved for cloud processing.
+\\
+As production environment is built on Microsoft Server based solution,
+and because it was highly unrecommended
+to install additional software to the production server,
+data acquiring and anonymization tools were chosen
+based on what was already usable in the RPA production environment.
+Microsoft Powershell offers sufficient tools
+for database SQL querying
+and stream editing.
+The amount of data was significant
+which made straight file editing impossible
+due to the memory limitations.
+Thus, stream editing was necessary
+for finding and replacing
+sensitive information from the data
+<!!! add some references>
+
+
 
 \subsection{Azure ML Studio}
 
@@ -659,8 +693,6 @@ In this study case, however,
 data does not contain clear values
 that are being estimated
 and that can be used as comparison.
-
-\\
 
 \begin{tabular}{cccc}
   LOG\_DATA \\
@@ -850,20 +882,41 @@ Meanwhile,
 \subsection{Discussion}
 <Here some thinking what should have been improved>
 
+\subsubsection*{Data formatting}
+The most time consuming tasks in the study
+was without a doubt
+the anonymization and preformatting of the data.
+Although sensitive information may sometimes be crucial in error fixing
+as problems may consider just one client,
+it is necessary that the data sanitation is possible to do
+in order to use the data in less secure environment.
+By preformatting the data in such way
+that all different personal information types
+do not differ between use cases.
+<!!! hetu in weird form>
+
+
 \clearpage
 %% Lähdeluettelo
+
+
+%% TODO: Fix bib-referencing
+\bibliographystyle{plain}
+\bibliography{refs}
+%%
 
 \thesisbibliography
 
 \begin{thebibliography}{99}
+  \bibitem{Winky} Winky K.O. Ho, Bo-Sin Tang and Siu Wai Wong
+    \textit{Predicting property prices with machine learning algorithms}
+  Journal of Property Research, 38:1, 48-70, DOI: 10.1080/09599916.2020.1832558
+  %%https://www.tandfonline.com/doi/full/10.1080/09599916.2020.1832558 \\
 
-
-  housing prices algorithm selection \\
-  https://www.tandfonline.com/doi/full/10.1080/09599916.2020.1832558 \\
-
-  detecting cyber threats from network data \\
-  https://ieeexplore.ieee.org/abstract/document/8233268  \\
-
+  \bibitem{Ghanem} K. Ghanem, F. J. Aparicio-Navarro, K. G. Kyriakopoulos, S. Lambotharan and J. A. Chambers
+    \textit{Support Vector Machine for Network Intrusion and Cyber-Attack Detection}
+  2017 Sensor Signal Processing for Defence Conference (SSPD), 2017, pp. 1-5, doi: 10.1109/SSPD.2017.8233268.
+  %%https://ieeexplore.ieee.org/abstract/document/8233268
 
 \end{thebibliography}
 
