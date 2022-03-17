@@ -380,8 +380,9 @@ Otherwise, the metadata abstract text must be identical to the text on the abstr
 %% This section is optional. Remove it if you do not want a preface.
 \mysection{Preface}
 %\mysection{Esipuhe}
-Pitkäksi venynyt työ \\
-Kiitokset \\
+Pitkäksi venynyt työ
+
+Kiitokset
 
 \vspace{5cm}
 Otaniemi, {\today}
@@ -444,14 +445,14 @@ Otaniemi, {\today}
 %% in explaining Finnish-language specific thesis conventions in English.
 %% This text will be translated to English soon.
 %%
-\section{Introduction}
+\section{Introduction}\label{sec:introduction}
 
 %% Leave page number of the first page empty
 %% 
 \thispagestyle{empty}
 
-Artificial intelligence has found its way to more and more fields of business. [!!S]
-In banking business it is already used in [!!!...]
+Artificial intelligence has found its way to more and more fields of business.<!!!S>
+In banking business it is already used in <!!!>
 
 
 <What does Samlink do?>
@@ -462,19 +463,22 @@ In banking business it is already used in [!!!...]
 
 <ML and Azure>
 
-Samlink Oy (Samlink from now on) was founded in 1994 [1]
-some text [2]
-<some basic info about Samlink> \\
-<founded year and such> \\
-<what kind of development> \\
-<RPA and such> \\
+Samlink Oy (Samlink from now on) was founded in 1994
+
+<some basic info about Samlink>
+
+<founded year and such>
+
+<what kind of development>
+
+<RPA and such>
 
 
-\subsection{Background and motivation}
+\subsection{Background and motivation}\label{subsec:background-and-motivation}
 In the field of information technology
 logging is one of the most important methods
 in problem solving,
-be it software or operating system related. \cite{delarosa2018log}
+be it software or operating system related.\cite{delarosa2018log}
 <importance of logs>
 
 <current state of samlink AI processes>
@@ -483,7 +487,7 @@ be it software or operating system related. \cite{delarosa2018log}
 
 <Intelligent automation>
 
-\subsection{Research objectives}
+\subsection{Research objectives}\label{subsec:research-objectives}
 This research aims to kickstart the machine learning application usage in Samlink operations.
 Multiple obstacles need to be tackled
 as most of the phases in this study has not yet been encountered inside the company.
@@ -496,7 +500,7 @@ as it is not for just machines
 but also for people to read.
 
 As today more and more concern is set on anonymization
-[!!!...]
+<!!!>
 <Anonymization scope>
 
 <Azure ML studio setup and prerequisites>
@@ -505,7 +509,7 @@ As today more and more concern is set on anonymization
 
 <Connection for data, ML estimates>
 
-\subsection{Scope}
+\subsection{Scope}\label{subsec:scope}
 
 In order to limit the study
 to feasible length and content
@@ -520,7 +524,7 @@ the amount of time used for each section.
 
 \subsubsection*{Data anonymization}
 Anonymization refers to <!!! open up term>
-\\
+
 In this study we aim to
 create a dataset usable in ML training.
 In this respect
@@ -530,7 +534,7 @@ of the data preprocessing in whole.
 Nevertheless,
 anonymization is from the security point of view
 the most important phase of data preprocessing.
-\\
+
 In this study we <!!!how widely we consider anonymizing?>
 
 \subsubsection*{Azure setup}
@@ -543,7 +547,7 @@ the Azure setup phase is documented in such detail
 reflecting the importance of this information
 for future developers
 starting Azure ML projects.
-\\
+
 <!!! what more?>
 
 \subsubsection*{Data requirements}
@@ -565,7 +569,7 @@ possible cyber threats from network traffic\cite{Ghanem}
 a two-class support vector machine could be utilized.
 These two methods are very different in usage
 and has their pros and cons in different applications.
-\\
+
 As different methods can be used in creative ways
 in very different applications
 depending on how the data is presented
@@ -574,7 +578,7 @@ this study focuses on
 just a few easily approachable training methods.
 
 
-\subsection{Structure}
+\subsection{Structure}\label{subsec:structure}
 <how the thesis is organized>
 
 
@@ -589,16 +593,16 @@ just a few easily approachable training methods.
 
 
 %% *** 2 ***
-\section{Background}
+\section{Background}\label{sec:background}
 %\section{Aikaisempi tutkimus}
 
-\subsection{Cloud services}
+\subsection{Cloud services}\label{subsec:cloud-services}
 <Azure ML and other cloud services>
 
-\subsection{Data protection}
+\subsection{Data protection}\label{subsec:data-protection}
 <Anonymization and data sensitivity>
 
-\subsection{Machine learning methods}
+\subsection{Machine learning methods}\label{subsec:machine-learning-methods}
 <Machine learning field and studies>
 
 <Log data parsing with ML>
@@ -614,14 +618,14 @@ just a few easily approachable training methods.
 
 
 %% *** 3 ***
-\section{Research material and methods}
+\section{Research material and methods}\label{sec:research-material-and-methods}
 %\section{Tutkimusaineisto ja -menetelmät}
 
 Tässä osassa kuvataan käytetty tutkimusaineisto ja
 tutkimuksen metodologiset valinnat, sekä
 kerrotaan tutkimuksen toteutustapa ja käytetyt menetelmät. 
 
-\subsection{Data}
+\subsection{Data}\label{subsec:data}
 The data in the research consists mainly of two parts.
 The most important part is,
 obviously,
@@ -638,7 +642,7 @@ is the support ticket data written by clerks of customer banks.
 Samlink
 
 
-\subsection{Data anonymization}
+\subsection{Data anonymization}\label{subsec:data-anonymization}
 Samlink handles highly sensitive banking customer data in its processes,
 such as personal identification numbers, home addresses, email addresses and bank account numbers.
 All possibly sensitive data must be removed
@@ -653,7 +657,7 @@ like pseudonymisation or k-anonymization,
 %%<!!! references>
 which would have also required strict inspections
 before data could have been approved for cloud processing.
-\\
+
 As production environment is built on Microsoft Server based solution,
 and because it was highly unrecommended
 to install additional software to the production server,
@@ -672,11 +676,11 @@ sensitive information from the data
 
 
 
-\subsection{Azure ML Studio}
+\subsection{Azure ML Studio}\label{subsec:azure-ml-studio}
 
 \subsubsection*{Machine Learning methods and components}
 Several different ML methods are usable with Azure ML Studio. <???>
-\\
+
 Usually <with usual ml methods> the estimates
 created using ML algorithms
 are formed based on the certain features
@@ -688,7 +692,7 @@ given to the ML algorithm
 that is removed from the training data
 and this column value is what algorithm
 aims to predict.
-\\
+
 In this study case, however,
 data does not contain clear values
 that are being estimated
@@ -700,7 +704,7 @@ and that can be used as comparison.
   a & b & c & n1 \\
   a & b & c & n2 \\
   a & b & c & n3 \\
-  a & b & c & n4 \\
+  a & b & c & n4
 \end{tabular}
 \begin{tabular}{c}
   EFECTE\_DATA \\
@@ -708,7 +712,7 @@ and that can be used as comparison.
   B YYYY.MM.DD hh:mm:ss \\
   C YYYY.MM.DD hh:mm:ss \\
   D YYYY.MM.DD hh:mm:ss \\
-  E YYYY.MM.DD hh:mm:ss \\
+  E YYYY.MM.DD hh:mm:ss
 \end{tabular}
 \\
 n1 = SUM(AB) \\
@@ -748,7 +752,7 @@ preformatting data! \\
 \end{enumerate}
 
 
-???? **** \\
+???? ****
 
 
 \clearpage
@@ -756,9 +760,9 @@ preformatting data! \\
 
 
 
-\section{Results}
+\section{Results}\label{sec:results}
 
-\subsection{Anonymization}
+\subsection{Anonymization}\label{subsec:anonymization}
 Anonymization took good proportion of the time in workdays
 as processes were slow,
 amount of data was big
@@ -767,7 +771,7 @@ before the results was seemed adequate.
 
 [!!! appendix of the script used]
 
-\subsection{Data formatting}
+\subsection{Data formatting}\label{subsec:data-formatting}
 At the beginning of the research,
 the log data from RPA was in SQL database.
 However,
@@ -778,7 +782,7 @@ For ML algorithms to be able to read the given data with ease
 this sort of >>impurities>> needed to be cleared from the data.
 
 
-\subsection{Azure and Azure ML Studio}
+\subsection{Azure and Azure ML Studio}\label{subsec:azure-and-azure-ml-studio}
 
 <general about ml inside azure>
 
@@ -793,10 +797,8 @@ this sort of >>impurities>> needed to be cleared from the data.
 
 \subsubsection*{Azure ML Studio components}
 <clusters and data>
-\\
 
 <Memory problems>
-\\
 
 During the initial pipeline runs
 the execution came to an abrupt stop
@@ -839,7 +841,7 @@ hence reducing the data amount considerably.
 Meanwhile,
 <fixing the memory issue>
 
-\subsection{Machine learning methods and pipelines}
+\subsection{Machine learning methods and pipelines}\label{subsec:machine-learning-methods-and-pipelines}
 
 <anomaly detection>
 
@@ -875,15 +877,15 @@ Meanwhile,
 
 \clearpage
 
-\section{Summary}
+\section{Summary}\label{sec:summary}
 
 <Sum up here what we did and why>
 
-\subsection{Discussion}
+\subsection{Discussion}\label{subsec:discussion}
 <Here some thinking what should have been improved>
 
 \subsubsection*{Data formatting}
-The most time consuming tasks in the study
+The most time-consuming tasks in the study
 was without a doubt
 the anonymization and preformatting of the data.
 Although sensitive information may sometimes be crucial in error fixing
@@ -899,26 +901,10 @@ do not differ between use cases.
 \clearpage
 %% Lähdeluettelo
 
-
-%% TODO: Fix bib-referencing
-\bibliographystyle{plain}
+\bibliographystyle{IEEEtran}
 \bibliography{refs}
 %%
 
-\thesisbibliography
-
-\begin{thebibliography}{99}
-  \bibitem{Winky} Winky K.O. Ho, Bo-Sin Tang and Siu Wai Wong
-    \textit{Predicting property prices with machine learning algorithms}
-  Journal of Property Research, 38:1, 48-70, DOI: 10.1080/09599916.2020.1832558
-  %%https://www.tandfonline.com/doi/full/10.1080/09599916.2020.1832558 \\
-
-  \bibitem{Ghanem} K. Ghanem, F. J. Aparicio-Navarro, K. G. Kyriakopoulos, S. Lambotharan and J. A. Chambers
-    \textit{Support Vector Machine for Network Intrusion and Cyber-Attack Detection}
-  2017 Sensor Signal Processing for Defence Conference (SSPD), 2017, pp. 1-5, doi: 10.1109/SSPD.2017.8233268.
-  %%https://ieeexplore.ieee.org/abstract/document/8233268
-
-\end{thebibliography}
 
 %% Appendices
 %% If you don't have appendices, remove \clearpage and \thesisappendix below.
@@ -926,7 +912,7 @@ do not differ between use cases.
 
 \thesisappendix
 
-\section{Esimerkki liitteestä\label{LiiteA}}
+\section{Esimerkki liitteestä}\label{sec:LiiteA}
 
 
 \clearpage
