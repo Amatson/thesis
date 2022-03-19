@@ -228,12 +228,14 @@
 %%
 
 %%
-\place{!!!Espoo}
+%% TODO: Check place!
+\place{Espoo}
 %%
 
 %% The date for the master's thesis is the day it is presented
 %%
-\date{!!!chk.dt.2021}
+%% TODO: Check date!
+\date{31.07.2022}
 %%
 
 %% Thesis supervisor
@@ -256,7 +258,7 @@
 %% Aaltologo: syntax:
 %% \uselogo{aaltoRed|aaltoBlue|aaltoYellow|aaltoGray|aaltoGrayScale}{?|!|''}
 %% The logo language is set to be the same as the thesis language.
-%% !!!
+%% TODO: Select smart logo
 \uselogo{aaltoPurple}{?}
 %%
 
@@ -273,7 +275,8 @@
 %% as the abstract page.
 %%
 \thesisabstract{
-!!!Your abstract in English.
+%% TODO: Lorem ipsum, replace
+Your abstract in English.
 Keep the abstract short.
 The abstract explains your research topic,
 the methods you have used,
@@ -406,16 +409,17 @@ Otaniemi, {\today}
 \subsection*{Symbols}
 
 \begin{tabular}{ll}
-  $\mathbf{B}$  & !!!magnetic flux density  \\
-  $\mathbf{B}$  & !!!magnetic flux density
-
+  %% TODO: dummies, replace
+  $\mathbf{B}$  & magnetic flux density  \\
+  $\mathbf{B}$  & magnetic flux density
 \end{tabular}
 
 \subsection*{Operators}
 
 \begin{tabular}{ll}
-  $\nabla \times \mathbf{A}$    & !!! curl of vectorin $\mathbf{A}$\\
-  +     & !!! yep, a plus
+  %% TODO: dummies, replace
+  $\nabla \times \mathbf{A}$    & curl of vectorin $\mathbf{A}$\\
+  +     &  yep, a plus
 \end{tabular}
 
 \subsection*{Abbreviations}
@@ -450,10 +454,11 @@ Otaniemi, {\today}
 %% Leave page number of the first page empty
 %% 
 \thispagestyle{empty}
-
-Artificial intelligence has found its way to more and more fields of business.<!!!S>
-In banking business it is already used in <!!!>
-
+%% TODO: Remember references
+Artificial intelligence has found its way to
+more and more fields of business.
+In banking business it is already used in
+credit card fraud detection, %% TODO: something more?
 
 <What does Samlink do?>
 
@@ -479,6 +484,9 @@ In the field of information technology
 logging is one of the most important methods
 in problem solving,
 be it software or operating system related.\cite{delarosa2018log}
+
+%% TODO: continue
+\begin{verbatim}
 <importance of logs>
 
 <current state of samlink AI processes>
@@ -486,6 +494,7 @@ be it software or operating system related.\cite{delarosa2018log}
 <Log format>
 
 <Intelligent automation>
+\end{verbatim}
 
 \subsection{Research objectives}\label{subsec:research-objectives}
 This research aims to kickstart the machine learning application usage in Samlink operations.
@@ -500,7 +509,9 @@ as it is not for just machines
 but also for people to read.
 
 As today more and more concern is set on anonymization
-<!!!>
+%% TODO: go on?
+
+\begin{verbatim}
 <Anonymization scope>
 
 <Azure ML studio setup and prerequisites>
@@ -508,6 +519,8 @@ As today more and more concern is set on anonymization
 <Log data and timestamp combining>
 
 <Connection for data, ML estimates>
+
+\end{verbatim}
 
 \subsection{Scope}\label{subsec:scope}
 
@@ -523,7 +536,9 @@ does not reflect
 the amount of time used for each section.
 
 \subsubsection*{Data anonymization}
-Anonymization refers to <!!! open up term>
+Anonymization refers to
+%% TODO: Open up, compare to pseudonymization
+%% TODO: Or not? Possibly move to another section
 
 In this study we aim to
 create a dataset usable in ML training.
@@ -535,7 +550,8 @@ Nevertheless,
 anonymization is from the security point of view
 the most important phase of data preprocessing.
 
-In this study we <!!!how widely we consider anonymizing?>
+In this study we
+%% TODO: how widely we consider anonymizing?
 
 \subsubsection*{Azure setup}
 The ML training and result scoring
@@ -548,17 +564,17 @@ reflecting the importance of this information
 for future developers
 starting Azure ML projects.
 
-<!!! what more?>
+%% TODO: what more?
 
 \subsubsection*{Data requirements}
 In ML point of view
 the data purity in a sense of
-<!!! what is data purity?>
+%% TODO: what is data purity?
 
 
 \subsubsection*{Machine learning methods}
 Several different machine learning algorithms exist
-<!!! source>
+%% TODO: Source?
 that are aimed for different applications in mind.
 For example,
 to make an algorithm that can predict
@@ -596,19 +612,20 @@ just a few easily approachable training methods.
 \section{Background}\label{sec:background}
 %\section{Aikaisempi tutkimus}
 
-\subsection{Cloud services}\label{subsec:cloud-services}
-<Azure ML and other cloud services>
 
-\subsection{Data protection}\label{subsec:data-protection}
-<Anonymization and data sensitivity>
-
-\subsection{Machine learning methods}\label{subsec:machine-learning-methods}
+%\subsection{Machine learning methods}\label{subsec:machine-learning-methods}
 <Machine learning field and studies>
 
 <Log data parsing with ML>
 
 <random delay in timeseries(?)>
 
+%% TODO: do we need other subsections?
+%\subsection{Cloud services}\label{subsec:cloud-services}
+%<Azure ML and other cloud services>
+
+%\subsection{Data protection}\label{subsec:data-protection}
+%<Anonymization and data sensitivity>
 
 
 
@@ -634,12 +651,45 @@ The second part complementing the study
 is the support ticket data written by clerks of customer banks.
 
 \subsubsection*{RPA log data}
-<what form was the data in?>
+Robotic process automations used in Samlink
+are engineered %% TODO: trained/programmed/
+to ease the workload of
+bank clerks.
+RPA components %% TODO: What is the right thing to say? RPA component/process?
+work mostly with loan applications %% TODO: Check!
+among other routine tasks
+that require mostly manual labor.
 
-<how it was acquired?>
+Like other software,
+RPA also produces log data during runtime.
+As several RPA processes are running %% TODO: How many RPAs
+%% TODO: how many customers are they dealing with?
+te amount of log produced daily is also significant. %% TODO: AMOUNTS!
+This log data is not in consistent form
+forming out of typical CSV data
+injected with even more inconsistent JSON data
+that varies in contents vastly.
+%% TODO: Include examples of data types used
+
+RPA log data is stored in SQL database.
+The database is split in live production log
+that is gathered for few months %% TODO: Check
+and then moved to archive that has
+several years worth of log.
+
+In this study we used archived data
+as it was easier to acquire in one run
+without the need to merge different parts together.
+Archive also had %% TODO: How much?
+data that was seen as sufficient amount
+for machine learning algorithm training.
+
 
 \subsubsection*{Support ticket data}
-Samlink
+Like all other software,
+RPA components fail from time to time
+%% TODO: clerks send tech support tickets
+%% TODO: due to GDPR, only timestamps could be used
 
 
 \subsection{Data anonymization}\label{subsec:data-anonymization}
@@ -654,7 +704,7 @@ while training the ML algorithm.
 This way it was not necessary to achieve adequate security
 by less secure and more effort consuming ways
 like pseudonymisation or k-anonymization,
-%%<!!! references>
+%% TODO: references?
 which would have also required strict inspections
 before data could have been approved for cloud processing.
 
@@ -672,8 +722,7 @@ due to the memory limitations.
 Thus, stream editing was necessary
 for finding and replacing
 sensitive information from the data
-<!!! add some references>
-
+%% TODO: References!
 
 
 \subsection{Azure ML Studio}\label{subsec:azure-ml-studio}
@@ -769,7 +818,7 @@ amount of data was big
 and multiple re-runs were needed
 before the results was seemed adequate.
 
-[!!! appendix of the script used]
+%% TODO: appendix of the script used
 
 \subsection{Data formatting}\label{subsec:data-formatting}
 At the beginning of the research,
@@ -817,7 +866,7 @@ While working with with the issue
 it was also noted
 that data needed more cleaning
 in order to ease the preprocessing phase
-as described with more detail in section <!!!4.2>
+as described with more detail in section \ref{subsec:data-anonymization}
 Thus,
 the data had to be imported from log archive
 and anonymized once more.
@@ -895,7 +944,7 @@ in order to use the data in less secure environment.
 By preformatting the data in such way
 that all different personal information types
 do not differ between use cases.
-<!!! hetu in weird form>
+%% TODO: hetu in weird form
 
 
 \clearpage
