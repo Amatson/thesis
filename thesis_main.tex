@@ -429,7 +429,8 @@ Otaniemi, {\today}
   ML          & Machine Learning \\
   SQL         & Structured Query Language \\
   JSON        & JavaScript Object Notation \\
-  CSV         & Comma-Separated Values
+  CSV         & Comma-Separated Values \\
+  GDPR        & General Data Protection Regulation
 \end{tabular}
 
 
@@ -460,24 +461,51 @@ more and more fields of business.
 In banking business it is already used in
 credit card fraud detection, %% TODO: something more?
 
-<What does Samlink do?>
 
-<Samlink, small banking business and machine learning potential>
+Samlink Oy (Samlink from now on)
+was founded in 1994
+and is now owned by Kyndryl.
+From the early years
+and going by the name of Samcom
+the company was owned by several Finnish banks
+and offered all sorts IT solutions to them.
+Most notable product is Codeapp
+that makes mobile authentication possible
+for client bank end customers.
+
+Besides banking,
+Samlink develops multiple other IT solutions
+to wide range of customers,
+for example,
+entertainment platform solutions for DNA.
+Even though Samlink can be considered
+a modern technology company
+the most modern technologies has not yet been adapted
+in tool variety used in development.
+However,
+robotic process automation has been adopted
+and is actively used in some
+banking solutions to reduce
+the amount of manual labor required
+from banking clerks.
+
+Like all other IT companies,
+Samlink has a lot of data that is produced
+and moved through its systems daily.
+And as a company offering continuous development
+as well as product maintenance services,
+Samlink also serves as a technical help desk
+regarding the software solutions produced.
+As no IT solutions comes without bugs or misbehaviour,
+Samlink service desk has to use considerable amount of time
+to resolve whether current tech help request
+is due to the problems in programming.
+In this process, machine learning is able to help.
+%% TODO: This would need some clarification and sourcing.
 
 <RPA in use, but not intelligent processes>
 
 <ML and Azure>
-
-Samlink Oy (Samlink from now on) was founded in 1994
-
-<some basic info about Samlink>
-
-<founded year and such>
-
-<what kind of development>
-
-<RPA and such>
-
 
 \subsection{Background and motivation}\label{subsec:background-and-motivation}
 In the field of information technology
@@ -507,8 +535,27 @@ so it is usable by machine learning algorithms.
 Log data forming is on of the key elements in automatic log parsing applications
 as it is not for just machines
 but also for people to read.
+%% TODO: more
 
 As today more and more concern is set on anonymization
+not only due to GDPR,
+the data used for machine learning must be sanitized.
+Because of this,
+one major objective is to create a clean dataset
+that is safe to use in cloud environment
+without creating concern around security issues.
+In addition to this,
+data must also be clean enough
+so that machine learning algorithms
+are able to process it.
+
+Finally,
+the main objective this research is aiming to answer
+is whether it is possible to use machine learning algorithms
+in such ways that combine support ticket timestamps
+and software run log
+so that it can predict
+if new support ticket might be coming.
 %% TODO: go on?
 
 \begin{verbatim}
@@ -527,7 +574,7 @@ As today more and more concern is set on anonymization
 In order to limit the study
 to feasible length and content
 it is necessary to define the scope for the thesis.
-As major part of the time used for the study
+As major part of the time consumed for the study
 was used for data acquiring and anonymizing
 yet the most value comes from
 content considering machine learning,
@@ -536,10 +583,10 @@ does not reflect
 the amount of time used for each section.
 
 \subsubsection*{Data anonymization}
-Anonymization refers to
-%% TODO: Open up, compare to pseudonymization
-%% TODO: Or not? Possibly move to another section
-
+Anonymization in the context of this thesis
+refers to data sanitization process
+purposed to edit the data into
+more secure form in the privacy point of view.
 In this study we aim to
 create a dataset usable in ML training.
 In this respect
@@ -550,8 +597,10 @@ Nevertheless,
 anonymization is from the security point of view
 the most important phase of data preprocessing.
 
-In this study we
-%% TODO: how widely we consider anonymizing?
+Keeping this in mind,
+anonymization is covered rather superficially,
+only enough to explain the reasons
+behind actions taken during anonymization process.
 
 \subsubsection*{Azure setup}
 The ML training and result scoring
@@ -567,9 +616,21 @@ starting Azure ML projects.
 %% TODO: what more?
 
 \subsubsection*{Data requirements}
-In ML point of view
-the data purity in a sense of
-%% TODO: what is data purity?
+Data purity in a sense of
+how easy it is to be used by ML algorithms
+creates challenges at the beginning of ML training.
+If data is not consistent,
+has lots of missing values
+or is formed in unanticipated way,
+it requires considerable amount of preprocessing
+slowing the training process
+and causing errors in pipeline runs.
+
+In order to create a baseline for Samlink ML projects
+this study aims to give basic criterion
+what is required from the data
+so it is easily parsable by ML algorithm.
+%% TODO: better words for parsable?
 
 
 \subsubsection*{Machine learning methods}
@@ -595,7 +656,10 @@ just a few easily approachable training methods.
 
 
 \subsection{Structure}\label{subsec:structure}
-<how the thesis is organized>
+At the beginning of this thesis
+we opened the key concepts discussed in the study.
+We also defined the
+%% TODO: nope. talk about next sections. move stuff from earlier sections
 
 
 
@@ -638,14 +702,17 @@ just a few easily approachable training methods.
 \section{Research material and methods}\label{sec:research-material-and-methods}
 %\section{Tutkimusaineisto ja -menetelmät}
 
-Tässä osassa kuvataan käytetty tutkimusaineisto ja
-tutkimuksen metodologiset valinnat, sekä
-kerrotaan tutkimuksen toteutustapa ja käytetyt menetelmät. 
+In the next section
+we explain in more detail
+what the data used in the study
+consists of
+and what methods were used
+in attempt to answer the research goals.
+%% TODO: Better frazing?
 
 \subsection{Data}\label{subsec:data}
 The data in the research consists mainly of two parts.
-The most important part is,
-obviously,
+The most important part is, obviously,
 the log data produced by the numerous RPA processes.
 The second part complementing the study
 is the support ticket data written by clerks of customer banks.
@@ -664,7 +731,7 @@ Like other software,
 RPA also produces log data during runtime.
 As several RPA processes are running %% TODO: How many RPAs
 %% TODO: how many customers are they dealing with?
-te amount of log produced daily is also significant. %% TODO: AMOUNTS!
+the amount of log produced daily is also significant. %% TODO: AMOUNTS!
 This log data is not in consistent form
 forming out of typical CSV data
 injected with even more inconsistent JSON data
@@ -687,7 +754,23 @@ for machine learning algorithm training.
 
 \subsubsection*{Support ticket data}
 Like all other software,
-RPA components fail from time to time
+RPA components fail from time to time.
+As described above, %% TODO: Make sure is described!
+RPA logs are verbose
+making possible error identification from among it hard.
+Due to that,
+it is not feasible to create log parsers
+that would be able to identify critical errors
+from within thousands of lines of log.
+When critical error happens
+and it causes the RPA process to fail,
+the banking clerks need to fix manually
+the job left by the RPA process.
+Every time this happens,
+these clerks then send a support request ticket
+to Samlink technical helpdesk
+and ask to fix the issue.
+
 %% TODO: clerks send tech support tickets
 %% TODO: due to GDPR, only timestamps could be used
 
