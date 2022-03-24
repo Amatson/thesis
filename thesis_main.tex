@@ -543,7 +543,7 @@ the data used for machine learning must be sanitized.
 Because of this,
 one major objective is to create a clean dataset
 that is safe to use in cloud environment
-without creating concern around security issues.
+without creating concern around security and privacy issues.
 In addition to this,
 data must also be clean enough
 so that machine learning algorithms
@@ -594,7 +594,7 @@ anonymization is not in the main focus of the study
 but only treated as a sub-phase
 of the data preprocessing in whole.
 Nevertheless,
-anonymization is from the security point of view
+anonymization is from the privacy point of view
 the most important phase of data preprocessing.
 
 Keeping this in mind,
@@ -678,11 +678,16 @@ We also defined the
 
 
 %\subsection{Machine learning methods}\label{subsec:machine-learning-methods}
-<Machine learning field and studies>
 
-<Log data parsing with ML>
+\begin{verbatim}
+  <Machine learning field and studies>
+  <Log data parsing with ML>
+  <random delay in timeseries(?)>
+  <cloud ml platforms>
+\end{verbatim}
 
-<random delay in timeseries(?)>
+
+
 
 %% TODO: do we need other subsections?
 %\subsection{Cloud services}\label{subsec:cloud-services}
@@ -710,14 +715,53 @@ and what methods were used
 in attempt to answer the research goals.
 %% TODO: Better frazing?
 
-\subsection{Data}\label{subsec:data}
 The data in the research consists mainly of two parts.
 The most important part is, obviously,
 the log data produced by the numerous RPA processes.
 The second part complementing the study
 is the support ticket data written by clerks of customer banks.
+In order to use the data safely in the cloud environment
+it was necessary to sanitize the data
+from any sensitive information.
+This was done by anonymizing the log data
+and using only timestamps from the support tickets.
 
-\subsubsection*{RPA log data}
+\subsection{Support ticket data}\label{subsec:efecte-ticket-data}
+
+Like all other software,
+RPA components fail from time to time.
+As described above, %% TODO: Make sure is described!
+RPA logs are verbose
+making possible error identification from among it hard.
+Due to that,
+it is not feasible to create log parsers
+that would be able to identify critical errors
+from within thousands of lines of log.
+When critical error happens
+and it causes the RPA process to fail,
+the banking clerks need to fix manually
+the job left by the RPA process.
+Every time this happens,
+these clerks then send a support request ticket
+to Samlink technical helpdesk
+and ask to fix the issue.
+
+%% TODO: clerks send tech support tickets
+
+When clerks send the ticket to technical support
+a verbose description of the situation is written
+to help developers to identify the problem.
+This description often contains sensitive end customer information
+like bank account details and social security numbers.
+To avoid privacy issues when processing this data,
+it was decided to use only timestamps of the tickets.
+The resulting data was practically a list of date and time values.
+More about the issue from privacy point of view
+is described in section \ref{subsec:data-anonymization}
+%% TODO: due to GDPR, only timestamps could be used
+
+
+\subsection{RPA log data}\label{subsec:rpa-log-data}
 Robotic process automations used in Samlink
 are engineered %% TODO: trained/programmed/
 to ease the workload of
@@ -752,41 +796,38 @@ data that was seen as sufficient amount
 for machine learning algorithm training.
 
 
-\subsubsection*{Support ticket data}
-Like all other software,
-RPA components fail from time to time.
-As described above, %% TODO: Make sure is described!
-RPA logs are verbose
-making possible error identification from among it hard.
-Due to that,
-it is not feasible to create log parsers
-that would be able to identify critical errors
-from within thousands of lines of log.
-When critical error happens
-and it causes the RPA process to fail,
-the banking clerks need to fix manually
-the job left by the RPA process.
-Every time this happens,
-these clerks then send a support request ticket
-to Samlink technical helpdesk
-and ask to fix the issue.
-
-%% TODO: clerks send tech support tickets
-%% TODO: due to GDPR, only timestamps could be used
-
-
 \subsection{Data anonymization}\label{subsec:data-anonymization}
+
+\subsubsection*{Support ticket data privacy}
 Samlink handles highly sensitive banking customer data in its processes,
 such as personal identification numbers, home addresses, email addresses and bank account numbers.
 All possibly sensitive data must be removed
-before data can be transferred out from production environment.
-To improve security,
+before data can be transferred out from production environment to cloud.
+Due to bureaucratic reasons,
+technical support tickets were under more strict policies.
+Because of this,
+they were allowed to be used in the research
+on condition that no business critical nor customer sensitive information
+was processed in the first place.
+Only way to assure this
+was to select solely timestamp fields from ticket data.
+Thus, no sanitation for ticket data was needed.
+
+\subsubsection*{RPA log data sanitization}
+Information privacy is one of the key values in Samlink business promise
+as company develops high security banking applications
+and processes sensitive customer data.
+Thus, several aspects were needed to take into consideration
+before log data could be authorized for thesis study usage.
+To improve privacy,
 it was decided to assume
 that personal customer details are not critical information
-while training the ML algorithm.
+for training the ML algorithm
+if goal is to find possible problems in RPA runtime
+and not detect individual customer related problems.
 This way it was not necessary to achieve adequate security
 by less secure and more effort consuming ways
-like pseudonymisation or k-anonymization,
+such as pseudonymisation or k-anonymization,
 %% TODO: references?
 which would have also required strict inspections
 before data could have been approved for cloud processing.
@@ -808,9 +849,18 @@ sensitive information from the data
 %% TODO: References!
 
 
-\subsection{Azure ML Studio}\label{subsec:azure-ml-studio}
+Anonymization took good proportion of the time in workdays
+as processes were slow,
+amount of data was big
+and multiple re-runs were needed
+before the results was seemed adequate.
 
-\subsubsection*{Machine Learning methods and components}
+%% TODO: appendix of the script used
+
+\subsection{Cloud machine learning and methods}\label{subsec:cloud-ml-and-methods}
+
+\subsubsection*{Azure resources and ML Studio}
+%% TODO: <Azure resources, virtual network etc.>
 Several different ML methods are usable with Azure ML Studio. <???>
 
 Usually <with usual ml methods> the estimates
@@ -887,6 +937,19 @@ preformatting data! \\
 ???? ****
 
 
+\subsubsection*{Machine learning methods and pipelines}
+Initial plan when starting the ML pipeline testing
+was to feed the log data to anomaly detection algorithm
+and try to get some sort of estimate of possible anomaly count.
+This plan had several problems.
+First, as stated, logging is very abundant
+and several thousands of rows was logged %% TODO: Check some real values!
+during a single day.
+This meant that among the
+%% TODO: << logeissa päivän aikana yhteen tikettiin liittyen satoja rivejä
+%% anomalioiden määrä voi olla tuhansia vaikka tikettejä vain kymmenkunta
+%% ei kerro vertailukelpoista määrää
+
 \clearpage
 
 
@@ -894,14 +957,6 @@ preformatting data! \\
 
 \section{Results}\label{sec:results}
 
-\subsection{Anonymization}\label{subsec:anonymization}
-Anonymization took good proportion of the time in workdays
-as processes were slow,
-amount of data was big
-and multiple re-runs were needed
-before the results was seemed adequate.
-
-%% TODO: appendix of the script used
 
 \subsection{Data formatting}\label{subsec:data-formatting}
 At the beginning of the research,
