@@ -268,7 +268,8 @@
 %% Thesis keywords:
 %% Note! The keywords are separated using the \spc macro
 %%
-\keywords{Machine learning algorithms\spc Robotic process automation\spc log parsing\spc random delay\spc Microsoft Azure ML Studio}
+\keywords{Machine learning algorithms\spc Robotic process automation\spc
+log parsing\spc random delay\spc Microsoft Azure ML Studio}
 %%
 
 %% The abstract text. This text is included in the metadata of the pdf file as well
@@ -370,7 +371,8 @@ Otherwise, the metadata abstract text must be identical to the text on the abstr
 %\department{Elektroniikan ja nanotekniikan laitos}
 \major{Ohjaus, robotiikka ja autonomiset järjestelmät}
 %% The keywords need not be separated by \spc now.
-\keywords{Koneoppiminen, koneoppimisalgoritmit, ohjelmistorobotiikka, loki, lokin parsiminen, satunnainen viive, satunnaisviive, Microsoft Azure ML Studio}
+\keywords{Koneoppiminen, koneoppimisalgoritmit, ohjelmistorobotiikka, loki,
+  lokin parsiminen, satunnainen viive, satunnaisviive, Microsoft Azure ML Studio}
 %% Abstract text
 \begin{abstractpage}[finnish]
   Tiivistelmässä on lyhyt selvitys kirjoituksen tärkeimmästä sisällöstä:
@@ -444,7 +446,8 @@ Otaniemi, {\today}
 
 
 
-%% *** 1 ***
+%% ************************************************ 1 ************************************************
+
 %% Text body begins. Note that since the text body is mostly in Finnish the
 %% majority of comments are also in Finnish after this point. There is no point
 %% in explaining Finnish-language specific thesis conventions in English.
@@ -558,15 +561,28 @@ so that it can predict
 if new support ticket might be coming.
 %% TODO: go on?
 
+%% TODO: Parse these to somewhere nice!
+Few things to consider:
+\begin{verbatim}
+  * Counting anomaly "probability" for individual log rows
+  * Random delay! Solving issue by grouping
+  * Hybrid ML with anomaly detection and regression
+  => Can this give any results for forecasting?
+  ?? Assumption to lean on:
+    !! Ticket causing log rows are ANOMALIES in log data.
+    TODO: explain why this assumption is necessary!!!
+    - Log amount is not necessarily proportional to ticket creating error amount, even with info-types filtered out
+    - Considerable amount of rows may be related to one, or several different, tickets
+\end{verbatim}
+%% TODO: it's not really probability. What is it?
+%% TODO: Is it really regression? Is that what we should be using?
+
+What really happens in this research:
 \begin{verbatim}
 <Anonymization scope>
-
 <Azure ML studio setup and prerequisites>
-
 <Log data and timestamp combining>
-
 <Connection for data, ML estimates>
-
 \end{verbatim}
 
 \subsection{Scope}\label{subsec:scope}
@@ -672,21 +688,100 @@ We also defined the
 
 
 
-%% *** 2 ***
+%% ************************************************ 2 ************************************************
+
 \section{Background}\label{sec:background}
 %\section{Aikaisempi tutkimus}
 
+%% TODO: Briefly about machine learning in general
 
-%\subsection{Machine learning methods}\label{subsec:machine-learning-methods}
+Machine learning is part of the artificial intelligence field.
+Typically, machine learning refers to %% TODO: something something data
 
-\begin{verbatim}
-  <Machine learning field and studies>
-  <Log data parsing with ML>
-  <random delay in timeseries(?)>
-  <cloud ml platforms>
-\end{verbatim}
+Machine learning usage has become more common
+and is nowadays widely used in many fields,
+not just general information technology and computer science.
+This is because data can be gathered everywhere,
+and where there is data to be processed,
+machine learning can be there to process it.
+%% TODO: Makes any sense? References!
+
+Machine learning divides commonly in several categories,
+which are explored briefly in the next section.
 
 
+\subsection*{Machine learning field}\label{subsec:bg-ml-field}
+%% TODO: Open up ML algorithms and learning methods
+
+\subsubsection*{ML training}
+Machine learning algorithms can be trained in two basic ways:
+supervised and unsupervised learning.
+
+In supervised learning,
+algorithm is given data with ready answers on
+how the data needs to be interpreted.
+Algorithm then tries to figure out
+how given data and the correct answers are related.
+
+In unsupervised learning,
+on the other hand,
+algorithm does not get model data from which to train itself,
+but instead it tries to find clusters or groups inside the data
+that are linked together more closely than to other parts of data.
+%% TODO: REFERENCES AND SUCH
+
+\subsubsection*{ML algorithms}
+Algorithms are the main "magic" inside machine learning. %% TODO: Omstart?
+They can be generally divided into <four> categories %% TODO: check
+
+Regression algorithms predict values
+and are typically used with supervised learning.
+%% TODO: give examples? House market price?
+
+Classification algorithms predict categories.
+Depending on the algorithm,
+they can predict between two or several categories.
+%% TODO: Examples?
+
+Clustering algorithms use unsupervised learning
+to find structures inside data.
+
+Anomaly detection algorithms work also unsupervised
+and try to find unusual or rare data points from data.
+
+%% TODO: need more info? Opening up?
+
+\subsection*{Cloud ML platforms}\label{subsec:bg-cloud-ml-platforms}
+%% TODO: Briefly about Azure, Google and AWS
+
+Machine learning algorithms are not light to operate.
+Depending on the amount of data,
+it can be a serious %% TODO: What? How big?
+
+Especially with online applications
+where real time analysis of new input data is required,
+cloud computing resources can make a huge difference
+in terms of processing speed. %% TODO: refs maybe?
+
+Online market offers several solutions for ML computing in cloud.
+
+Google
+
+Amazon AWS(?)
+
+Microsoft Azure
+
+%% TODO: More details of each, briefly
+
+\subsection*{Log data parsing with ML}\label{subsec:log-data-parsing-with-ml}
+%% TODO: Some research should exist
+
+\subsection*{Random delay in timeseries}\label{subsec:bg-random-delay-in-timeseries}
+%% TODO: Anything about the topic?
+
+
+\subsection*{Hybrid ML approach with anomaly detection}\label{subsec:bg-hybrid-ml-approach-with-anomaly-detection}
+%% TODO: Is there anything about this?
 
 
 %% TODO: do we need other subsections?
@@ -702,8 +797,8 @@ We also defined the
 
 
 
+%% ************************************************ 3 ************************************************
 
-%% *** 3 ***
 \section{Research material and methods}\label{sec:research-material-and-methods}
 %\section{Tutkimusaineisto ja -menetelmät}
 
@@ -954,6 +1049,7 @@ This meant that among the
 
 
 
+%% ************************************************ 4 ************************************************
 
 \section{Results}\label{sec:results}
 
@@ -1064,6 +1160,10 @@ Meanwhile,
 
 \clearpage
 
+
+
+%% ************************************************ 5 ************************************************
+
 \section{Summary}\label{sec:summary}
 
 <Sum up here what we did and why>
@@ -1086,6 +1186,11 @@ do not differ between use cases.
 
 
 \clearpage
+
+
+
+%% ************************************************ 6 ************************************************
+
 %% Lähdeluettelo
 
 \bibliographystyle{IEEEtran}
