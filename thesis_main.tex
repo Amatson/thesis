@@ -516,6 +516,38 @@ logging is one of the most important methods
 in problem solving,
 be it software or operating system related.\cite{delarosa2018log}
 
+Typically,
+at least in Samlink processes,
+logging is a bit more verbose
+than it needs to be.
+This is usually because when the problem occurs
+it is easier to already have the verbose logs available
+than trying to replicate the issue
+after setting logging to more verbose mode.
+Too verbose logging, however,
+leads into two problematic issues.
+First of, the size of log is huge
+and finding the critical leads for
+solving the problem in hand
+takes more time.
+Of course,
+with more strict logging
+pinpointing the problem from within the logs
+would be faster,
+but then again,
+solving the problem with only critical error messages
+could be more time-consuming
+if crucial context is missing.
+Secondly,
+as software tends to see some issues it encounters
+worth of several dozens of log rows,
+some rows are not critical information
+if the software is able to continue,
+especially if it is able to retry the process after failure
+and get the job done at the second time.
+These issues make log parsing considerably laborious.
+
+
 %% TODO: continue
 \begin{verbatim}
 <importance of logs>
