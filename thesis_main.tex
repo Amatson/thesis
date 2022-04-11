@@ -1079,6 +1079,23 @@ This meant that among the
 %% anomalioiden määrä voi olla tuhansia vaikka tikettejä vain kymmenkunta
 %% ei kerro vertailukelpoista määrää
 
+Two different algorithms are needed.
+In phase 1,
+algorithm defines how likely one datapoint
+is to be considered an anomaly.
+In phase 2,
+another algorithm aims to predict
+how many tickets are to be expected to receive
+within a time frame.
+Phase 1 is purely anomaly detection
+while phase 2 could use
+classification within time frame
+
+Possible algorithms to consider in phase 2:
+\begin{verbatim}
+  Artificial Neural Network, reinforced learning
+\end{verbatim}
+
 \clearpage
 
 
