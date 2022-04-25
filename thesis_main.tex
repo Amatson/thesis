@@ -510,7 +510,7 @@ In this process, machine learning is able to help.
 
 <ML and Azure>
 
-\subsection{Background and motivation}\label{subsec:background-and-motivation}
+\subsection{Background and motivation}\label{subsec:intro-background-and-motivation}
 In the field of information technology
 logging is one of the most important methods
 in problem-solving,
@@ -559,7 +559,7 @@ These issues make log parsing considerably laborious.
 <Intelligent automation>
 \end{verbatim}
 
-\subsection{Research objectives}\label{subsec:research-objectives}
+\subsection{Research objectives}\label{subsec:intro-research-objectives}
 This research aims to kickstart the machine learning application usage in Samlink operations.
 Multiple obstacles need to be tackled
 as most of the phases in this study has not yet been encountered inside the company.
@@ -617,7 +617,7 @@ What really happens in this research:
 <Connection for data, ML estimates>
 \end{verbatim}
 
-\subsection{Scope}\label{subsec:scope}
+\subsection{Scope}\label{subsec:intro-scope}
 
 In order to limit the study
 to feasible length and content
@@ -703,7 +703,7 @@ this study focuses on
 just a few easily approachable training methods.
 
 
-\subsection{Structure}\label{subsec:structure}
+\subsection{Structure}\label{subsec:intro-structure}
 At the beginning of this thesis
 we opened the key concepts discussed in the study.
 We also defined the
@@ -742,7 +742,7 @@ Machine learning divides commonly in several categories,
 which are explored briefly in the next section.
 
 
-\subsection*{Machine learning field}\label{subsec:bg-ml-field}
+\subsection{Machine learning field}\label{subsec:bg-ml-field}
 %% TODO: Open up ML algorithms and learning methods
 
 \subsubsection*{ML training}
@@ -761,6 +761,30 @@ algorithm does not get model data from which to train itself,
 but instead it tries to find clusters or groups inside the data
 that are linked together more closely than to other parts of data.
 %% TODO: REFERENCES AND SUCH
+
+Typically,
+when training an algorithm,
+some predefined portion of the data
+is used as training data.
+%% TODO: How much? Sources!
+The rest is used to validate the results
+so that validation data and training data do not overlap.
+Instead, trained algorithm is given data it has not seen before
+and the result it produces with it is then validated.
+For example,
+in supervised learning
+the key values the algorithm is trained to find out
+are hidden from the validation data.
+The resulting values produced by the algorithm
+are compared to those hidden values
+and the difference between the estimate and the real value
+can be used to determine how well the current algorithm compares to others.
+
+%% TODO: next one might change!
+However, in this study,
+we are going to break that rule
+about non-overlapping training and validation data.
+The reason for this is explained further in section \ref{subsec:rmm-ml-methods-and-pipelines})
 
 \subsubsection*{ML algorithms}
 Algorithms are the main "magic" inside machine learning. %% TODO: Omstart?
@@ -783,7 +807,7 @@ and try to find unusual or rare data points from data.
 
 %% TODO: need more info? Opening up?
 
-\subsection*{Cloud ML platforms}\label{subsec:bg-cloud-ml-platforms}
+\subsection{Cloud ML platforms}\label{subsec:bg-cloud-ml-platforms}
 %% TODO: Briefly about Azure, Google and AWS
 
 Machine learning algorithms are not light to operate.
@@ -807,14 +831,14 @@ Microsoft Azure\cite{altexsoft}
 
 %% TODO: More details of each, briefly
 
-\subsection*{Log data parsing with ML}\label{subsec:log-data-parsing-with-ml}
+\subsection{Log data parsing with ML}\label{subsec:bg-log-data-parsing-with-ml}
 %% TODO: Some research should exist
 
-\subsection*{Random delay in time series}\label{subsec:bg-random-delay-in-time-series}
+\subsection{Random delay in time series}\label{subsec:bg-random-delay-in-time-series}
 %% TODO: Anything about the topic?
 
 
-\subsection*{Hybrid ML approach with anomaly detection}\label{subsec:bg-hybrid-ml-approach-with-anomaly-detection}
+\subsection{Hybrid ML approach with anomaly detection}\label{subsec:bg-hybrid-ml-approach-with-anomaly-detection}
 %% TODO: Is there anything about this?
 
 
@@ -855,7 +879,7 @@ from any sensitive information.
 This was done by anonymizing the log data
 and using only timestamps from the support tickets.
 
-\subsection{Support ticket data}\label{subsec:efecte-ticket-data}
+\subsection{Support ticket data}\label{subsec:rmm-efecte-ticket-data}
 
 Like all other software,
 RPA components fail from time to time.
@@ -886,11 +910,11 @@ To avoid privacy issues when processing this data,
 it was decided to use only timestamps of the tickets.
 The resulting data was practically a list of date and time values.
 More about the issue from privacy point of view
-is described in section \ref{subsec:data-anonymization}
+is described in section \ref{subsec:rmm-data-anonymization}
 %% TODO: due to GDPR, only timestamps could be used
 
 
-\subsection{RPA log data}\label{subsec:rpa-log-data}
+\subsection{RPA log data}\label{subsec:rmm-rpa-log-data}
 Robotic process automations used in Samlink
 are engineered %% TODO: trained/programmed/
 to ease the workload of
@@ -925,7 +949,7 @@ data that was seen as sufficient amount
 for machine learning algorithm training.
 
 
-\subsection{Data anonymization}\label{subsec:data-anonymization}
+\subsection{Data anonymization}\label{subsec:rmm-data-anonymization}
 
 \subsubsection*{Support ticket data privacy}
 Samlink handles highly sensitive banking customer data in its processes,
@@ -956,7 +980,7 @@ if goal is to find possible problems in RPA runtime
 and not detect individual customer related problems.
 This way it was not necessary to achieve adequate security
 by less secure and more effort consuming ways
-such as pseudonymisation or k-anonymization,
+such as pseudonymization or k-anonymization,
 %% TODO: references?
 which would have also required strict inspections
 before data could have been approved for cloud processing.
@@ -986,9 +1010,8 @@ before the results was seemed adequate.
 
 %% TODO: appendix of the script used
 
-\subsection{Cloud machine learning and methods}\label{subsec:cloud-ml-and-methods}
+\subsection{Azure environment}\label{subsec:rmm-azure-environment}
 
-\subsubsection*{Azure resources and ML Studio}
 %% TODO: <Azure resources, virtual network etc.>
 Several different ML methods are usable with Azure ML Studio. <???>
 
@@ -1066,7 +1089,29 @@ preformatting data! \\
 ???? ****
 
 
-\subsubsection*{Machine learning methods and pipelines}
+\subsection{Machine learning methods and pipelines}\label{subsec:rmm-ml-methods-and-pipelines}
+As stated in section~\ref{subsec:bg-ml-field},
+the approach in this thesis is,
+if expression is allowed, unorthodox
+Usually,
+it is not a good idea to use
+same data points in ML algorithm training and validating.
+Acting otherwise
+leads to algorithm processing with
+same data it was trained with
+thus creating a situation
+where algorithm already knows what to do with the current datapoint.
+If the results were validated after this
+the algorithm would get unreliable score
+as it had the validation data already in the training phase.
+This could be compared to
+giving some right answers to students
+during test and scoring test results as if
+no help wasn't given.
+
+%% TODO: explain why we did it anyway!
+
+
 Initial plan when starting the ML pipeline testing
 was to feed the log data to anomaly detection algorithm
 and try to get some sort of estimate of possible anomaly count.
@@ -1151,7 +1196,7 @@ While working with with the issue
 it was also noted
 that data needed more cleaning
 in order to ease the preprocessing phase
-as described with more detail in section \ref{subsec:data-anonymization}
+as described with more detail in section \ref{subsec:rmm-data-anonymization}
 Thus,
 the data had to be imported from log archive
 and anonymized once more.
@@ -1175,7 +1220,7 @@ hence reducing the data amount considerably.
 Meanwhile,
 <fixing the memory issue>
 
-\subsection{Machine learning methods and pipelines}\label{subsec:machine-learning-methods-and-pipelines}
+\subsection{ML training and validation}\label{subsec:ml-training-and-validation}
 
 <anomaly detection>
 
