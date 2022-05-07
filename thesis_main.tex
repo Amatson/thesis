@@ -179,6 +179,11 @@
 %% Math fonts, symbols, and formatting; these are usually needed
 \usepackage{amsfonts,amssymb,amsbsy,amsmath}
 
+%% URL line breaking
+\usepackage{url}
+\usepackage{breakurl}
+\def\UrlBreaks{\do\/\do-}
+
 %% Change the school field to specify your school if the automatically set name
 %% is wrong
 % \university{aalto-yliopisto}
@@ -432,7 +437,8 @@ Otaniemi, {\today}
   SQL         & Structured Query Language \\
   JSON        & JavaScript Object Notation \\
   CSV         & Comma-Separated Values \\
-  GDPR        & General Data Protection Regulation
+  GDPR        & General Data Protection Regulation \\
+  ADA         & Anomaly Detection Algorithm
 \end{tabular}
 
 
@@ -532,7 +538,7 @@ solving the problem in hand
 takes more time.
 Of course,
 with more strict logging
-pinpointing the problem from within the logs
+pinpointing the issue from within the logs
 would be faster,
 but then again,
 solving the problem with only critical error messages
@@ -687,10 +693,10 @@ Several different machine learning algorithms exist
 that are aimed for different applications in mind.
 For example,
 to make an algorithm that can predict
-the price of an apartment listed\cite{Winky}
+the price of an apartment listed\cite{winky}
 we could be using linear regression
 and in order to detect
-possible cyber threats from network traffic\cite{Ghanem}
+possible cyber threats from network traffic\cite{ghanem}
 a two-class support vector machine could be utilized.
 These two methods are very different in usage
 and has their pros and cons in different applications.
@@ -702,6 +708,14 @@ and how the ML problem is formed,
 this study focuses on
 just a few easily approachable training methods.
 
+When it comes to anomaly detection,
+only principal component analysis (PCA)
+is considered as
+PCA-based Anomaly Detection component is usable
+from existing anomaly detection algorithms
+in Azure ML Studio.
+As purely Azure ML Studio is used during this study,
+no other anomaly detection algorithms are debated.
 
 \subsection{Structure}\label{subsec:intro-structure}
 At the beginning of this thesis
@@ -836,10 +850,13 @@ Microsoft Azure\cite{altexsoft}
 
 \subsection{Random delay in time series}\label{subsec:bg-random-delay-in-time-series}
 %% TODO: Anything about the topic?
-
+%% TODO: data in this research is not time-series data! eg. temperature would be
+%% However, random delay seems to be usually with time-series data
 
 \subsection{Hybrid ML approach with anomaly detection}\label{subsec:bg-hybrid-ml-approach-with-anomaly-detection}
 %% TODO: Is there anything about this?
+
+%% TODO: Something about Anomaly and Novelty detection differences?
 
 
 %% TODO: do we need other subsections?
@@ -947,6 +964,30 @@ without the need to merge different parts together.
 Archive also had %% TODO: How much?
 data that was seen as sufficient amount
 for machine learning algorithm training.
+
+\subsubsection*{Data formatting}\label{subsec:data-formatting}
+At the beginning of the research,
+the log data from RPA was in SQL database.
+However,
+the database used was not >>pure>>
+in a way that typical relational databases are,
+but some columns included JSON-formatted data in them.
+For ML algorithms to be able to read the given data with ease
+this sort of >>impurities>> needed to be cleared from the data.
+
+
+When feeding the log data to anomaly detection algorithm
+it was necessary that all the rows were
+as minimally unique as possible.
+%% TODO: Explain anomaly detection.
+Thus, all unique data was stripped from the data,
+especially the fingerprint value
+that was unique for each row.
+Also,
+job ID information and timestamps of the rows
+were removed momentarily.
+%% TODO: this was done with case:RawMessage
+%% TODO: fix above to make sense
 
 
 \subsection{Data anonymization}\label{subsec:rmm-data-anonymization}
@@ -1066,27 +1107,8 @@ to avoid counting multiple values
 linked to same error
 as different possible ticket creators.
 \\ \\
-**** ???? \\
-Is it possible to use full row as a feature? \\
-5000 rows / week \\
-count events / week \\
-=> estimate from data \\
-\\
-preformatting data! \\
-\begin{enumerate}
-  \item remove fingerprint etc unique values from raw message
-  \item calculate anomaly probability per line
-  \item [!] CAN WE COMBINE THIS PER JOB-ID?
-  \item create new table consisting:
-  \begin{enumerate}
-    \item amount of rows per timeframe
-    \item anomaly probability value (median, mean etc)
-    \item efecte tickets received in said timeframe
-  \end{enumerate}
-\end{enumerate}
 
 
-???? ****
 
 
 \subsection{Machine learning methods and pipelines}\label{subsec:rmm-ml-methods-and-pipelines}
@@ -1141,6 +1163,51 @@ Possible algorithms to consider in phase 2:
   Artificial Neural Network, reinforced learning
 \end{verbatim}
 
+\subsubsection*{Anomaly detection algorithms}
+%% TODO:
+Here we discuss only about the PCA-based anomaly detection
+as it is the only anomaly detection algorithm available
+in Azure ML Studio.
+
+Move this section to Section 2 (Background)
+if it fits there better.
+%%
+\\ \\
+
+Even though only one ADA is usable, %% TODO: open up in somewhere
+the data it processes can be given in two formats.
+Most simple way is to give the data as-is
+letting the PCA-based anomaly detection component
+work without further modifying the log rows.
+This way,
+the component tries to recognize the anomalies
+based on all the information included in the row.
+Practically,
+this means that the component processes data in textual format.
+Another way
+is to create numerical values
+out of the textual data.
+Each word or N-Gram %% TODO: Open up!
+is now a number of said instances found on
+the row being processed,
+and each row can be presented
+as a sequence of numbers
+indicating the number of those words.
+
+N-Grams can in addition have a weight
+based on the frequency they appear
+in the whole data.
+Different weights usable in Azure ML component
+are listed below
+
+\begin{enumerate}
+  \item Binary Weight
+  \item TF Weight
+  \item IDF Weight
+  \item TF-IDF Weight
+\end{enumerate}
+
+
 \clearpage
 
 
@@ -1148,17 +1215,6 @@ Possible algorithms to consider in phase 2:
 %% ************************************************ 4 ************************************************
 
 \section{Results}\label{sec:results}
-
-
-\subsection{Data formatting}\label{subsec:data-formatting}
-At the beginning of the research,
-the log data from RPA was in SQL database.
-However,
-the database used was not >>pure>>
-in a way that typical relational databases are,
-but some columns included JSON-formatted data in them.
-For ML algorithms to be able to read the given data with ease
-this sort of >>impurities>> needed to be cleared from the data.
 
 
 \subsection{Azure and Azure ML Studio}\label{subsec:azure-and-azure-ml-studio}
@@ -1232,10 +1288,25 @@ Poisson only for poisson distributed data.>
 <two-class classification>
 <support vector machine etc>
 
-
+preformatting data! \\
+\begin{enumerate}
+  \item remove fingerprint etc unique values from raw message
+  \item calculate anomaly probability per line
+  \item [!] CAN WE COMBINE THIS PER JOB-ID?
+  \item create new table consisting:
+  \begin{enumerate}
+    \item amount of rows per timeframe
+    \item amount of unique job ID's per said timeframe
+    \item anomaly probability value (median, mean etc)
+    \item efecte tickets received in said timeframe
+  \end{enumerate}
+\end{enumerate}
 
 \subsubsection*{<Integrating with timestamps>}
-
+To avoid the problem with random delays
+between log rows and technical ticket timestamps,
+log rows were grouped by time stamp
+certain time frame groups.
 
 %% using verbatim to avoid douple line breaks for pdf readability
 \begin{verbatim}
@@ -1253,6 +1324,13 @@ Poisson only for poisson distributed data.>
 
   >
 \end{verbatim}
+
+
+%% TODO: TEST WITHOUT ANOMALY PROBABILITY METRICS!!!
+%% ie. is the anomaly phase of the hybrid learning really usefull
+%% Do log row amount and jobid amount correlate more to tickets as features?
+
+
 
 \clearpage
 
@@ -1280,6 +1358,11 @@ that all different personal information types
 do not differ between use cases.
 %% TODO: hetu in weird form
 
+
+\subsubsection*{Possible ML methods}
+Some sort of time delay forecasting?\cite{erharter2021pointlessness}
+Could we estimate the number of tickets
+based on some log metrics in time frame?
 
 \clearpage
 
