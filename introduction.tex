@@ -34,15 +34,18 @@ produces log to \enquote{register
 the automatically produced and time-stamped documentation
 of events, behaviors and conditions
 relevant to a particular system}\cite{delarosa2018log}.
-
+Logs don't have any standards or form guidelines to follow
+which tends to make
+log analysis and log based problem-solving troublesome.
+This is also the case with RPA's developed by Oy Samlink Ab.
 
 Oy Samlink Ab (Samlink from now on)
 was founded in 1994
 and is now owned by Kyndryl.
 From the early years
-and going by the name of Samcom
+while going by the name of Samcom
 the company was owned by several Finnish banks
-developing all sorts IT solutions to them.
+developing all sorts IT solutions for them.
 Most notable product is Codeapp
 that makes mobile authentication possible
 for client bank end customers.
@@ -53,33 +56,49 @@ to wide range of customers,
 for example,
 entertainment platform solutions for DNA\@.
 Even though Samlink can be considered
-a modern technology company
-the most modern technologies has not yet been adapted
+a modern technology company,
+the most modern AI technologies has not yet been adopted
 in tool variety used in development.
 However,
-robotic process automation has been adopted
-and is actively used in some
-banking solutions to reduce
-the amount of manual labor required
+RPA has been actively used
+in some banking solutions
+to reduce the amount of manual labor required
 from banking clerks.
 
-Like all other IT companies,
-Samlink has a lot of data that is produced
-and moved through its systems daily.
-And as a company offering continuous development
+In addition to continuous development
 as well as product maintenance services,
-Samlink also serves as a technical help desk
+Samlink also offers a technical help desk
 regarding the software solutions produced.
 As no IT solutions comes without bugs or misbehaviour,
 Samlink service desk has to use considerable amount of time
-to resolve whether current tech help request
-is due to the problems in programming.
-In this process, machine learning is able to help.
-%% TODO: This would need some clarification and sourcing.
+to resolve if technical help requests received
+are due to the problems in programming
+and require fixing in production.
+In many cases,
+the problem-solving starts by reading the log
+and analyzing the data written by processes in question.
 
-<RPA in use, but not intelligent processes>
+%% TODO: Clean and clarify?
 
-<ML and Azure>
+%% TODO: Next could be moved to following subsection
+
+When it comes to technical support tickets from banking clerks,
+if Samlink support has received a help request
+the issue behind the request is not fresh anymore.
+In the event of RPA job failing,
+it takes some time for the clerk to notice the issue,
+write a help request to first support level,
+which then redirects the ticket to corresponding team.
+Furthermore,
+if the issue is noticed during friday,
+it takes few more days to be handled by RPA developers.
+This leads to noticeable delay in processes
+that were supposed to be dealt by RPA
+but which now have to be manually taken care of
+by said clerks.
+
+%% TODO: how can ml help?
+
 
 \subsection{Background and motivation}\label{subsec:intro-background-and-motivation}
 In the field of information technology
