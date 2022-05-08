@@ -1,0 +1,135 @@
+%!TEX root = thesis.tex
+%% %% ***************** Background *****************
+
+\section{Background}\label{sec:background}
+%\section{Aikaisempi tutkimus}
+
+%% TODO: Briefly about machine learning in general
+
+Machine learning is part of the artificial intelligence field.
+Typically, machine learning refers to %% TODO: something something data
+
+Machine learning usage has become more common
+and is nowadays widely used in many fields,
+not just general information technology and computer science.
+This is because data can be gathered everywhere,
+and where there is data to be processed,
+machine learning can be there to process it.
+%% TODO: Makes any sense? References!
+
+Machine learning divides commonly in several categories,
+which are explored briefly in the next section.
+
+
+\subsection{Machine learning field}\label{subsec:bg-ml-field}
+%% TODO: Open up ML algorithms and learning methods
+
+\subsubsection*{ML training}
+Machine learning algorithms can be trained in two basic ways:
+supervised and unsupervised learning.
+
+In supervised learning,
+algorithm is given data with ready answers on
+how the data needs to be interpreted.
+Algorithm then tries to figure out
+how given data and the correct answers are related.
+
+In unsupervised learning,
+on the other hand,
+algorithm does not get model data from which to train itself,
+but instead it tries to find clusters or groups inside the data
+that are linked together more closely than to other parts of data.
+%% TODO: REFERENCES AND SUCH
+
+Typically,
+when training an algorithm,
+some predefined portion of the data
+is used as training data.
+%% TODO: How much? Sources!
+The rest is used to validate the results
+so that validation data and training data do not overlap.
+Instead, trained algorithm is given data it has not seen before
+and the result it produces with it is then validated.
+For example,
+in supervised learning
+the key values the algorithm is trained to find out
+are hidden from the validation data.
+The resulting values produced by the algorithm
+are compared to those hidden values
+and the difference between the estimate and the real value
+can be used to determine how well the current algorithm compares to others.
+
+%% TODO: next one might change!
+However, in this study,
+we are going to break that rule
+about non-overlapping training and validation data.
+The reason for this is explained further in section~\ref{subsec:rmm-ml-methods-and-pipelines})
+
+\subsubsection*{ML algorithms}
+Algorithms are the main "magic" inside machine learning. %% TODO: Omstart?
+They can be generally divided into <four> categories %% TODO: check
+
+Regression algorithms predict values
+and are typically used with supervised learning.
+%% TODO: give examples? House market price?
+
+Classification algorithms predict categories.
+Depending on the algorithm,
+they can predict between two or several categories.
+%% TODO: Examples?
+
+Clustering algorithms use unsupervised learning
+to find structures inside data.
+
+Anomaly detection algorithms work also unsupervised
+and try to find unusual or rare data points from data.
+
+%% TODO: need more info? Opening up?
+
+\subsection{Cloud ML platforms}\label{subsec:bg-cloud-ml-platforms}
+%% TODO: Briefly about Azure, Google and AWS
+
+Machine learning algorithms are not light to operate.
+Depending on the amount of data,
+it can be a serious %% TODO: What? How big?
+
+Especially with online applications
+where real time analysis of new input data is required,
+cloud computing resources can make a huge difference
+in terms of processing speed. %% TODO: refs maybe?
+
+Online market offers several solutions for ML computing in cloud.
+
+Google
+
+Amazon AWS(?)
+
+Microsoft Azure\cite{altexsoft}
+
+
+
+%% TODO: More details of each, briefly
+
+\subsection{Log data parsing with ML}\label{subsec:bg-log-data-parsing-with-ml}
+%% TODO: Some research should exist
+
+\subsection{Random delay in time series}\label{subsec:bg-random-delay-in-time-series}
+%% TODO: Anything about the topic?
+%% TODO: data in this research is not time-series data! eg. temperature would be
+%% However, random delay seems to be usually with time-series data
+
+\subsection{Hybrid ML approach with anomaly detection}\label{subsec:bg-hybrid-ml-approach-with-anomaly-detection}
+%% TODO: Is there anything about this?
+
+%% TODO: Something about Anomaly and Novelty detection differences?
+
+
+%% TODO: do we need other subsections?
+%\subsection{Cloud services}\label{subsec:cloud-services}
+%<Azure ML and other cloud services>
+
+%\subsection{Data protection}\label{subsec:data-protection}
+%<Anonymization and data sensitivity>
+
+
+\clearpage

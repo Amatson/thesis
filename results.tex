@@ -1,0 +1,124 @@
+%!TEX root = thesis.tex
+%% %% ***************** Results *****************
+
+
+\section{Results}\label{sec:results}
+
+
+\subsection{Azure and Azure ML Studio}\label{subsec:azure-and-azure-ml-studio}
+
+<general about ml inside azure>
+
+\subsubsection*{Azure resources}
+
+<what resources was needed inside Azure?>
+
+<virtual machines etc.>
+
+
+
+
+\subsubsection*{Azure ML Studio components}
+<clusters and data>
+
+<Memory problems>
+
+During the initial pipeline runs
+the execution came to an abrupt stop
+and Azure notified about memory issues.
+These problems were linked to the data amount
+which had to be reduced to 600 megabytes
+before any pipeline could be finished using the data.
+This reduction was against the initial goal
+where preferably all the data could have been used.
+
+Considerable amount of time was used
+to fix or avoid this issue
+but nothing clear was found
+that would explain the error received.
+While working with the issue
+it was also noted
+that data needed more cleaning
+in order to ease the preprocessing phase
+as described with more detail in section~\ref{subsec:rmm-data-anonymization}
+Thus,
+the data had to be imported from log archive
+and anonymized once more.
+
+Two choices was possible to take:
+\begin{enumerate}
+    \item Continue working with full data
+    and attempting to fix the memory issue
+    by consulting Azure experts
+    \item  Trim the data to reduce the data size
+    by declaring info-type log messages
+    as unnecessary
+    and working with vastly diminished data
+    until the memory issue would be solved
+    one way or another
+\end{enumerate}
+
+To advance the study more efficiently
+it was decided to trim info-type log messages from data
+hence reducing the data amount considerably.
+Meanwhile,
+<fixing the memory issue>
+
+\subsection{ML training and validation}\label{subsec:ml-training-and-validation}
+
+<anomaly detection>
+
+<N-Gram Feature extracting>
+
+<Some regression algorithm to predict event count.
+Poisson only for poisson distributed data.>
+
+<two-class classification>
+<support vector machine etc>
+
+preformatting data! \\
+\begin{enumerate}
+    \item remove fingerprint etc unique values from raw message
+    \item calculate anomaly probability per line
+    \item [!] CAN WE COMBINE THIS PER JOB-ID?
+    \item create new table consisting:
+    \begin{enumerate}
+        \item amount of rows per timeframe
+        \item amount of unique job ID's per said timeframe
+        \item anomaly probability value (median, mean etc)
+        \item efecte tickets received in said timeframe
+    \end{enumerate}
+\end{enumerate}
+
+\subsubsection*{<Integrating with timestamps>}
+To avoid the problem with random delays
+between log rows and technical ticket timestamps,
+log rows were grouped by time stamp
+certain time frame groups.
+
+%% using verbatim to avoid douple line breaks for pdf readability
+\begin{verbatim}
+  <todo:
+
+  ***A***
+  count sum of incidents in timeframe x
+  set x to each row in data by timestamp
+  predict amount of incidents based on data
+
+  ***B***
+  Use efecte data as reference values
+  (regression, predict amount in timeframe -> compare)
+  (classification, count TRUE in timeframe -> compare amount)
+
+  >
+\end{verbatim}
+
+
+%% TODO: TEST WITHOUT ANOMALY PROBABILITY METRICS!!!
+%% ie. is the anomaly phase of the hybrid learning really usefull
+%% Do log row amount and jobid amount correlate more to tickets as features?
+
+
+
+
+\clearpage

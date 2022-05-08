@@ -1,0 +1,340 @@
+%!TEX root = thesis.tex
+%% %% ***************** Research materials and methods *****************
+
+%% ************************************************ 3 ************************************************
+
+\section{Research material and methods}\label{sec:research-material-and-methods}
+%\section{Tutkimusaineisto ja -menetelmät}
+
+In the next section
+we explain in more detail
+what the data used in the study
+consists of
+and what methods were used
+in attempt to answer the research goals.
+%% TODO: Better frazing?
+
+The data in the research consists mainly of two parts.
+The most important part is, obviously,
+the log data produced by the numerous RPA processes.
+The second part complementing the study
+is the support ticket data written by clerks of customer banks.
+In order to use the data safely in the cloud environment
+it was necessary to sanitize the data
+from any sensitive information.
+This was done by anonymizing the log data
+and using only timestamps from the support tickets.
+
+\subsection{Support ticket data}\label{subsec:rmm-efecte-ticket-data}
+
+Like all other software,
+RPA components fail from time to time.
+As described above, %% TODO: Make sure is described!
+RPA logs are verbose
+making possible error identification from among it hard.
+Due to that,
+it is not feasible to create log parsers
+that would be able to identify critical errors
+from within thousands of lines of log.
+When critical error happens
+causing the RPA process to fail,
+the banking clerks need to fix manually
+the job left by the RPA process.
+Every time this happens,
+these clerks then send a support request ticket
+to Samlink technical helpdesk
+and ask to fix the issue.
+
+%% TODO: clerks send tech support tickets
+
+When clerks send the ticket to technical support
+a verbose description of the situation is written
+to help developers to identify the problem.
+This description often contains sensitive end customer information
+like bank account details and social security numbers.
+To avoid privacy issues when processing this data,
+it was decided to use only timestamps of the tickets.
+The resulting data was practically a list of date and time values.
+More about the issue from privacy point of view
+is described in section~\ref{subsec:rmm-data-anonymization}
+%% TODO: due to GDPR, only timestamps could be used
+
+
+\subsection{RPA log data}\label{subsec:rmm-rpa-log-data}
+Robotic process automations used in Samlink
+are engineered %% TODO: trained/programmed/
+to ease the workload of
+bank clerks.
+RPA components %% TODO: What is the right thing to say? RPA component/process?
+work mostly with loan applications %% TODO: Check!
+among other routine tasks
+that require mostly manual labor.
+
+Like other software,
+RPA also produces log data during runtime.
+As several RPA processes are running %% TODO: How many RPAs
+%% TODO: how many customers are they dealing with?
+the amount of log produced daily is also significant. %% TODO: AMOUNTS!
+This log data is not in consistent structure
+being formed out of typical CSV data
+injected with even more inconsistent JSON data
+that varies in contents vastly.
+%% TODO: Include examples of data types used
+
+RPA log data is stored in SQL database.
+The database is split in live production log
+that is gathered for few months %% TODO: Check
+and then moved to archive that has
+several years worth of log.
+
+In this study we used archived data
+as it was easier to acquire in one run
+without the need to merge different parts together.
+Archive also had %% TODO: How much?
+data that was seen as sufficient amount
+for machine learning algorithm training.
+
+\subsubsection*{Data formatting}\label{subsubsec:data-formatting}
+At the beginning of the research,
+the log data from RPA was in SQL database.
+However,
+the database used was not >>pure>>
+in a way that typical relational databases are,
+but some columns included JSON-formatted data in them.
+For ML algorithms to be able to read the given data with ease
+this sort of >>impurities>> needed to be cleared from the data.
+
+
+When feeding the log data to anomaly detection algorithm
+it was necessary that all the rows were
+as minimally unique as possible.
+%% TODO: Explain anomaly detection.
+Thus, all unique data was stripped from the data,
+especially the fingerprint value
+that was unique for each row.
+Also,
+job ID information and timestamps of the rows
+were removed momentarily.
+%% TODO: this was done with case:RawMessage
+%% TODO: fix above to make sense
+
+
+\subsection{Data anonymization}\label{subsec:rmm-data-anonymization}
+
+\subsubsection*{Support ticket data privacy}
+Samlink handles highly sensitive banking customer data in its processes,
+such as personal identification numbers, home addresses, email addresses and bank account numbers.
+All possibly sensitive data must be removed
+before data can be transferred out from production environment to cloud.
+Due to bureaucratic reasons,
+technical support tickets were under more strict policies.
+Because of this,
+they were allowed to be used in the research
+on condition that no business critical nor customer sensitive information
+was processed in the first place.
+Only way to assure this
+was to select solely timestamp fields from ticket data.
+Thus, no sanitation for ticket data was needed.
+
+\subsubsection*{RPA log data sanitization}
+Information privacy is one of the key values in Samlink business promise
+as company develops high security banking applications
+and processes sensitive customer data.
+Thus, several aspects were needed to take into consideration
+before log data could be authorized for thesis study usage.
+To improve privacy,
+it was decided to assume
+that personal customer details are not critical information
+for training the ML algorithm
+if goal is to find possible problems in RPA runtime
+and not detect individual customer related problems.
+This way it was not necessary to achieve adequate security
+by less secure and more effort consuming ways
+such as pseudonymization or k-anonymization,
+%% TODO: references?
+which would have also required strict inspections
+before data could have been approved for cloud processing.
+
+As production environment is built on Microsoft Server based solution,
+and because it was highly unrecommended
+to install additional software to the production server,
+data acquiring and anonymization tools were chosen
+based on what was already usable in the RPA production environment.
+Microsoft Powershell offers sufficient tools
+for database SQL querying
+and stream editing.
+The amount of data was significant
+which made straight file editing impossible
+due to the memory limitations.
+Thus, stream editing was necessary
+for finding and replacing
+sensitive information from the data
+%% TODO: References!
+
+
+Anonymization took good proportion of the time in workdays
+as processes were slow,
+amount of data was big
+and multiple re-runs were needed
+before the results was seemed adequate.
+
+%% TODO: appendix of the script used
+
+\subsection{Azure environment}\label{subsec:rmm-azure-environment}
+
+%% TODO: <Azure resources, virtual network etc.>
+Several different ML methods are usable with Azure ML Studio.%%TODO: open up
+
+Usually <with usual ml methods> the estimates
+created using ML algorithms
+are formed based on the certain features
+presented on a one element of the data,
+or on one row.
+This means that in typical case,
+there is one column in the data
+given to the ML algorithm
+that is removed from the training data
+and this column value is what algorithm
+aims to predict.
+
+In this study case, however,
+data does not contain clear values
+that are being estimated
+and that can be used as comparison.
+
+\begin{tabular}{cccc}
+    LOG\_DATA \\
+    a=date & b=msg & c=\etc & \\
+    a & b & c & n1 \\
+    a & b & c & n2 \\
+    a & b & c & n3 \\
+    a & b & c & n4
+\end{tabular}
+\begin{tabular}{c}
+    EFECTE\_DATA \\
+    A YYYY.MM.DD hh:mm:ss \\
+    B YYYY.MM.DD hh:mm:ss \\
+    C YYYY.MM.DD hh:mm:ss \\
+    D YYYY.MM.DD hh:mm:ss \\
+    E YYYY.MM.DD hh:mm:ss
+\end{tabular}
+\\
+n1 = SUM(AB) \\
+n2 = SUM(C) \\
+n3 = SUM(DE) \\
+=> \\
+We could try to predict nx
+but usually this is done
+by making estimate based on
+a, b and c.
+Instead,
+we aim to estimate the sum of events
+in timeframe.
+We should also skip event instances
+that are close to each other
+to avoid counting multiple values
+linked to same error
+as different possible ticket creators.
+\\ \\
+
+
+
+
+\subsection{Machine learning methods and pipelines}\label{subsec:rmm-ml-methods-and-pipelines}
+As stated in section~\ref{subsec:bg-ml-field},
+the approach in this thesis is,
+if expression is allowed, unorthodox
+Usually,
+it is not a good idea to use
+same data points in ML algorithm training and validating.
+Acting otherwise
+leads to algorithm processing with
+same data it was trained with
+thus creating a situation
+where algorithm already knows what to do with the current datapoint.
+If the results were validated after this
+the algorithm would get unreliable score
+as it had the validation data already in the training phase.
+This could be compared to
+giving some right answers to students
+during test and scoring test results as if
+no help wasn't given.
+
+%% TODO: explain why we did it anyway!
+
+
+Initial plan when starting the ML pipeline testing
+was to feed the log data to anomaly detection algorithm
+and try to get some sort of estimate of possible anomaly count.
+This plan had several problems.
+First, as stated, logging is very abundant
+and several thousands of rows was logged %% TODO: Check some real values!
+during a single day.
+This meant that among the
+%% TODO: << logeissa päivän aikana yhteen tikettiin liittyen satoja rivejä
+%% anomalioiden määrä voi olla tuhansia vaikka tikettejä vain kymmenkunta
+%% ei kerro vertailukelpoista määrää
+
+Two different algorithms are needed.
+In phase 1,
+algorithm defines how likely one datapoint
+is to be considered an anomaly.
+In phase 2,
+another algorithm aims to predict
+how many tickets are to be expected to receive
+within a time frame.
+Phase 1 is purely anomaly detection
+while phase 2 could use
+classification within time frame
+
+Possible algorithms to consider in phase 2:
+\begin{verbatim}
+  Artificial Neural Network, reinforced learning
+\end{verbatim}
+
+\subsubsection*{Anomaly detection algorithms}
+%% TODO:
+Here we discuss only about the PCA-based anomaly detection
+as it is the only anomaly detection algorithm available
+in Azure ML Studio.
+
+Move this section to Section 2 (Background)
+if it fits there better.
+%%
+\\ \\
+
+Even though only one ADA is usable, %% TODO: open up in somewhere
+the data it processes can be given in two formats.
+Most simple way is to give the data as-is
+letting the PCA-based anomaly detection component
+work without further modifying the log rows.
+This way,
+the component tries to recognize the anomalies
+based on all the information included in the row.
+Practically,
+this means that the component processes data in textual format.
+Another way
+is to create numerical values
+out of the textual data.
+Each word or N-Gram %% TODO: Open up!
+is now a number of said instances found on
+the row being processed,
+and each row can be presented
+as a sequence of numbers
+indicating the number of those words.
+
+N-Grams can in addition have a weight
+based on the frequency they appear
+in the whole data.
+Different weights usable in Azure ML component
+are listed below
+
+\begin{enumerate}
+    \item Binary Weight
+    \item TF Weight
+    \item IDF Weight
+    \item TF-IDF Weight
+\end{enumerate}
+
+
+\clearpage

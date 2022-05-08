@@ -1,0 +1,295 @@
+%!TEX root = thesis.tex
+%% %% ***************** Introduction *****************
+
+\section{Introduction}\label{sec:introduction}
+
+%% Leave page number of the first page empty
+\thispagestyle{empty}
+%% TODO: Remember references
+Artificial intelligence (AI) and machine learning (ML)
+has found their way to
+more and more fields of business.
+In banking business they are already used in
+fraud detection, risk management and service recommendations.\cite{donepudi2017machine}
+Even though these
+modern big data utilizing technologies
+are widely used abroad,
+in Finnish banking field AI and ML are not popularly utilized.
+Instead,
+many self-acting solutions are being used
+to streamline manual labor
+which could be called intelligent,
+but are merely highly automated processes
+and thus cannot be included in the AI category.
+One of these technologies used in Finnish banking systems
+is Robotic Process Automation (RPA).
+
+RPA operates \enquote{on the user interface of other computer systems
+in the way a human would do},\cite{van2018robotic}
+but is bounded by predefined operations
+thus being prone to unforeseen situations
+such as faulty input.
+RPA, like generally all other software,
+produces log to \enquote{register
+the automatically produced and time-stamped documentation
+of events, behaviors and conditions
+relevant to a particular system}\cite{delarosa2018log}.
+
+
+Oy Samlink Ab (Samlink from now on)
+was founded in 1994
+and is now owned by Kyndryl.
+From the early years
+and going by the name of Samcom
+the company was owned by several Finnish banks
+developing all sorts IT solutions to them.
+Most notable product is Codeapp
+that makes mobile authentication possible
+for client bank end customers.
+
+Besides banking,
+Samlink develops multiple other IT solutions
+to wide range of customers,
+for example,
+entertainment platform solutions for DNA\@.
+Even though Samlink can be considered
+a modern technology company
+the most modern technologies has not yet been adapted
+in tool variety used in development.
+However,
+robotic process automation has been adopted
+and is actively used in some
+banking solutions to reduce
+the amount of manual labor required
+from banking clerks.
+
+Like all other IT companies,
+Samlink has a lot of data that is produced
+and moved through its systems daily.
+And as a company offering continuous development
+as well as product maintenance services,
+Samlink also serves as a technical help desk
+regarding the software solutions produced.
+As no IT solutions comes without bugs or misbehaviour,
+Samlink service desk has to use considerable amount of time
+to resolve whether current tech help request
+is due to the problems in programming.
+In this process, machine learning is able to help.
+%% TODO: This would need some clarification and sourcing.
+
+<RPA in use, but not intelligent processes>
+
+<ML and Azure>
+
+\subsection{Background and motivation}\label{subsec:intro-background-and-motivation}
+In the field of information technology
+logging is one of the most important methods
+in problem-solving,
+be it software or operating system related.\cite{delarosa2018log}
+
+Typically,
+at least in Samlink processes,
+logging is a bit more verbose
+than it needs to be.
+This is usually because when the problem occurs
+it is easier to already have the verbose logs available
+than trying to replicate the issue
+after setting logging to more verbose mode.
+Too verbose logging, however,
+leads into two problematic issues.
+First of, the size of log is huge
+and finding the critical leads for
+solving the problem in hand
+takes more time.
+Of course,
+with more strict logging
+pinpointing the issue from within the logs
+would be faster,
+but then again,
+solving the problem with only critical error messages
+could be more time-consuming
+if crucial context is missing.
+Secondly,
+as software tends to see some issues it encounters
+worth of several dozens of log rows,
+some rows are not critical information
+if the software is able to continue,
+especially if it is able to retry the process after failure
+and get the job done at the second time.
+These issues make log parsing considerably laborious.
+
+
+%% TODO: continue
+\begin{verbatim}
+<importance of logs>
+
+<current state of samlink AI processes>
+
+<Log format>
+
+<Intelligent automation>
+\end{verbatim}
+
+\subsection{Research objectives}\label{subsec:intro-research-objectives}
+This research aims to kickstart the machine learning application usage in Samlink operations.
+Multiple obstacles need to be tackled
+as most of the phases in this study has not yet been encountered inside the company.
+
+First and foremost,
+it is crucial to construct some basic form for log data
+so it is usable by machine learning algorithms.
+Log data forming is on of the key elements in automatic log parsing applications
+as it is not for just machines
+but also for people to read.
+%% TODO: more
+
+As today more and more concern is set on anonymization
+not only due to GDPR,
+the data used for machine learning must be sanitized.
+Because of this,
+one major objective is to create a clean dataset
+that is safe to use in cloud environment
+without creating concern around security and privacy issues.
+In addition to this,
+data must also be clean enough
+so that machine learning algorithms
+are able to process it.
+
+Finally,
+the main objective this research is aiming to answer
+is whether it is possible to use machine learning algorithms
+in such ways that combine support ticket timestamps
+and software run log
+so that it can predict
+if new support ticket might be coming.
+%% TODO: go on?
+
+%% TODO: Parse these to somewhere nice!
+Few things to consider:
+\begin{verbatim}
+  * Counting anomaly "probability" for individual log rows
+  * Random delay! Solving issue by grouping
+  * Hybrid ML with anomaly detection and regression
+  => Can this give any results for forecasting?
+  ?? Assumption to lean on:
+    !! Ticket causing log rows are ANOMALIES in log data.
+    TODO: explain why this assumption is necessary!!!
+    - Log amount is not necessarily proportional to ticket creating error amount, even with info-types filtered out
+    - Considerable amount of rows may be related to one, or several different, tickets
+\end{verbatim}
+%% TODO: it's not really probability. What is it?
+%% TODO: Is it really regression? Is that what we should be using?
+
+What really happens in this research:
+\begin{verbatim}
+<Anonymization scope>
+<Azure ML studio setup and prerequisites>
+<Log data and timestamp combining>
+<Connection for data, ML estimates>
+\end{verbatim}
+
+\subsection{Scope}\label{subsec:intro-scope}
+
+In order to limit the study
+to feasible length and content
+it is necessary to define the scope for the thesis.
+As major part of the time consumed for the study
+was used for data acquiring and anonymizing
+yet the most value comes from
+content considering machine learning,
+the length of the content per section
+does not reflect
+the amount of time used for each section.
+
+\subsubsection*{Data anonymization}
+Anonymization in the context of this thesis
+refers to data sanitization process
+purposed to edit the data into
+more secure form in the privacy point of view.
+In this study we aim to
+create a dataset usable in ML training.
+In this respect
+anonymization is not in the main focus of the study
+but only treated as a sub-phase
+of the data preprocessing in whole.
+Nevertheless,
+anonymization is from the privacy point of view
+the most important phase of data preprocessing.
+
+Keeping this in mind,
+anonymization is covered rather superficially,
+only enough to explain the reasons
+behind actions taken during anonymization process.
+
+\subsubsection*{Azure setup}
+The ML training and result scoring
+is done in Azure ML environment.
+As part of the study aims to create
+an initial guideline for
+ML process commissioning
+the Azure setup phase is documented in such detail
+reflecting the importance of this information
+for future developers
+starting Azure ML projects.
+
+%% TODO: what more?
+
+\subsubsection*{Data requirements}
+Data purity in a sense of
+how easy it is to be used by ML algorithms
+creates challenges at the beginning of ML training.
+If data is not consistent,
+has lots of missing values
+or is formed in unanticipated way,
+it requires considerable amount of preprocessing
+slowing the training process
+and causing errors in pipeline runs.
+
+In order to create a baseline for Samlink ML projects
+this study aims to give basic criterion
+what is required from the data,
+so it is easily parsable by ML algorithm.
+%% TODO: better words for parsable?
+
+
+\subsubsection*{Machine learning methods}
+Several different machine learning algorithms exist
+%% TODO: Source?
+that are aimed for different applications in mind.
+For example,
+to make an algorithm that can predict
+the price of an apartment listed\cite{winky}
+we could be using linear regression
+and in order to detect
+possible cyber threats from network traffic\cite{ghanem}
+a two-class support vector machine could be utilized.
+These two methods are very different in usage
+and has their pros and cons in different applications.
+
+As different methods can be used in creative ways
+in very different applications
+depending on how the data is presented
+and how the ML problem is formed,
+this study focuses on
+just a few easily approachable training methods.
+
+When it comes to anomaly detection,
+only principal component analysis (PCA)
+is considered as
+PCA-based Anomaly Detection component is usable
+from existing anomaly detection algorithms
+in Azure ML Studio.
+As purely Azure ML Studio is used during this study,
+no other anomaly detection algorithms are debated.
+
+\subsection{Structure}\label{subsec:intro-structure}
+At the beginning of this thesis
+we opened the key concepts discussed in the study.
+We also defined the
+%% TODO: nope. talk about next sections. move stuff from earlier sections
+
+
+%% Opinnäytteessä jokainen osa alkaa uudelta sivulta, joten \clearpage
+%%
+%% In a thesis, every section starts a new page, hence \clearpage
+\clearpage

@@ -1,0 +1,22 @@
+%% Thanks to marcschulder
+%% https://gist.github.com/marcschulder/5b619509d08c96f14b312a766f5b67c7
+
+% In LaTeX, the spacing between sentences is longer than the spacing between words.
+% By default, LaTeX treats periods followed by a whitespace as ends of sentence.
+% This leads to incorrect behaviour when using abbreviations like "e.g." or "cf.".
+% To get correct spacing, use the following commands, like this: "Some periods, \eg these ones, do not end a sentence."
+\newcommand{\ie}{i.\,e.\ }
+\newcommand{\eg}{e.\,g.\ }
+\newcommand{\cf}{cf.\ }
+\newcommand\etc{etc.\ }
+
+% Uppercase versions for use at start of sentence
+\newcommand{\Ie}{I.\,e.\ }
+\newcommand{\Eg}{E.\,g.\ }
+
+% When etc. is used as the sentence-final or phrase-final word, \etc would erroneously inject a between-words space.
+% In those cases, you can just write "etc." by hand instead of using the command.
+% If you would prefer a command, use \etcFinal{} (the curly braces are important).
+% Example for sentence-final use: "Uses are A, B, C, \etcFinal{}. The next sentence..."
+% Example for phrase-final use: "Its various uses, such as A, B, C, \etcFinal{}., are well known."
+\newcommand\etcFinal{etc}
