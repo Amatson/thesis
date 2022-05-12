@@ -25,7 +25,7 @@ from any sensitive information.
 This was done by anonymizing the log data
 and using only timestamps from the support tickets.
 
-\subsection{Support ticket data}\label{subsec:rmm-efecte-ticket-data}
+\subsection{Support ticket data}\label{subsec:meth-efecte-ticket-data}
 
 Like all other software,
 RPA components fail from time to time.
@@ -56,11 +56,11 @@ To avoid privacy issues when processing this data,
 it was decided to use only timestamps of the tickets.
 The resulting data was practically a list of date and time values.
 More about the issue from privacy point of view
-is described in section~\ref{subsec:rmm-data-anonymization}
+is described in section~\ref{subsec:meth-data-anonymization}
 %% TODO: due to GDPR, only timestamps could be used
 
 
-\subsection{RPA log data}\label{subsec:rmm-rpa-log-data}
+\subsection{RPA log data}\label{subsec:meth-rpa-log-data}
 Robotic process automations used in Samlink
 are engineered %% TODO: trained/programmed/
 to ease the workload of
@@ -119,7 +119,7 @@ were removed momentarily.
 %% TODO: fix above to make sense
 
 
-\subsection{Data anonymization}\label{subsec:rmm-data-anonymization}
+\subsection{Data anonymization}\label{subsec:meth-data-anonymization}
 
 \subsubsection*{Support ticket data privacy}
 Samlink handles highly sensitive banking customer data in its processes,
@@ -180,7 +180,7 @@ before the results was seemed adequate.
 
 %% TODO: appendix of the script used
 
-\subsection{Azure environment}\label{subsec:rmm-azure-environment}
+\subsection{Azure environment}\label{subsec:meth-azure-environment}
 
 %% TODO: <Azure resources, virtual network etc.>
 Several different ML methods are usable with Azure ML Studio.%%TODO: open up
@@ -240,7 +240,7 @@ as different possible ticket creators.
 
 
 
-\subsection{Machine learning methods and pipelines}\label{subsec:rmm-ml-methods-and-pipelines}
+\subsection{ML methods and pipelines}\label{subsec:meth-ml-pipelines}
 As stated in section~\ref{subsec:bg-ml-field},
 the approach in this thesis is,
 if expression is allowed, unorthodox
@@ -292,7 +292,27 @@ Possible algorithms to consider in phase 2:
   Artificial Neural Network, reinforced learning
 \end{verbatim}
 
-\subsubsection*{Anomaly detection algorithms}
+\subsubsection{ML methods - Phase 1: Anomaly detection}\label{meth-mlmeth1-anomaly-detection}
+In Azure ML Studio
+there is only one anomaly detection module
+for anomaly detecting,
+but with textual input like logs
+it can be used at least in two ways.
+First,
+input data can be fed to
+the algorithm trainer as is,
+making each row in the input
+a feature as a whole
+to consider.
+Second option is to
+convert the textual features
+into numerical N-Gram features.
+Whichever approach used,
+the final step in phase 1
+is using PCA-based anomaly detection.
+
+
+\subsubsection*{PCA-based anomaly detection algorithm}
 %% TODO:
 Here we discuss only about the PCA-based anomaly detection
 as it is the only anomaly detection algorithm available
@@ -334,6 +354,19 @@ are listed below
     \item TF Weight
     \item IDF Weight
     \item TF-IDF Weight
+\end{enumerate}
+
+
+\subsubsection{ML methods - Phase 2: Ticket amount forecasting}\label{meth-mlmeth2-ticket-amount-forecasting}
+
+
+\subsubsection*{Regression algorithms}
+
+\begin{enumerate}
+    \item Linear regression
+    \item Decision forest regression
+    \item \etc
+    \item \etc
 \end{enumerate}
 
 
