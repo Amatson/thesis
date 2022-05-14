@@ -25,6 +25,8 @@ from any sensitive information.
 This was done by anonymizing the log data
 and using only timestamps from the support tickets.
 
+%% ************************************************************************************************************
+
 \subsection{Support ticket data}\label{subsec:meth-efecte-ticket-data}
 
 Like all other software,
@@ -59,6 +61,7 @@ More about the issue from privacy point of view
 is described in section~\ref{subsec:meth-data-anonymization}
 %% TODO: due to GDPR, only timestamps could be used
 
+%% ************************************************************************************************************
 
 \subsection{RPA log data}\label{subsec:meth-rpa-log-data}
 Robotic process automations used in Samlink
@@ -118,6 +121,7 @@ were removed momentarily.
 %% TODO: this was done with case:RawMessage
 %% TODO: fix above to make sense
 
+%% ************************************************************************************************************
 
 \subsection{Data anonymization}\label{subsec:meth-data-anonymization}
 
@@ -180,11 +184,71 @@ before the results was seemed adequate.
 
 %% TODO: appendix of the script used
 
+%% ************************************************************************************************************
+
 \subsection{Azure environment}\label{subsec:meth-azure-environment}
 
 %% TODO: <Azure resources, virtual network etc.>
 Several different ML methods are usable with Azure ML Studio.%%TODO: open up
 
+
+%% ************************************************************************************************************
+
+
+\subsection{Machine learning pipeline}\label{subsec:meth-ml-pipeline}
+As stated in section~\ref{subsec:bg-ml-field},
+the approach in this thesis is,
+if expression is allowed, unorthodox.
+Typically,
+it is not a good idea to use
+same data points in ML algorithm training and validating.
+Acting otherwise
+leads to algorithm processing with
+same data it was trained with
+thus creating a situation
+where algorithm already knows what to do with the current datapoint.
+If the results were validated after this
+the algorithm would get unreliable score
+as it had the validation data already in the training phase.
+This could be compared to
+giving some right answers to students
+during test and scoring test results as if
+no help wasn't given.
+
+%% TODO: explain why we did it anyway!
+
+
+Initial plan when starting the ML pipeline testing
+was to feed the log data to anomaly detection algorithm
+and try to get some sort of estimate of possible anomaly count.
+This plan had several problems.
+First, as stated, logging is very abundant
+and several thousands of rows was logged %% TODO: Check some real values!
+during a single day.
+This meant that among the
+%% TODO: << logeissa päivän aikana yhteen tikettiin liittyen satoja rivejä
+%% anomalioiden määrä voi olla tuhansia vaikka tikettejä vain kymmenkunta
+%% ei kerro vertailukelpoista määrää
+
+Two different algorithms are needed.
+In phase 1,
+algorithm defines how likely one datapoint
+is to be considered an anomaly.
+In phase 2,
+another algorithm aims to predict
+how many tickets are to be expected to receive
+within a time frame.
+Phase 1 is purely anomaly detection
+while phase 2 could use
+classification within time frame
+
+Possible algorithms to consider in phase 2:
+\begin{verbatim}
+  Artificial Neural Network, reinforced learning
+\end{verbatim}
+
+
+%% TODO: unorganized text below!
 Usually <with usual ml methods> the estimates
 created using ML algorithms
 are formed based on the certain features
@@ -235,117 +299,69 @@ that are close to each other
 to avoid counting multiple values
 linked to same error
 as different possible ticket creators.
-\\ \\
 
 
+\subsubsection*{Memory issues and limitations}
+Memory is crucial in ML training
+as multiple steps happen
+and data is formatted \etc. %% TODO: fix!
+While building ML pipeline in Azure ML studio,
+a memory issue emerged
+that affected several components
+and caused serious limitations
+in terms of usable components and data size.
+Due to the time limits of this study
+this issue was not resolved
+and the problem behind it was not found.
+As several conditions
+considering the environment costs
+were already issued by the company,
+the issue was declared to be linked with
+compute instance property limitations.
+However, this was not certain.
+
+%% TODO: limitations to components
+%% limitations to data size
+%% effects on choises in components?
 
 
-\subsection{ML methods and pipelines}\label{subsec:meth-ml-pipelines}
-As stated in section~\ref{subsec:bg-ml-field},
-the approach in this thesis is,
-if expression is allowed, unorthodox
-Usually,
-it is not a good idea to use
-same data points in ML algorithm training and validating.
-Acting otherwise
-leads to algorithm processing with
-same data it was trained with
-thus creating a situation
-where algorithm already knows what to do with the current datapoint.
-If the results were validated after this
-the algorithm would get unreliable score
-as it had the validation data already in the training phase.
-This could be compared to
-giving some right answers to students
-during test and scoring test results as if
-no help wasn't given.
-
-%% TODO: explain why we did it anyway!
-
-
-Initial plan when starting the ML pipeline testing
-was to feed the log data to anomaly detection algorithm
-and try to get some sort of estimate of possible anomaly count.
-This plan had several problems.
-First, as stated, logging is very abundant
-and several thousands of rows was logged %% TODO: Check some real values!
-during a single day.
-This meant that among the
-%% TODO: << logeissa päivän aikana yhteen tikettiin liittyen satoja rivejä
-%% anomalioiden määrä voi olla tuhansia vaikka tikettejä vain kymmenkunta
-%% ei kerro vertailukelpoista määrää
-
-Two different algorithms are needed.
-In phase 1,
-algorithm defines how likely one datapoint
-is to be considered an anomaly.
-In phase 2,
-another algorithm aims to predict
-how many tickets are to be expected to receive
-within a time frame.
-Phase 1 is purely anomaly detection
-while phase 2 could use
-classification within time frame
-
-Possible algorithms to consider in phase 2:
-\begin{verbatim}
-  Artificial Neural Network, reinforced learning
-\end{verbatim}
-
-\subsubsection{ML methods - Phase 1: Anomaly detection}\label{meth-mlmeth1-anomaly-detection}
+\subsubsection*{Feature format for PCA-ADA}
+%% TODO: n-gram vs pure data input
 In Azure ML Studio
-there is only one anomaly detection module
+there is only one module selectable
 for anomaly detecting,
-but with textual input like logs
+the PCA-based anomaly detection module,
+which is explained in section~\ref{subsec:bg-pca-ada}.
+However,
+with textual input like logs
 it can be used at least in two ways.
 First,
 input data can be fed to
 the algorithm trainer as is,
-making each row in the input
-a feature as a whole
-to consider.
-Second option is to
-convert the textual features
-into numerical N-Gram features.
-Whichever approach used,
-the final step in phase 1
-is using PCA-based anomaly detection.
-
-
-\subsubsection*{PCA-based anomaly detection algorithm}
-%% TODO:
-Here we discuss only about the PCA-based anomaly detection
-as it is the only anomaly detection algorithm available
-in Azure ML Studio.
-
-Move this section to Section 2 (Background)
-if it fits there better.
-%%
-\\ \\
-
-Even though only one ADA is usable, %% TODO: open up in somewhere
-the data it processes can be given in two formats.
-Most simple way is to give the data as-is
-letting the PCA-based anomaly detection component
-work without further modifying the log rows.
+letting the PCA-based ADA component
+do the work without further modifying the log rows.
 This way,
 the component tries to recognize the anomalies
 based on all the information included in the row.
-Practically,
-this means that the component processes data in textual format.
-Another way
-is to create numerical values
-out of the textual data.
+Practically this means
+that the component processes data in textual format
+making each row in the input
+a feature as a whole
+to consider.
+
+Second option is to
+convert the textual features
+into numerical N-Gram features.
 Each word or N-Gram %% TODO: Open up!
 is now a number of said instances found on
 the row being processed,
 and each row can be presented
 as a sequence of numbers
-indicating the number of those words.
+indicating the number of those features.
 
 N-Grams can in addition have a weight
 based on the frequency they appear
-in the whole data.
+in the entire data.
 Different weights usable in Azure ML component
 are listed below
 
@@ -357,10 +373,16 @@ are listed below
 \end{enumerate}
 
 
-\subsubsection{ML methods - Phase 2: Ticket amount forecasting}\label{meth-mlmeth2-ticket-amount-forecasting}
+\subsubsection*{Anomaly probability}
+%% TODO: PCA output
+
+\subsubsection*{Statistical features}
+%% TODO: combination with ticket data. SQL queries
 
 
-\subsubsection*{Regression algorithms}
+\subsubsection*{Regression based estimating}
+%% TODO: parameters?
+%% Ticket amount forecasting
 
 \begin{enumerate}
     \item Linear regression
