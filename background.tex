@@ -6,26 +6,69 @@
 
 %% TODO: Briefly about machine learning in general
 
-Machine learning is part of the artificial intelligence field.
-Typically, machine learning refers to %% TODO: something something data
-
-Machine learning usage has become more common
+Machine learning, or ML,
+is a subcategory of the AI field and data science.
+Typically, ML refers to
+a set of technologies used to \enquote{build computers
+that improve automatically through experience}.\cite{jordan2015machine}
+This is generally considered a machine way
+to simulate human learning process.
+ML usage has become more common
 and is nowadays widely used in many fields,
-not just general information technology and computer science.
+not just in general information technology and computer science.
 This is because data can be gathered everywhere,
 and where there is data to be processed,
-machine learning can be there to process it.
-%% TODO: Makes any sense? References!
+ML can be there to process it.
+Computer algorithms are able to find 
+statistical correlation and patterns
+from places overlooked by human mind,
+or where amount of data is just too much 
+for people to process.
+This is why ML has proved its power
+in various empirical science fields,
+such as biology, cosmology or social science.\cite{jordan2015machine}
 
-Machine learning divides commonly in several categories,
-which are explored briefly in the next section.
-
+In this section, 
+key concepts of ML are explained briefly
+and several ML features are explored 
+that are most relevant to this study.
+We also discuss shortly about data sensitivity
+and how it had to be addressed during this study.
 
 \subsection{Machine learning field}\label{subsec:bg-ml-field}
 %% TODO: Open up ML algorithms and learning methods
 
+\subsubsection*{ML algoritshms}
+Algorithm means a finite sequence of (typically) mathematical operations
+that are used to solve a specific problem, 
+typically by repetition of some steps
+untill the problem resolves.\cite{merriam2022algorithm}
+Algorithms are the main "magic" inside ML
+where repeating patterns are searched from within the data
+by iterating through all the data points.
+
+In ML, 
+algorithms can be generally divided into <four> categories %% TODO: check
+
+Regression algorithms predict values
+and are typically used with supervised learning.
+%% TODO: give examples? House market price?
+
+Classification algorithms predict categories.
+Depending on the algorithm,
+they can predict between two or several categories.
+%% TODO: Examples?
+
+Clustering algorithms use unsupervised learning
+to find structures inside data.
+
+Anomaly detection algorithms work also unsupervised
+and try to find unusual or rare data points from data.
+
+%% TODO: need more info? Opening up?
+
 \subsubsection*{ML training}
-Machine learning algorithms can be trained in two basic ways:
+ML algorithms can be trained in two basic ways:
 supervised and unsupervised learning.
 
 In supervised learning,
@@ -65,26 +108,6 @@ we are going to break that rule
 about non-overlapping training and validation data.
 The reason for this is explained further in section~\ref{subsec:meth-ml-pipeline})
 
-\subsubsection*{ML algorithms}
-Algorithms are the main "magic" inside machine learning. %% TODO: Omstart?
-They can be generally divided into <four> categories %% TODO: check
-
-Regression algorithms predict values
-and are typically used with supervised learning.
-%% TODO: give examples? House market price?
-
-Classification algorithms predict categories.
-Depending on the algorithm,
-they can predict between two or several categories.
-%% TODO: Examples?
-
-Clustering algorithms use unsupervised learning
-to find structures inside data.
-
-Anomaly detection algorithms work also unsupervised
-and try to find unusual or rare data points from data.
-
-%% TODO: need more info? Opening up?
 
 \subsection{Cloud ML platforms}\label{subsec:bg-cloud-ml-platforms}
 %% TODO: Briefly about Azure, Google and AWS

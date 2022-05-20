@@ -119,6 +119,73 @@ certain time frame groups.
 %% Do log row amount and jobid amount correlate more to tickets as features?
 
 
+\subsubsection*{N-Gram feature extraction}
+Using Decision forest regression algorithm.
+\\
+\begin{figure}[htb]
+    \centering
+    \includegraphics[height=30mm,scale=0.5]{./appendices/msg_ngram_decision-forest-reg_lewd2unanom.png}
+    \caption{Message with N-Gram feature extraction
+    using unconventional training method in phase 1,
+        Decision forest regression in phase 2,
+        compared to method without anomaly values.
+        \label{fig:msg_ngram_decision-forest-reg_lewd2unanom}}
+\end{figure}
 
+\begin{figure}[htb]
+    \centering
+    \includegraphics[height=30mm,scale=0.5]{./appendices/msg_ngram_decision-forest-reg_proper2unanom.png}
+    \caption{Message with N-Gram feature extraction
+    using proper training method in phase 1,
+        Decision forest regression in phase 2,
+        compared to method without anomaly values.
+        \label{fig:msg_ngram_decision-forest-reg_proper2unanom}}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[height=30mm,scale=0.5]{./appendices/msg_ngram_decision-forest-reg_lewd2proper.png}
+    \caption{Message with N-Gram feature extraction
+    using Decision forest regression in phase 2,
+        comparing unconventional training to proper training.
+        \label{fig:msg_ngram_decision-forest-reg_lewd2proper}}
+\end{figure}
+
+
+
+\clearpage
+
+\subsubsection*{Anomaly detection with pure textual data}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[height=30mm,scale=0.5]{./appendices/msg_pure_decision-forest-reg_lewd2unanom.png}
+    \caption{Message fed pure to ADA-component,
+    using unconventional training method in phase 1,
+        Decision forest regression in phase 2,
+        compared to method without anomaly values.
+        \label{fig:msg_pure_decision-forest-reg_lewd2unanom}}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[height=30mm,scale=0.5]{./appendices/msg_pure_decision-forest-reg_proper2unanom.png}
+    \caption{Message fed pure to ADA-component,
+        using proper training method in phase 1,
+        Decision forest regression in phase 2,
+        compared to method without anomaly values.
+        \label{fig:msg_pure_decision-forest-reg_proper2unanom}}
+\end{figure}
+
+
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[height=30mm,scale=0.5]{./appendices/msg_pure_decision-forest-reg_lewd2proper.png}
+    \caption{Message fed pure to ADA-component,
+    using Decision forest regression in phase 2,
+        comparing unconventional training to proper training.
+        \label{fig:msg_pure_decision-forest-reg_lewd2proper}}
+\end{figure}
 
 \clearpage
