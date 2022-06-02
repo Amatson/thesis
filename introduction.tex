@@ -26,7 +26,7 @@ is Robotic Process Automation (RPA).
 
 RPA operates \enquote{on the user interface of other computer systems
 in the way a human would do},\cite{van2018robotic}
-but is bounded by predefined operations
+but is strictly bounded by predefined operations
 thus being prone to unforeseen situations
 such as faulty input.
 RPA, like generally all other software,
@@ -58,7 +58,7 @@ entertainment platform solutions for DNA\@.
 Even though Samlink can be considered
 a modern technology company,
 the most modern AI technologies has not yet been adopted
-in tool variety used in development.
+in the variety of tools used in development.
 However,
 RPA has been actively used
 in some banking solutions
@@ -70,20 +70,115 @@ as well as product maintenance services,
 Samlink also offers a technical help desk
 regarding the software solutions produced.
 As no IT solutions comes without bugs or misbehaviour,
-Samlink service desk has to use considerable amount of time
-to resolve if technical help requests received
+Samlink service desk has to use considerable amount of labor
+to resolve if technical support request tickets received
 are due to the problems in programming
 and require fixing in production.
 In many cases,
 the problem-solving starts by reading the log
 and analyzing the data written by processes in question.
 
-%% TODO: Clean and clarify?
+In this study,
+we aim to find if it is possible to utilize
+ML methods in parsing logs
+created by Samlink RPA's.
+Ultimately,
+we intend to train ML
+which is able to predict the arrival of a technical support ticket
+thus giving a warning for developers about possible issues
+in the production.
 
-%% TODO: Next could be moved to following subsection
+\subsection{Background and motivation}\label{subsec:intro-background-and-motivation}
+In the field of information technology
+logging is one of the most important methods
+in problem-solving,
+be it software or operating system related.\cite{delarosa2018log}
+Typically,
+at least in Samlink processes,
+logging is a bit more verbose
+than it needs to be.
+This is usually because when the problem occurs
+it is easier to already have the verbose logs available
+than trying to replicate the issue
+after setting logging to more verbose mode.
+Too verbose logging, however,
+leads into two problematic issues for Samlink.
 
-When it comes to technical support tickets from banking clerks,
-if Samlink support has received a help request
+First of, the size of log is huge
+and finding the critical lead for
+solving the problem in hand
+takes more time.
+Of course,
+with more strict logging
+pinpointing the issue from within the logs
+would be faster,
+but then again,
+solving the problem with only critical error messages
+could be more time-consuming
+if crucial context is missing.
+
+Secondly,
+as software tends to see some issues it encounters
+worth of several dozens of log rows,
+some rows are not critical information
+if the software is able to continue,
+especially if it is able to retry the process after failure
+and get the job done at the second time.
+These issues make log parsing considerably laborious.
+
+Production logs are usually not viewed
+if everything is presumably working as intended.
+Technical support tickets are both
+last and most visible indicator
+that something is wrong.
+When a technical support ticket is received from banking clerks
+it means that something is wrong
+in a very visible way.
+Roughly speaking,
+technical tickets that are due to
+clear misbehavior of the RPA systems
+and not, for example, user errors,
+can be divided in two categories.
+First are the tickets
+that uncover an unknown bug in the system
+which can be either fixed
+or instructed to user how to avoid.
+Second type of tickets are
+somewhat pre-known issues
+that occur from time to time
+and are either fixed with updating parts of the system
+or by rebooting the process.
+
+Typically,
+in software systems,
+if issue is known and can be fixed by rebooting something,
+developers can create log monitors
+that search for certain keywords
+and raise an alert if encountered.
+However,
+when it comes to RPA's and technical tickets considering them,
+it hard to say which type of issue is in question
+by reading the RPA logs word by word without context.
+New kind of issues can be more frequent
+than already confronted ones,
+and clear keyword linked to
+a certain problem may not exist
+without considerable amount of false positive matches.
+
+ML algorithms are widely used
+to find patterns from massive amount of data
+making it an ideal tool for log parsing.
+Patterns, however,
+need a connection to a visible issue.
+If RPA system has encountered an error
+but is able to retry successfully,
+then no issue has practically happened
+that needs immediate concern.
+Hence,
+RPA log parsing with ML can find meaningful patterns
+only if they relate to actual technical tickets.
+
+If Samlink support has received a help request
 the issue behind the request is not fresh anymore.
 In the event of RPA job failing,
 it takes some time for the clerk to notice the issue,
@@ -97,57 +192,9 @@ that were supposed to be dealt by RPA
 but which now have to be manually taken care of
 by said clerks.
 
-%% TODO: how can ml help?
+\todo{something about log format?}
 
-
-\subsection{Background and motivation}\label{subsec:intro-background-and-motivation}
-In the field of information technology
-logging is one of the most important methods
-in problem-solving,
-be it software or operating system related.\cite{delarosa2018log}
-
-Typically,
-at least in Samlink processes,
-logging is a bit more verbose
-than it needs to be.
-This is usually because when the problem occurs
-it is easier to already have the verbose logs available
-than trying to replicate the issue
-after setting logging to more verbose mode.
-Too verbose logging, however,
-leads into two problematic issues.
-First of, the size of log is huge
-and finding the critical leads for
-solving the problem in hand
-takes more time.
-Of course,
-with more strict logging
-pinpointing the issue from within the logs
-would be faster,
-but then again,
-solving the problem with only critical error messages
-could be more time-consuming
-if crucial context is missing.
-Secondly,
-as software tends to see some issues it encounters
-worth of several dozens of log rows,
-some rows are not critical information
-if the software is able to continue,
-especially if it is able to retry the process after failure
-and get the job done at the second time.
-These issues make log parsing considerably laborious.
-
-
-%% TODO: continue
-\begin{verbatim}
-<importance of logs>
-
-<current state of samlink AI processes>
-
-<Log format>
-
-<Intelligent automation>
-\end{verbatim}
+\toimhuom{Otherwise, this chapter is good to go!}
 
 \subsection{Research objectives}\label{subsec:intro-research-objectives}
 This research aims to kickstart the machine learning application usage in Samlink operations.
