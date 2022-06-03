@@ -88,6 +88,8 @@ which is able to predict the arrival of a technical support ticket
 thus giving a warning for developers about possible issues
 in the production.
 
+%% ************************************************************************************************************
+
 \subsection{Background and motivation}\label{subsec:intro-background-and-motivation}
 In the field of information technology
 logging is one of the most important methods
@@ -196,18 +198,20 @@ by said clerks.
 
 \toimhuom{Otherwise, this chapter is good to go!}
 
+%% ************************************************************************************************************
+
 \subsection{Research objectives}\label{subsec:intro-research-objectives}
-This research aims to kickstart the machine learning application usage in Samlink operations.
+This research aims to kickstart the ML application usage in Samlink operations.
 Multiple obstacles need to be tackled
-as most of the phases in this study has not yet been encountered inside the company.
+as most of the phases in this study
+has not yet been encountered inside the company.
 
 First and foremost,
 it is crucial to construct some basic form for log data
-so it is usable by machine learning algorithms.
-Log data forming is on of the key elements in automatic log parsing applications
+to make it usable by ML algorithms.
+Log data forming is one of the key elements in automatic log parsing applications
 as it is not for just machines
 but also for people to read.
-%% TODO: more
 
 As today more and more concern is set on anonymization
 not only due to GDPR,
@@ -215,23 +219,20 @@ the data used for machine learning must be sanitized.
 Because of this,
 one major objective is to create a clean dataset
 that is safe to use in cloud environment
-without creating concern around security and privacy issues.
+without raising concern around security and privacy issues.
 In addition to this,
 data must also be clean enough
-so that machine learning algorithms
+so that ML algorithms
 are able to process it.
 
 Finally,
 the main objective this research is aiming to answer
-is whether it is possible to use machine learning algorithms
+is whether it is possible to use ML algorithms
 in such ways that combine support ticket timestamps
 and software run log
-so that it can predict
+so that an algorithm can predict
 if new support ticket might be coming.
-%% TODO: go on?
 
-%% TODO: Parse these to somewhere nice!
-Few things to consider:
 \begin{verbatim}
   * Counting anomaly "probability" for individual log rows
   * Random delay! Solving issue by grouping
@@ -243,8 +244,6 @@ Few things to consider:
     - Log amount is not necessarily proportional to ticket creating error amount, even with info-types filtered out
     - Considerable amount of rows may be related to one, or several different, tickets
 \end{verbatim}
-%% TODO: it's not really probability. What is it?
-%% TODO: Is it really regression? Is that what we should be using?
 
 What really happens in this research:
 \begin{verbatim}
@@ -254,10 +253,12 @@ What really happens in this research:
 <Connection for data, ML estimates>
 \end{verbatim}
 
+%% ************************************************************************************************************
+
 \subsection{Scope}\label{subsec:intro-scope}
 
 In order to limit the study
-to feasible length and content
+to feasible length and content,
 it is necessary to define the scope for the thesis.
 As major part of the time consumed for the study
 was used for data acquiring and anonymizing
@@ -266,6 +267,22 @@ content considering machine learning,
 the length of the content per section
 does not reflect
 the amount of time used for each section.
+
+Before diving in to the scope of research objectives,
+we must first make one assumption regarding the data
+that ML is going to find some meaning from.
+In order to find a connection between log data and support tickets,
+we make a hypothesis that errors leading to tickets
+are visible to or parseable by ML algorithm.
+In addition,
+as we are going to utilize anomaly detection algorithm in log parsing,
+we must also assume that these errors in log
+are, in fact, anomalies.
+We will, however,
+compare the results against these assumptions
+to test this hypothesis.
+
+%% ************************************************************************************************************
 
 \subsubsection*{Data anonymization}
 Anonymization in the context of this thesis
@@ -287,6 +304,8 @@ anonymization is covered rather superficially,
 only enough to explain the reasons
 behind actions taken during anonymization process.
 
+%% ************************************************************************************************************
+
 \subsubsection*{Azure setup}
 The ML training and result scoring
 is done in Azure ML environment.
@@ -296,9 +315,11 @@ ML process commissioning
 the Azure setup phase is documented in such detail
 reflecting the importance of this information
 for future developers
-starting Azure ML projects.
+starting Azure ML projects in Samlink.
 
-%% TODO: what more?
+\todo{Maybe something more}
+
+%% ************************************************************************************************************
 
 \subsubsection*{Data requirements}
 Data purity in a sense of
@@ -315,17 +336,16 @@ In order to create a baseline for Samlink ML projects
 this study aims to give basic criterion
 what is required from the data,
 so it is easily parsable by ML algorithm.
-%% TODO: better words for parsable?
 
+%% ************************************************************************************************************
 
 \subsubsection*{Machine learning methods}
 Several different machine learning algorithms exist
-%% TODO: Source?
 that are aimed for different applications in mind.
 For example,
 to make an algorithm that can predict
 the price of an apartment listed\cite{winky}
-we could be using linear regression
+we could be using linear regression,
 and in order to detect
 possible cyber threats from network traffic\cite{ghanem}
 a two-class support vector machine could be utilized.
@@ -341,21 +361,17 @@ just a few easily approachable training methods.
 
 When it comes to anomaly detection,
 only principal component analysis (PCA)
-is considered as
-PCA-based Anomaly Detection component is usable
+is considered because
+PCA-based Anomaly Detection component is the only one usable
 from existing anomaly detection algorithms
 in Azure ML Studio.
 As purely Azure ML Studio is used during this study,
 no other anomaly detection algorithms are debated.
 
+%% ************************************************************************************************************
+
 \subsection{Structure}\label{subsec:intro-structure}
-At the beginning of this thesis
-we opened the key concepts discussed in the study.
-We also defined the
-%% TODO: nope. talk about next sections. move stuff from earlier sections
 
+\todo{Open up what we are going to discuss here and in what order}
 
-%% Opinnäytteessä jokainen osa alkaa uudelta sivulta, joten \clearpage
-%%
-%% In a thesis, every section starts a new page, hence \clearpage
 \clearpage

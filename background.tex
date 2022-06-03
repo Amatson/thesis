@@ -4,8 +4,6 @@
 \section{Background}\label{sec:background}
 %\section{Aikaisempi tutkimus}
 
-%% TODO: Briefly about machine learning in general
-
 Machine learning, or ML,
 is a subcategory of the AI field and data science.
 Typically, ML refers to
@@ -35,37 +33,45 @@ that are most relevant to this study.
 We also discuss shortly about data sensitivity
 and how it had to be addressed during this study.
 
+%% ************************************************************************************************************
+
+
 \subsection{Machine learning field}\label{subsec:bg-ml-field}
 %% TODO: Open up ML algorithms and learning methods
 
-\subsubsection*{ML algoritshms}
+\subsubsection*{ML algorithms}
 Algorithm means a finite sequence of (typically) mathematical operations
 that are used to solve a specific problem, 
 typically by repetition of some steps
-untill the problem resolves.\cite{merriam2022algorithm}
+until the problem resolves.\cite{merriam2022algorithm}
 Algorithms are the main "magic" inside ML
 where repeating patterns are searched from within the data
 by iterating through all the data points.
 
 In ML, 
-algorithms can be generally divided into <four> categories %% TODO: check
+algorithms can be generally divided into <four> categories
+\todo{Check categories, create list or table}
 
 Regression algorithms predict values
 and are typically used with supervised learning.
-%% TODO: give examples? House market price?
+\todo{Examples: House market price?}
 
 Classification algorithms predict categories.
 Depending on the algorithm,
 they can predict between two or several categories.
-%% TODO: Examples?
+\todo{Examples?}
 
 Clustering algorithms use unsupervised learning
 to find structures inside data.
+\todo{Examples?}
 
 Anomaly detection algorithms work also unsupervised
 and try to find unusual or rare data points from data.
+\todo{Examples?}
 
-%% TODO: need more info? Opening up?
+\todo{Something more generally about algorithms... Intro to next section (training).}
+
+%% ************************************************************************************************************
 
 \subsubsection*{ML training}
 ML algorithms can be trained in two basic ways:
@@ -82,13 +88,13 @@ on the other hand,
 algorithm does not get model data from which to train itself,
 but instead it tries to find clusters or groups inside the data
 that are linked together more closely than to other parts of data.
-%% TODO: REFERENCES AND SUCH
+\todo{References!}
 
 Typically,
 when training an algorithm,
 some predefined portion of the data
 is used as training data.
-%% TODO: How much? Sources!
+\todo{Sources? Amounts?}
 The rest is used to validate the results
 so that validation data and training data do not overlap.
 Instead, trained algorithm is given data it has not seen before
@@ -102,75 +108,86 @@ are compared to those hidden values
 and the difference between the estimate and the real value
 can be used to determine how well the current algorithm compares to others.
 
-%% TODO: next one might change!
+\todo{Next one might change a bit depending on the actual results, which are still to be tested.}
 However, in this study,
 we are going to break that rule
 about non-overlapping training and validation data.
 The reason for this is explained further in section~\ref{subsec:meth-ml-pipeline})
 
+%% ************************************************************************************************************
 
 \subsection{Cloud ML platforms}\label{subsec:bg-cloud-ml-platforms}
-%% TODO: Briefly about Azure, Google and AWS
+\todo{Briefly about Azure, Google and AWS}
 
 Machine learning algorithms are not light to operate.
 Depending on the amount of data,
 it can be a serious %% TODO: What? How big?
+\todo{something something seriously big}
 
 Especially with online applications
 where real time analysis of new input data is required,
 cloud computing resources can make a huge difference
 in terms of processing speed. %% TODO: refs maybe?
+\todo{referencing}
 
 Online market offers several solutions for ML computing in cloud.
-
+\todo{open up some facts about these. BRIEFLY}
 Google
 
 Amazon AWS(?)
 
 Microsoft Azure\cite{altexsoft}
 
+%% ************************************************************************************************************
 
+\subsection{Azure ML Studio}\label{subsec:bg-azure-ml-studio-algorithms}
 
-%% TODO: More details of each, briefly
+\todo{More info about Azure ML studio}
+%% TODO!
 
-\subsection{Azure ML Studio and algorithms}\label{subsec:bg-azure-ml-studio-algorithms}
+\todo{Intro to next subsections}
 
+%% ************************************************************************************************************
 
-%\subsection{Regression algorithm?}\label{subsec:bg-regression-ml}
-%% TODO: this should be basically covered above
+\subsection{Regression algorithm}\label{subsec:bg-regression-ml}
+\todo{science and math behind regression algorithm }
+%% TODO!
 
+%% ************************************************************************************************************
 
 \subsection{PCA-based anomaly detection}\label{subsec:bg-pca-ada}
-%% TODO: Explain PCA and mention other ADA algorithms
+\todo{Explain PCA and mention other ADA algorithms}
 
-%% TODO: Something about Anomaly and Novelty detection differences?
+\todo{Something about Anomaly and Novelty detection differences?}
 
+%% ************************************************************************************************************
 
 \subsection{N-Gram features}\label{subsec:bg-ngram-features}
-%% TODO: cover basic n-gram features and ML connection
+\todo{cover basic n-gram features and ML connection}
 
+%% ************************************************************************************************************
 
 \subsection{Data sensitivity}\label{subsec:bg-data-sensitivity}
-%% TODO: some basic stuff about anonymization, data sensitivity and data protection
+\todo{some basic stuff about anonymization, data sensitivity and data protection}
+\todo{Just practicalities, not much about theory or background}
 
-%% käytännön puolesta, miten käytönnössä,
-%% ei liikaa teoriaa ja taustaa
-
+%% ************************************************************************************************************
 
 \subsection{Log data parsing with ML}\label{subsec:bg-log-data-parsing-with-ml}
-%% TODO: Some research should exist
+\todo{Some research should exist}
 
+%% ************************************************************************************************************
 
+\clearpage
+\todo{Is below topics needed? Would there be a better place for them?}
 
-%% TODO: Is below topics needed?
-
-%\subsection{Random delay in time series?}\label{subsec:bg-random-delay-in-time-series}
-%% TODO: Anything about the topic?
-%% TODO: data in this research is not time-series data! eg. temperature would be
+\subsection{Random delay (in time series?)}\label{subsec:bg-random-delay-in-time-series}
+\todo{Anything about the topic?}
+\todo{data in this research is not time-series data! eg. temperature would be}
 %% However, random delay seems to be usually with time-series data
 
-%\subsection{Hybrid ML approach with anomaly detection?}\label{subsec:bg-hybrid-ml-approach-with-anomaly-detection}
-%% TODO: Is there anything about this?
+\subsection{Hybrid ML approach with anomaly detection?}\label{subsec:bg-hybrid-ml-approach-with-anomaly-detection}
+\todo{Is there anything about this?}
 
 
 
