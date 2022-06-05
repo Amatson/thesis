@@ -142,28 +142,111 @@ Microsoft Azure\cite{altexsoft}
 
 \subsection{Azure ML Studio}\label{subsec:bg-azure-ml-studio-algorithms}
 
-\todo{More info about Azure ML studio}
 %% TODO!
+\todo{More info about Azure ML studio}
+\toimhuom{some unorganized text:}
+Microsoft Azure offers a Machine Learning Studio environment
+for easy ML pipeline designing.
+
+Explain pipeline briefly.
+
+ML Studio gives ML designer a possibility to
+train algorithms and publish cloud endpoints
+utilizing all Azure resources
+connecting the power of ML
+to all other Azure possibilities
+like data storages, IoT-services and cloud computing.
+%% TODO: IoT in abberviations?
+%% TODO: references!
+
+With drag-and-drop pipeline designer
+it is easy to get started with ML programming,
+and visualizing the process helps understand all pipeline components
+and their relations to each other.
+\todo{picture of azure pipeline}
 
 \todo{Intro to next subsections}
+Each component in pipeline can be tuned
+to certain extent.
+ML Studio has a predefined set of ready algorithms to use.
+In this study we focus on  %% TODO: reconsider next
+R-script execution component,
+regression algorithm components,
+PCA-based anomaly detection component,
+N-Gram feature extraction component and
+feature hashing component.
+
 
 %% ************************************************************************************************************
 
 \subsection{Regression algorithm}\label{subsec:bg-regression-ml}
-\todo{science and math behind regression algorithm }
+\todo{science and math behind regression algorith}
+Regression analysis is typical approach in statistical science.
+It is used to find relationships with a set of variables.
 %% TODO!
+%% TODO: REFERENCES!
 
 %% ************************************************************************************************************
 
 \subsection{PCA-based anomaly detection}\label{subsec:bg-pca-ada}
 \todo{Explain PCA and mention other ADA algorithms}
 
+\toimhuom{unorganized text below:}
+
+%% TODO: Reference: https://docs.microsoft.com/en-us/azure/machine-learning/component-reference/pca-based-anomaly-detection
+
+Principal Component Analysis, or PCA,
+is an ML technique used to analyze data and explain the variance inside it.
+
+Other anomaly detection methods exist, but they are not supported by ML Studio
+in a ready component level. %% TODO: check wording.
 \todo{Something about Anomaly and Novelty detection differences?}
 
 %% ************************************************************************************************************
 
-\subsection{N-Gram features}\label{subsec:bg-ngram-features}
+\subsection{N-gram features and feature hashing}\label{subsec:bg-ngram-features}
+%% TODO:
 \todo{cover basic n-gram features and ML connection}
+
+\toimhuom{unorganized text below:}
+As stated before, %% TODO: state before!
+features are the key elements in ML algorithm training.
+As textual input does not have any meaning to machines as itself,
+it is necessary to create a connection between words and features for algorithm.
+In ML training, one typical approach is to convert textual input to numerical features.
+For example, by creating a dictionary of words used in the input
+and assigning each word an identification number,
+we can express words as a count of certain words used.
+In addition,
+as words include meanings not only individually but also
+with relation to each other and in their order, %% TODO: Some example!
+we can add more information for the algorithm
+by creating word pairs and groups in the dictionary.
+These groups are referred as word grams,
+where \textbf{n} in n-gram refers to the maximum number of words
+in a group of consecutive words in the input sentence.
+
+%% TODO: check above
+%% TODO: REFERENCES!
+%% TODO: More?
+
+\todo{explain feature hashing component functionality briefly}
+
+As the number of word grams in a dictionary can increase significantly
+in complex input cases,
+it is necessary to limit the resource usage by decreasing the features analyzed.
+One way to do this is use feature hashing.
+This means that instead of pure n-gram count
+we use hashed value of several n-grams
+thus reducing the amount of features.
+As a drawback,
+the amount of information might also get reduced as the data is "compressed"
+but this way we can include more features for algorithm training
+without significant resource demands.
+
+%% TODO: check above
+%% TODO: REFERENCES!
+%% TODO: More?
 
 %% ************************************************************************************************************
 
@@ -171,10 +254,27 @@ Microsoft Azure\cite{altexsoft}
 \todo{some basic stuff about anonymization, data sensitivity and data protection}
 \todo{Just practicalities, not much about theory or background}
 
+During this study,
+it was necessary to make sure no sensitive data
+was moved out of the production environment.
+This was mostly due to regulations described in GDPR. %% TODO: wording? More?
+
+Data anonymization was executed in production environment
+with Powershell script.
+Several predefined identification features were searched with
+regular expression (or regex), patterns and replaced with
+default keys.
+%% TODO: examples
+%% TODO: Sources!
+
 %% ************************************************************************************************************
 
 \subsection{Log data parsing with ML}\label{subsec:bg-log-data-parsing-with-ml}
 \todo{Some research should exist}
+TODO: In this section, we look what studies and cases of ML log data parsing
+exists in the IT field.
+Only briefly, nothing too deep
+
 
 %% ************************************************************************************************************
 
@@ -186,11 +286,36 @@ Microsoft Azure\cite{altexsoft}
 \todo{data in this research is not time-series data! eg. temperature would be}
 %% However, random delay seems to be usually with time-series data
 
+\begin{itcomment}
+    This study is not practically about time series data.
+    Example of time series would be temperature or other sensor data.
+
+    However, this study features a rare case of random delay in data feature connection.
+    This sort of aspect is usually related to time series forecasting.
+    Is there any studies about the topic that is related to something else?
+    Random delay is, in a way, important part of the study as it defines
+\end{itcomment}
+
 \subsection{Hybrid ML approach with anomaly detection?}\label{subsec:bg-hybrid-ml-approach-with-anomaly-detection}
 \todo{Is there anything about this?}
 
 
+\begin{itcomment}
+    Hybrid ML as a term is used here to explain that we
+    use two different ML algorithms in two separate phases.
+    In first phase we try to give an anomaly certainty value for each log row
+    using PCA-based anomaly detection component.
+    In second phase we use this value as a feature to estimate ticket amount in time range
+    by utilizing regression algorithm.
 
+    Dual algorithm approach should not be unusual in ML field,
+    but how existing studies or case examples relate to our way is uncertain.
+
+    If nothing exists about the topic (at least nothing easily to be found)
+    it should be worth to mention.
+    But if there is a lot of case examples about this, it feels unnecessary
+    to discus about it in more detail.
+\end{itcomment}
 
 
 
