@@ -23,6 +23,7 @@ but are merely highly automated processes
 and thus cannot be included in the AI category.
 One of these technologies used in Finnish banking systems
 is Robotic Process Automation (RPA).
+%% TODO: Should IPA be mentioned (Intelligent Process Automation) and in what level?
 
 RPA operates \enquote{on the user interface of other computer systems
 in the way a human would do},\cite{van2018robotic}
@@ -46,7 +47,7 @@ From the early years
 while going by the name of Samcom
 the company was owned by several Finnish banks
 developing all sorts IT solutions for them.
-Most notable product is Codeapp
+Most notable product is Codeapp %% TODO: Codeapp is not relevant? Speak banking systems in general?
 that makes mobile authentication possible
 for client bank end customers.
 
@@ -80,8 +81,9 @@ and analyzing the data written by processes in question.
 
 In this study,
 we aim to find if it is possible to utilize
-ML methods in parsing logs
+ML methods in analyzing logs
 created by Samlink RPA's.
+%% TODO: Check terms! RPA-robots? RPA-processes? How to define term hierarchy?
 Ultimately,
 we intend to train ML
 which is able to predict the arrival of a technical support ticket
@@ -120,13 +122,17 @@ could be more time-consuming
 if crucial context is missing.
 
 Secondly,
-as software tends to see some issues it encounters
-worth of several dozens of log rows,
-some rows are not critical information
-if the software is able to continue,
-especially if it is able to retry the process after failure
-and get the job done at the second time.
-These issues make log parsing considerably laborious.
+a well-designed software
+is able to retry the process after first failure,
+but logging is done in real time,
+not after final results of the process has been determined.
+This means,
+that each process failure is logged
+even though said process succeeds eventually.
+Thus,
+logs may include dozens of rows of information about a problem encountered,
+which are not critical information after all.
+These issues make log analyzing considerably laborious.
 
 Production logs are usually not viewed
 if everything is presumably working as intended.
@@ -169,7 +175,7 @@ without considerable amount of false positive matches.
 
 ML algorithms are widely used
 to find patterns from massive amount of data
-making it an ideal tool for log parsing.
+making it an ideal tool for log analyzing.
 Patterns, however,
 need a connection to a visible issue.
 If RPA system has encountered an error
@@ -177,7 +183,7 @@ but is able to retry successfully,
 then no issue has practically happened
 that needs immediate concern.
 Hence,
-RPA log parsing with ML can find meaningful patterns
+RPA log analyzing with ML can find meaningful patterns
 only if they relate to actual technical tickets.
 
 If Samlink support has received a help request
@@ -194,6 +200,9 @@ that were supposed to be dealt by RPA
 but which now have to be manually taken care of
 by said clerks.
 
+%% TODO:
+\todo{Add something about why ticket forecasting would be desirable}
+
 \todo{something about log format?}
 
 \toimhuom{Otherwise, this chapter is good to go!}
@@ -202,6 +211,7 @@ by said clerks.
 
 \subsection{Research objectives}\label{subsec:intro-research-objectives}
 This research aims to kickstart the ML application usage in Samlink operations.
+%% TODO: This cannot be said right now as Samlink is part of Kyndryl
 Multiple obstacles need to be tackled
 as most of the phases in this study
 has not yet been encountered inside the company.
@@ -209,7 +219,7 @@ has not yet been encountered inside the company.
 First and foremost,
 it is crucial to construct some basic form for log data
 to make it usable by ML algorithms.
-Log data forming is one of the key elements in automatic log parsing applications
+Log data forming is one of the key elements in automatic log analyzing applications
 as it is not for just machines
 but also for people to read.
 
@@ -275,7 +285,7 @@ In order to find a connection between log data and support tickets,
 we make a hypothesis that errors leading to tickets
 are visible to or parseable by ML algorithm.
 In addition,
-as we are going to utilize anomaly detection algorithm in log parsing,
+as we are going to utilize anomaly detection algorithm in log analyzing,
 we must also assume that these errors in log
 are, in fact, anomalies.
 We will, however,
@@ -309,6 +319,7 @@ behind actions taken during anonymization process.
 \subsubsection*{Azure setup}
 The ML training and result scoring
 is done in Azure ML environment.
+Azure is used because... %% TODO: Justify reasons behind selecting Azure ML Studio
 As part of the study aims to create
 an initial guideline for
 ML process commissioning
@@ -318,6 +329,9 @@ for future developers
 starting Azure ML projects in Samlink.
 
 \todo{Maybe something more}
+
+
+
 
 %% ************************************************************************************************************
 
@@ -335,7 +349,7 @@ and causing errors in pipeline runs.
 In order to create a baseline for Samlink ML projects
 this study aims to give basic criterion
 what is required from the data,
-so it is easily parsable by ML algorithm.
+so it is easily analyzable by ML algorithm.
 
 %% ************************************************************************************************************
 
@@ -368,6 +382,8 @@ in Azure ML Studio.
 As purely Azure ML Studio is used during this study,
 no other anomaly detection algorithms are debated.
 
+%% TODO: maybe mention some other ADA-algorithms that exist even though not usable in Azure?
+
 %% ************************************************************************************************************
 
 \subsection{Structure}\label{subsec:intro-structure}
@@ -375,3 +391,6 @@ no other anomaly detection algorithms are debated.
 \todo{Open up what we are going to discuss here and in what order}
 
 \clearpage
+
+
+%% TODO! Use "Machine Learning" instead of "ML" in more places! Find relevant places to use!
