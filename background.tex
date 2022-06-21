@@ -39,6 +39,9 @@ and how it had to be addressed during this study.
 \subsection{Machine learning field}\label{subsec:bg-ml-field}
 %% TODO: Open up ML algorithms and learning methods
 
+Machine learning is built with algorithms
+that operate
+
 \subsubsection*{ML algorithms}
 Algorithm means a finite sequence of (typically) mathematical operations
 that are used to solve a specific problem, 
@@ -289,30 +292,109 @@ Only briefly, nothing too deep
 
 %% ************************************************************************************************************
 
-\clearpage
-\todo{Is below topics needed? Would there be a better place for them?}
-
-\subsection{Random delay (in time series?)}\label{subsec:bg-random-delay-in-time-series}
+%% TODO: Workname. Check.
+\subsection{Random delay in log event analyzing}\label{subsec:bg-random-delay}
 \todo{Anything about the topic?}
-\todo{data in this research is not time-series data! eg. temperature would be}
-%% However, random delay seems to be usually with time-series data
 
-\begin{itcomment}
-    This study is not practically about time series data.
-    Example of time series would be temperature or other sensor data.
+Random delay in input data features
+is not unusual aspect in time-series forecasting.
+Time-series in ML context
+refers to data features that varies over time
+and is usually affected by past values.
+As an example,
+ML algorithm could try to predict future weather
+based on measured temperature and air pressure.
+Both these features change over time
+and also affect to their own future values.
 
-    However, this study features a rare case of random delay in data feature connection.
-    This sort of aspect is usually related to time series forecasting.
-    Is there any studies about the topic that is related to something else?
-    Random delay is, in a way, important part of the study as it defines
-\end{itcomment}
+Random delay in such an example
+could be due to some other local or global features
+like
+%% TODO: find proper exampe about time series forecasting and random delay!
+%% TODO: REFERENCES
 
-\subsection{Hybrid ML approach with anomaly detection?}\label{subsec:bg-hybrid-ml-approach-with-anomaly-detection}
-\todo{Is there anything about this?}
+This study, however,
+is not time-series
+because the majority of the log rows
+are not affected by previously logged events.
+Random delay in this case
+is caused by banking clerks
+finding the issue and writing a technical support request.
+This delay can span from hours to several days
+depending on the weekday and time the issue occurred.
 
-%% TODO include! Add something!
-%% TODO: Avataan hieman tämän tutkimuksen kontekstissa,
-%% käsitellään näkökulmasta "aikaikkunaan pakkaaminen satunnaisviiveen vaikutuksen poistamisessa"
+%% TODO: More to background?
+
+%% TODO: Move  below to methods section!
+As random delay of such
+does not  seem to be trivial to take into account
+with ML algorithms, %% TODO: Any sources?
+a simple method to solve this was used
+we call \enquote{time frame compression method}.
+%% TODO: Is there anything to refer to???
+This means that
+in order to eliminate the effects of random delay
+we compress some features in certain time frame
+which is at least as long as the longest estimated delay.
+Simply put,
+as we count possible anomalies during one hour of log,
+we cannot compare this number to actual tickets received
+at the same hour or the next.
+What we can do,
+with time frame compression,
+is that we count some statistical values of anomaly estimates,
+for example, the mean and median values of a week,
+and then compare these numbers with the tickets received
+during the same week.
+
+
+%% ************************************************************************************************************
+
+
+\subsection{Hybrid machine learning approach in anomaly detection}\label{subsec:bg-hybrid-ml-approach-with-anomaly-detection}
+
+Hybrid machine learning (HML)
+refers to an ML technique
+where two or more ML methods are combined
+to overcome the limitations of
+or to boost the estimation capabilities of
+a single method alone.\cite{Anifowose2020hml}
+In this study,
+we combine PCA-based anomaly detection algorithm
+with regression algorithm
+in order to amplify the prediction powers of our ML algorithm
+when trying to determine the possible ticket count
+based on log events.
+
+Hybrid machine learning is not rare technique in ML field.\cite{shon2007hybrid,tsai2010credit,mohan2019effective,
+    hsieh2005hybrid,jain2007hybrid,kim2007hybrid,lee2002credit,malhotra2002differentiating}
+%% TODO:
+\todo{Something about the HML in ADA}
+
+In order to clarify whether hybrid approach is suitable for the current study problem
+we will compare the results of hybrid ML technique
+with a single ML algorithm usage.
+
+
+%% TODO: Include wireframe model about hybrid model
+
+
+%% TODO: Move to methods section?
+With ML algorithm utilizing n-gram features combined with time frame compression
+it is possible to get estimates
+about the support tickets based on the log events.
+It is not feasible to use anomaly detection on its own to do this
+as plain sum of anomalies detected
+is not correlating with tickets received.
+
+We can, however,
+amplify our ticket estimating algorithm with anomaly value features.
+As we first count the anomaly numbers with anomaly detection algorithm %% TODO: better wording?
+and their calculated statistical features with another algorithm,
+like regression algorithm,
+we get more relative information to use
+when creating the final ticket number estimations. %% TODO: check sensability
+
 
 
 \begin{itcomment}
@@ -332,10 +414,5 @@ Only briefly, nothing too deep
     to discus about it in more detail.
 \end{itcomment}
 
-%% TODO include! Add something!
-%% TODO: Selostetaan lyhyesti ja tuodaan perustelut tulosten muodossa,
-%% eli verrataan tilanteeseen jossa anomalioita ei etsittäisi aluksi.
-
-%% TODO: Include wireframe model about hybrid model
 
 \clearpage

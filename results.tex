@@ -4,7 +4,11 @@
 
 \section{Results}\label{sec:results}
 
-\todo{Very much under construction. Results are still being gathered.}
+We start this section by looking at
+the Azure resources needed for ML training
+both on common Azure environment and ML Studio.
+Next we analyze the results of
+different ML algorithms and pipelines.
 
 \subsection{Azure and Azure ML Studio}\label{subsec:azure-and-azure-ml-studio}
 
@@ -63,8 +67,29 @@ Two choices was possible to take:
 To advance the study more efficiently
 it was decided to trim info-type log messages from data
 hence reducing the data amount considerably.
-Meanwhile,
-<fixing the memory issue>
+Final data included 8.6 million log rows
+which was about 10\% of the original data size.
+
+Even with this data size,
+some Azure ML components faced this memory issue
+and forced us to choose such components
+that were able to handle these data amounts.
+
+%% TODO: Move some parts of the above memory problem elsewhere
+
+In addition to the data we used to train the algorithm,
+we needed to set up computing instance
+in Azure ML studio.
+Some predefined resource limitations
+affected the computing instance choosing
+and the memory issue encouraged us
+to pick memory prioritized instances.
+Single computing instance did not work,
+but we needed to choose a computing cluster instead
+to be able to run ML training pipeline.
+%% TODO: Maybe what other choises were possible?
+
+
 
 \subsection{ML training and validation}\label{subsec:ml-training-and-validation}
 

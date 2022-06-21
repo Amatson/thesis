@@ -257,7 +257,7 @@ that was unique for each data point.
     computing clusters, jobs, datasets and such.
     What kind of resources were usable based on the issue at hand
     and limitations by the company (cost, basically).
-    We discus some things about Azure ML Studio
+    We discuss some things about Azure ML Studio
     but only in extent of what parts needed configuring.
     More general info about ML Studio should be in chapter 2.
 \end{itcomment}
@@ -332,6 +332,14 @@ how many tickets are to be expected to receive
 within a time frame.
 
 \todo{Under construction below:}
+
+%% TODO: Mention that data splits in phase 1 have to be un-random
+%% Otherwise, possible anomaly values used in phase 2 would be randomly included
+%% Data in phase 1 need to be chronological!
+
+
+%% TODO: Results: Feature Hashing runs out of memory in Model Training with full data (unconventional training)
+%% Trying with smaller splits, which, once again, reduces data amount.
 
 \begin{itcomment}
     Next in this subsection, ML studio pipeline used is explained in more detail.
@@ -474,6 +482,12 @@ are listed below.
 \end{enumerate}
 
 \todo{Explain different weights and open up more Azure ML Studio PCA-component}
+
+%% TODO: RESULTS:
+%   Pure n-gram feature component using skipped
+%   Only 2% of the data could be used. Not enough.
+%
+
 
 \subsubsection*{Anomaly probability}
 %% TODO: PCA output
