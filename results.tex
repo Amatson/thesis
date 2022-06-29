@@ -22,6 +22,19 @@ different ML algorithms and pipelines.
 \end{itcomment}
 
 
+Due to some restrictions in security,
+all resources used for ML training
+needed to be inside the same virtual network.
+Azure ML Studio environment could be opened from any network,
+but most of the features were unavailable
+if accessing machine was outside this virtual network.
+Thus,
+a virtual machine had to be acquired as Azure resource
+from within the same network as other resources
+and ML Studio internet UI had to be opened with this machine.
+
+%% TODO: add picture to explain this
+
 \subsubsection*{Azure ML Studio components}
 \begin{itcomment}
     clusters and data
@@ -54,7 +67,7 @@ and anonymized once more.
 Two choices was possible to take:
 \begin{enumerate}
     \item Continue working with full data
-    and attempting to fix the memory issue
+    and try to fix the memory issue
     by consulting Azure experts
     \item  Trim the data to reduce the data size
     by declaring info-type log messages

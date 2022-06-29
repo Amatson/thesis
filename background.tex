@@ -197,6 +197,7 @@ It is used to find relationships with a set of variables.
 
 \subsection{PCA-based anomaly detection}\label{subsec:bg-pca-ada}
 \todo{Explain PCA and mention other ADA algorithms}
+%% TODO: rename subsection if more algorithms are introduced?
 
 \toimhuom{unorganized text below:}
 
@@ -212,6 +213,23 @@ in a ready component level. %% TODO: check wording.
 %% TODO: How PCA works for anomaly detection? How is it used in it?
 %% TODO: Differences for other anomaly detection methods? What other methods are there?
 
+
+\subsubsection*{One-Class support vector machine}
+%% TODO: This is also usable in azure, but not suitable in our case
+%% TODO: make sure this is mentioned in places where "only one is pca" is considered
+
+Azure ML Studio has also another anomaly detection algorithm to use.
+This module is called One-Class Support Vector Machine.
+In our case, however,
+this module was not deemed suitable
+as the documentation mentioned that
+\enquote{The dataset that you use for training
+can contain all or mostly normal cases.}
+Because the content of the data used did not meet this requirement,
+the usage of this component was decided to skip.
+
+%% TODO: https://docs.microsoft.com/en-us/previous-versions/azure/machine-learning/studio-module-reference/one-class-support-vector-machine
+%% TODO: add some reference to module
 
 %% ************************************************************************************************************
 
