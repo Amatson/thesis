@@ -1,6 +1,8 @@
 %!TEX root = thesis.tex
 %% %% ***************** Background *****************
 
+%% ************************************************ 2 ************************************************
+
 \section{Background}\label{sec:background}
 %\section{Aikaisempi tutkimus}
 
@@ -14,7 +16,7 @@ to simulate human learning process.
 ML usage has become more common
 and is nowadays widely used in many fields,
 not just in general information technology and computer science.
-This is because data can be gathered everywhere,
+This is because data can be gathered from anywhere,
 and where there is data to be processed,
 ML can be there to process it.
 Computer algorithms are able to find 
@@ -36,65 +38,81 @@ and how it had to be addressed during this study.
 %% ************************************************************************************************************
 
 
-\subsection{Machine learning field}\label{subsec:bg-ml-field}
-%% TODO: Open up ML algorithms and learning methods
+\subsection{Machine learning algorithms and training}\label{subsec:bg-machine-learning}
 
-Machine learning is built with algorithms
-that operate
-
-\subsubsection*{ML algorithms}
 Algorithm means a finite sequence of (typically) mathematical operations
-that are used to solve a specific problem, 
+that are used to solve a specific problem,
 typically by repetition of some steps
 until the problem resolves.\cite{merriam2022algorithm}
-Algorithms are the main "magic" inside ML
-where repeating patterns are searched from within the data
-by iterating through all the data points.
+Algorithms are the main component inside ML.~
+By iterating through all the data points
+algorithm is able to, for example,
+find repeating patterns,
+mathematical or logical connections,
+or unusual anomalies that would be seemingly normal for human eye.
 
-In ML, 
-algorithms can be generally divided into <four> categories
-\todo{Check categories, create list or table}
+Algorithms operate on set of rules
+that are tunable parameters.
+In order to utilize an algorithm to solve a problem,
+algorithm is first trained by tuning these parameters.
+Usually,
+ML algorithms can be trained in three ways:
+supervised, unsupervised, and reinforced learning.\cite{jordan2015machine}
+Even more training methods exist
+that usually combine those mentioned.\cite{ayodele2010types, mahesh2020machine}
+For the sake of simplicity,
+we focus on those three main methods.
+
+In \textbf{supervised learning},
+algorithm is given data with ready answers on
+how the data needs to be interpreted.
+Algorithm then tries to figure out the rules behind
+how given data and the correct answers are related.\cite{ayodele2010types}
+
+%% TODO: Check if needs some more
+
+In \textbf{unsupervised learning},
+on the other hand,
+algorithm does not get model data from which to train itself,
+but instead it tries to find clusters or groups inside the data
+that are linked together more closely than to other data points.
+%% TODO: references
+
+\textbf{Reinforced learning} refers to a method
+where a computer program is given a goal
+and provided feedback as a reward.
+This reward is what program aims to maximize
+by adjusting given parameters. %% TODO: References and example
+
+In ML,
+there are multiple algorithms to solve different problems
+and no jack-of-all-trades algorithm exists.
+Each algorithm is suitable for certain type of problem.
+To simplify,
+algorithms are usually divided into three categories
+based on the problem type.
 
 Regression algorithms predict values
 and are typically used with supervised learning.
-\todo{Examples: House market price?}
+
+\todo{Examples: House market price?} %% TODO
 
 Classification algorithms predict categories.
 Depending on the algorithm,
 they can predict between two or several categories.
-\todo{Examples?}
+\todo{Examples?}  %% TODO
 
 Clustering algorithms use unsupervised learning
 to find structures inside data.
-\todo{Examples?}
+\todo{Examples?}  %% TODO
 
 Anomaly detection algorithms work also unsupervised
 and try to find unusual or rare data points from data.
-\todo{Examples?}
+\todo{Examples?} %% TODO
 
-\todo{Something more generally about algorithms... Intro to next section (training).}
 
-%% TODO: Reinforced learning? Should it be mentioned somehow/somewhere?
 
-%% ************************************************************************************************************
 
-\subsubsection*{ML training}
-ML algorithms can be trained in two basic ways:
-supervised and unsupervised learning.
-
-In supervised learning,
-algorithm is given data with ready answers on
-how the data needs to be interpreted.
-Algorithm then tries to figure out
-how given data and the correct answers are related.
-
-In unsupervised learning,
-on the other hand,
-algorithm does not get model data from which to train itself,
-but instead it tries to find clusters or groups inside the data
-that are linked together more closely than to other parts of data.
-\todo{References!}
-%% TODO: Other type of unsupervised learning algorithms exist
 
 Typically,
 when training an algorithm,
@@ -112,13 +130,25 @@ are hidden from the validation data.
 The resulting values produced by the algorithm
 are compared to those hidden values
 and the difference between the estimate and the real value
-can be used to determine how well the current algorithm compares to others.
+can be used to determine how well the current trained algorithm compares to others.
 
 \todo{Next one might change a bit depending on the actual results, which are still to be tested.}
 However, in this study,
 we are going to break that rule
 about non-overlapping training and validation data.
 The reason for this is explained further in section~\ref{subsec:meth-ml-pipeline})
+
+
+
+\todo{Something more generally about algorithms... Intro to next section (training).}
+
+%% TODO: Reinforced learning? Should it be mentioned somehow/somewhere?
+
+
+
+The full component chain from input to output
+with algorithm training and result validating
+is called a machine learning pipeline.
 
 %% ************************************************************************************************************
 
@@ -153,14 +183,11 @@ Microsoft Azure\cite{altexsoft}
 \toimhuom{some unorganized text:}
 Microsoft Azure offers a Machine Learning Studio environment
 for easy ML pipeline designing.
-
-Explain pipeline briefly.
-
-ML Studio gives ML designer a possibility to
+ML Studio gives machine learning designer a possibility to
 train algorithms and publish cloud endpoints
 utilizing all Azure resources
 connecting the power of ML
-to all other Azure possibilities
+to all other Azure features
 like data storages, IoT-services and cloud computing.
 %% TODO: IoT in abberviations?
 %% TODO: references!
@@ -173,7 +200,7 @@ and their relations to each other.
 
 \todo{Intro to next subsections}
 Each component in pipeline can be tuned
-to certain extent.
+to a certain extent.
 ML Studio has a predefined set of ready algorithms to use.
 In this study we focus on  %% TODO: reconsider next
 R-script execution component,
@@ -186,7 +213,7 @@ feature hashing component.
 %% ************************************************************************************************************
 
 \subsection{Regression algorithm}\label{subsec:bg-regression-ml}
-\todo{science and math behind regression algorith}
+\todo{science and math behind regression algorithm}
 Regression analysis is typical approach in statistical science.
 It is used to find relationships with a set of variables.
 %% TODO!
@@ -213,6 +240,7 @@ in a ready component level. %% TODO: check wording.
 %% TODO: How PCA works for anomaly detection? How is it used in it?
 %% TODO: Differences for other anomaly detection methods? What other methods are there?
 
+%% ............................................................................................................
 
 \subsubsection*{One-Class support vector machine}
 %% TODO: This is also usable in azure, but not suitable in our case
@@ -291,7 +319,7 @@ was moved out of the production environment.
 This was mostly due to regulations described in GDPR. %% TODO: wording? More?
 
 Data anonymization was executed in production environment
-with Powershell script.
+with PowerShell script.
 Several predefined identification features were searched with
 regular expression (or regex), patterns and replaced with
 default keys.

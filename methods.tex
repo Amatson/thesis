@@ -6,27 +6,16 @@
 \section{Research material and methods}\label{sec:research-material-and-methods}
 %\section{Tutkimusaineisto ja -menetelmät}
 
-%% TODO: make sure below points are mentioned SOMEWHERE
-\begin{verbatim}
-  * Counting anomaly "probability" for individual log rows
-  * Random delay! Solving issue by grouping
-  * Hybrid ML with anomaly detection and regression
-  => Can this give any results for forecasting?
-  ?? Assumption to lean on:
-    !! Ticket causing log rows are ANOMALIES in log data.
-    TODO: explain why this assumption is necessary!!!
-    - Log amount is not necessarily proportional to ticket creating error amount, even with info-types filtered out
-    - Considerable amount of rows may be related to one, or several different, tickets
-\end{verbatim}
-
 In the next section
 we explain in more detail
 what the data used in the study
 consists of
 and what methods were used
 in attempt to answer the research goals.
+The content of the section is briefly described below,
+and the steps of the research are explained. %% TODO: Better phrasing
 
-The data in the research is mainly made up of two parts.
+The data in the research is mainly made of two parts.
 The most important part is, obviously,
 the log data produced by the numerous RPA processes.
 The second part complementing the study
@@ -37,14 +26,13 @@ from any sensitive information.
 This was done by anonymizing the log data
 and using only timestamps from the support tickets.
 
-%% TODO: explain that we are walking through the process below and each part has their own section further.
 After confirming the results of anonymization,
 the data was preprocessed into a better form
 to make it more usable by algorithms.
 More processing was done inside the pipeline
 as ML Studio offered several usable components for this
 but main cleaning was easier and to execute in local environment.
-This was also done with Powershell scripting.
+This was also done with PowerShell scripting.
 
 ML pipeline was created in Azure ML Studio
 and several ML algorithms were compared
@@ -68,7 +56,7 @@ Like all other software,
 RPA components fail from time to time.
 As described before,
 RPA logs are verbose
-making possible error identification from among it hard.
+making possible error identification from among them hard.
 Due to that,
 it is not feasible to create log parsers
 that would be able to identify critical errors
@@ -98,19 +86,15 @@ is described in section~\ref{subsec:meth-data-anonymization}.
 \subsection{RPA log data}\label{subsec:meth-rpa-log-data}
 Robotic process algorithms used in Samlink
 are designed to ease the workload of bank clerks.
-RPA robots work mostly with loan applications
-among other routine tasks
-that require mostly manual labor.
-\todo{Check!}
+RPA robots work in behalf of bank clerks
+executing routine tasks that require mostly manual labor.
 
 Like other software,
 RPA also produces log data during runtime.
-As several RPA robots are running
-the amount of log produced daily is also significant.
-\todo{How many RPA:s? How many customers? How much log data?}
-%% TODO: How many RPAs
-%% TODO: how many customers are they dealing with?
-%% TODO: AMOUNTS!
+As dozens of RPA robots are running
+in several bank environment
+the amount of log produced is also significant,
+up to over a million lines per week.
 This log data is not in consistent structure
 being formed out of typical CSV data
 injected with even more inconsistent JSON data
@@ -133,7 +117,7 @@ data that was considered as sufficient amount
 for machine learning algorithm training.
 \todo{how much really?}
 
-\begin{itcomment}
+\begin{itcomment} %% TODO:
     Next up we'll explain some key features about the log data
     such as timestamps, robot names, messages etc.
 
@@ -167,6 +151,8 @@ was to select solely timestamp fields from ticket data.
 Thus, no sanitation for ticket data was needed
 as ticket data consisted of only list of datetime values.
 
+%% ............................................................................................................
+
 \subsubsection*{RPA log data sanitization}
 Information privacy is one of the key values in Samlink business promise
 as company develops high security banking applications
@@ -199,7 +185,7 @@ and because it was highly unrecommended
 to install additional software to the production server,
 data acquiring and anonymization tools were chosen
 based on what was already usable in the RPA production environment.
-Microsoft Powershell offers sufficient tools
+Microsoft PowerShell offers sufficient tools
 for database SQL querying
 and stream editing.
 The amount of data was significant
@@ -221,7 +207,7 @@ before the results were seemed adequate.
 
 %% ************************************************************************************************************
 
-\subsection{Data formatting}\label{subsubsec:data-formatting}
+\subsection{Data formatting}\label{subsec:meth-data-formatting}
 At the beginning of the research,
 the log data from RPA was in SQL database.
 However,
@@ -273,6 +259,10 @@ that was unique for each data point.
     We discuss some things about Azure ML Studio
     but only in extent of what parts needed configuring.
     More general info about ML Studio should be in chapter 2.
+
+    This needs to be formatted with Results-section
+    so that information does not overlap.
+    Maybe this section should be only on one of the sections.
 \end{itcomment}
 
 %% TODO: <Azure resources, virtual network etc.>
@@ -287,7 +277,7 @@ that was unique for each data point.
 \subsection{Machine learning pipeline}\label{subsec:meth-ml-pipeline}
 
 \todo{this section is under construction}
-As stated in section~\ref{subsec:bg-ml-field},
+As stated in section~\ref{subsec:bg-machine-learning},
 the approach in this thesis is,
 if expression is allowed, unorthodox.
 Typically,
@@ -310,7 +300,7 @@ no help was given.
 
 \begin{itcomment}
     Depending on the results (still working on it...)
-    it is possible that this unorthodox training method didn't bring much results
+    it is possible that this unorthodox training method doesn't give good results
     compared to proper training pipeline.
 \end{itcomment}
 
@@ -420,6 +410,7 @@ within a time frame.
 %linked to same error
 %as different possible ticket creators.
 
+%% ............................................................................................................
 
 \subsubsection*{Memory issues and limitations}
 Memory is crucial in ML training
@@ -444,6 +435,7 @@ However, this was not certain.
 %% limitations to data size
 %% effects on choises in components?
 
+%% ............................................................................................................
 
 \subsubsection*{Feature format for PCA-ADA}
 %% TODO: n-gram vs pure data input
@@ -501,6 +493,7 @@ are listed below.
 %   Only 2% of the data could be used. Not enough.
 %
 
+%% ............................................................................................................
 
 \subsubsection*{Anomaly probability}
 %% TODO: PCA output
@@ -508,7 +501,39 @@ are listed below.
     Here we explain what PCA-component outputs and how the result is used in the pipeline.
 \end{itcomment}
 
-\subsubsection*{Statistical features}
+The output values of the PCA-ADA component are,
+as explained in the section~\ref{subsec:bg-pca-ada},
+normalized so the values range between 0 and 1.
+This anomaly probability value
+is the main output of hybrid ML phase 1.
+Based on our initial hypothesis
+that each anomalous event in the log
+is linked to a real life support ticket received,
+the bigger a single anomaly probability value is for a log row
+the more likely that row is related to a ticket inducing event.
+
+
+%% TODO: make sure below points are mentioned SOMEWHERE
+\begin{verbatim}
+  * Random delay! Solving issue by grouping
+  * Hybrid ML with anomaly detection and regression
+  => Can this give any results for forecasting?
+  ?? Assumption to lean on:
+    !! Ticket causing log rows are ANOMALIES in log data.
+    TODO: explain why this assumption is necessary!!!
+    - Log amount is not necessarily proportional to ticket creating error amount, even with info-types filtered out
+    - Considerable amount of rows may be related to one, or several different, tickets
+\end{verbatim}
+
+
+%% ............................................................................................................
+
+\subsubsection*{Time frame compression and statistical features}
+To avoid the problem with random delays
+between log rows and technical ticket timestamps,
+log rows were grouped by time stamp
+into certain time frame groups. %% TODO: explain in more detail than in background
+
 %% TODO: combination with ticket data. SQL queries
 \begin{itcomment}
     This part explains some statistical features used when starting regression training
@@ -518,6 +543,7 @@ are listed below.
     All these values are grouped together in timescales.
 \end{itcomment}
 
+%% ............................................................................................................
 
 \subsubsection*{Regression based estimating}
 %% TODO: parameters?

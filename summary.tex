@@ -53,4 +53,19 @@ it is possible to miss important anomalous rows that come in groups
 which would provide necessary insight to identify anomalous events.
 %% TODO: Show some explaining graphics, here or elsewhere.
 
+The original hypothesis was
+that anomalous events in the logs
+were clearly linked to the tickets received.
+However,
+as memory errors due to the size of data forced us to skip info-typed rows,
+it is possible the data anomalies did not reflect to the tickets.
+As stated before,
+multiple error lines in the log may be linked to a single issue,
+which could make the ticket inducing events
+more common log feature.
+Thus,
+by tuning the statistical values used
+to take into account more common error messages,
+it could have been possible to get better results.
+
 \clearpage
