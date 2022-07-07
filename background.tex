@@ -226,12 +226,14 @@ It is used to find relationships with a set of variables.
 \todo{Explain PCA and mention other ADA algorithms}
 %% TODO: rename subsection if more algorithms are introduced?
 
+
 \toimhuom{unorganized text below:}
 
 %% TODO: Reference: https://docs.microsoft.com/en-us/azure/machine-learning/component-reference/pca-based-anomaly-detection
 
 Principal Component Analysis, or PCA,
-is an ML technique used to analyze data and explain the variance inside it.
+is a machine learning technique
+used to analyze data and explain the variance inside it.
 
 Other anomaly detection methods exist, but they are not supported by ML Studio
 in a ready component level. %% TODO: check wording.
@@ -239,6 +241,15 @@ in a ready component level. %% TODO: check wording.
 %% TODO: Mathematical background
 %% TODO: How PCA works for anomaly detection? How is it used in it?
 %% TODO: Differences for other anomaly detection methods? What other methods are there?
+
+%% TODO!
+\todo{placeholder picture. replace with mathematical explanation}
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=150mm]{./appendices/pca-nutshell.jpeg}
+    \caption{PCA in a nutshell
+        \label{fig:pca-nutshell}}
+\end{figure}
 
 %% ............................................................................................................
 
@@ -327,13 +338,23 @@ default keys.
 %% TODO: Sources!
 %% TODO: How does anonymization affect to ML algorithm functionalities/usages?
 
+%% TODO: references?
+%% TODO: Refer to k-anonymization and pseudonymization. Explain BRIEFLY
+\begin{itcomment} %% Moved from Methods-section
+    Here we could explain more about pseudonymization and k-anonymization,
+    but is it necessary as they were not used or considered?
+    It would bring something more to the study, of course,
+    but is it worth the time?
+\end{itcomment}
+
+
 %% ************************************************************************************************************
 
 \subsection{Log data analyzing with ML}\label{subsec:bg-log-data-analyzing-with-ml}
 \todo{Some research should exist}
-TODO: In this section, we look what studies and cases of ML log data analyzing
-exists in the IT field.
-Only briefly, nothing too deep
+TODO: In this section, we look
+what studies and cases of ML log data analyzing exists in the IT field.
+Only briefly, nothing too deep.
 
 
 %% ************************************************************************************************************
@@ -371,28 +392,12 @@ depending on the weekday and time the issue occurred.
 
 %% TODO: More to background?
 
-%% TODO: Move  below to methods section!
 As random delay of such
-does not  seem to be trivial to take into account
+does not seem to be trivial to take into account
 with ML algorithms, %% TODO: Any sources?
 a simple method to solve this was used
-we call \enquote{time frame compression method}.
-%% TODO: Is there anything to refer to???
-This means that
-in order to eliminate the effects of random delay
-we compress some features in certain time frame
-which is at least as long as the longest estimated delay.
-Simply put,
-as we count possible anomalies during one hour of log,
-we cannot compare this number to actual tickets received
-at the same hour or the next.
-What we can do,
-with time frame compression,
-is that we count some statistical values of anomaly estimates,
-for example, the mean and median values of a week,
-and then compare these numbers with the tickets received
-during the same week.
-
+which we call \enquote{time frame compression method}.
+More about this approach is discussed in the section \ref{subsec:meth-ml-pipeline}
 
 %% ************************************************************************************************************
 
@@ -422,6 +427,7 @@ we will compare the results of hybrid ML technique
 with a single ML algorithm usage.
 
 
+\todo{Include wireframe model about hybrid model}
 %% TODO: Include wireframe model about hybrid model
 
 

@@ -103,44 +103,84 @@ to be able to run ML training pipeline.
 
 \subsection{ML training and validation}\label{subsec:res-ml-training-and-validation}
 
+In the methods section~\ref{subsec:meth-ml-pipeline}
+we discussed of different approaches that could be used
+to get the best results from the ML training.
+In order to compare different results,
+some comparable metrics are needed.
+%% TODO: declare comparable metrics etc.
 
+%% TODO: move to methods-section???
+Several crossing points caused the pipeline to diverge.
+First,
+the error message used to calculate the anomaly probability of a log row
+had two options.
+We could either use simple \textit{message},
+or more verbose \textit{rawmessage}.
+This textual data could be fed to the ADA-component in several forms.
+Most straightforward way was using textual data without any preformatting.
+Text could also be run through \enquote{Preprocess text} -component. %% TODO: Explain somewhere!
+N-gram features could have been extracted from the text
+and these features could have been used instead.
+Instead of n-gram features,
+textual data could be converted to numeric
+with \enquote{Feature Hashing} -component.
+After getting the ADA-component results,
+the anomaly probabilities were compressed with R-code or SQL. %% TODO: ?
+<This concludes the phase 1.> %% TODO: ??
 
-\begin{itcomment}
-    anomaly detection
+In phase two,
+diverging of the pipeline was due to either different regression algorithms used
+or result comparison to disregarding the results of phase 1.
+In practice this means
+that in order to validate the results against our initial hypothesis,
+we used statistical log data such as row count and unique job ID count
+without anomaly probabilities
+to determine whether anomaly metrics provided any insight regarding the ticket data.
 
-    N-Gram Feature extracting
+Each diverging step, or layer,
+multiplies the amount of results used in final comparison
+that would determine the best possible pipeline combination.
+These layers are simplified in the table~\ref{tab:ml-pipeline-diverging}.
 
-    Some regression algorithm to predict event count.
-    Poisson only for poisson distributed data, probably not usable here
+\begin{table}[]
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Divergent layer}           & \textbf{Options}                                                              & \textbf{Divergent count} \\ \hline
+        Input text column                  & \begin{tabular}[c]{@{}l@{}}message \\ rawmessage\end{tabular}                 & 2                        \\ \hline
+        Text preprocess                    & \begin{tabular}[c]{@{}l@{}}Yes\\ No\end{tabular}                              & 2                        \\ \hline
+        Numeric conversion                 & \begin{tabular}[c]{@{}l@{}}No\\ N-gram Feature\\ Feature Hashing\end{tabular} & 3                        \\ \hline
+        ADA training                       & \begin{tabular}[c]{@{}l@{}}Unconventional \\ Proper\end{tabular}              & 2                        \\ \hline
+        Validation without anomaly metrics & \begin{tabular}[c]{@{}l@{}}Yes\\ No\end{tabular}                           & 2                        \\ \hline
+        Regression algorithms &
+        \begin{tabular}[c]{@{}l@{}}Decision forest regression \\ Boosted decision tree regression \\ Neural Network Regression \\ Linear regression\end{tabular} &
+        4 \\ \hline
+    \end{tabular}
+    \caption{Pipeline divergent layers}
+    \label{tab:ml-pipeline-diverging}
+\end{table}
 
-    two-class classification
-    support vector machine etc
+The divergent count implies the number of branches
+diverging from the previous component.
+The total count of branch ends, or leaves,
+would then be the multiplication of all divergent counts,
+totaling to 192 comparable pipeline combinations.
+Moreover,
+n-gram feature extraction and feature hashing
+have several tunable parameters
+that strongly influence the end results of the algorithm training.
+To reduce this amount when considering the best possible pipeline,
+we simplified this by narrowing down the options 
+based on initial test run results of some of the divergent options.
 
-    random forest regression is probably best based on the initial results
-\end{itcomment}
-
-preformatting data! \\
-\begin{enumerate}
-    \item remove fingerprint etc unique values from raw message
-    \item calculate anomaly probability per line
-    \item [!] CAN WE COMBINE THIS PER JOB-ID?
-    \item create new table consisting:
-    \begin{enumerate}
-        \item amount of rows per timeframe
-        \item amount of unique job ID's per said timeframe
-        \item anomaly probability value (median, mean etc)
-        \item efecte tickets received in said timeframe
-    \end{enumerate}
-\end{enumerate}
-
-
-
-
-
-%% TODO: TEST WITHOUT ANOMALY PROBABILITY METRICS!!!
-%% ie. is the anomaly phase of the hybrid learning really usefull
-%% Do log row amount and jobid amount correlate more to tickets as features?
-
+For example, 
+n-gram feature component suffered greatly from the memory problem %% TODO: refer to it?
+and the data amount that the \textit{Extract N-Gram Features from Text} -component
+was able to handle only 2\% of the original data amount.
+This was deemed as too small amount for training
+as it would be extremely likely with 98\% of the data skipped
+that also possible rows relevant to the ticket anomalies
+would get trimmed out.
 
 
 %% ************************************************************************************************************
@@ -154,7 +194,7 @@ Using Decision forest regression algorithm.
 \\
 \begin{figure}[htb]
     \centering
-    \includegraphics[height=30mm,scale=0.5]{./appendices/msg_ngram_decision-forest-reg_lewd2unanom.png}
+    \includegraphics[width=150mm]{./appendices/msg_ngram_decision-forest-reg_lewd2unanom.png}
     \caption{Message with N-Gram feature extraction
     using unconventional training method in phase 1,
         Decision forest regression in phase 2,
@@ -164,7 +204,7 @@ Using Decision forest regression algorithm.
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[height=30mm,scale=0.5]{./appendices/msg_ngram_decision-forest-reg_proper2unanom.png}
+    \includegraphics[width=150mm]{./appendices/msg_ngram_decision-forest-reg_proper2unanom.png}
     \caption{Message with N-Gram feature extraction
     using proper training method in phase 1,
         Decision forest regression in phase 2,
@@ -174,7 +214,7 @@ Using Decision forest regression algorithm.
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[height=30mm,scale=0.5]{./appendices/msg_ngram_decision-forest-reg_lewd2proper.png}
+    \includegraphics[width=150mm]{./appendices/msg_ngram_decision-forest-reg_lewd2proper.png}
     \caption{Message with N-Gram feature extraction
     using Decision forest regression in phase 2,
         comparing unconventional training to proper training.
@@ -191,7 +231,7 @@ Using Decision forest regression algorithm.
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[height=30mm,scale=0.5]{./appendices/msg_pure_decision-forest-reg_lewd2unanom.png}
+    \includegraphics[width=150mm]{./appendices/msg_pure_decision-forest-reg_lewd2unanom.png}
     \caption{Message fed pure to ADA-component,
     using unconventional training method in phase 1,
         Decision forest regression in phase 2,
@@ -201,7 +241,7 @@ Using Decision forest regression algorithm.
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[height=30mm,scale=0.5]{./appendices/msg_pure_decision-forest-reg_proper2unanom.png}
+    \includegraphics[width=150mm]{./appendices/msg_pure_decision-forest-reg_proper2unanom.png}
     \caption{Message fed pure to ADA-component,
         using proper training method in phase 1,
         Decision forest regression in phase 2,
@@ -213,7 +253,7 @@ Using Decision forest regression algorithm.
 
 \begin{figure}[htb]
     \centering
-    \includegraphics[height=30mm,scale=0.5]{./appendices/msg_pure_decision-forest-reg_lewd2proper.png}
+    \includegraphics[width=150mm]{./appendices/msg_pure_decision-forest-reg_lewd2proper.png}
     \caption{Message fed pure to ADA-component,
     using Decision forest regression in phase 2,
         comparing unconventional training to proper training.

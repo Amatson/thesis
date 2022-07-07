@@ -112,8 +112,8 @@ several years worth of log.
 In this study we used archived data
 as it was easier to acquire in one run
 without the need to merge different parts together.
-Archive also had
-data that was considered as sufficient amount
+Archive also had data
+that was considered as sufficient amount
 for machine learning algorithm training.
 \todo{how much really?}
 
@@ -129,7 +129,30 @@ for machine learning algorithm training.
     as it demanded too much resources in ML Studio to process.
     In the data preprocessing phase the rawmessage was kept along
     and it lead to some interesting and most likely reusable preprocessing scripts.
+
 \end{itcomment}
+%% TODO: Discuss about rawmessage memory issues in result section!
+
+
+%% TODO: check below to make sense
+Samlink RPA logs have few default features. %% TODO: check better word
+These are listed in a table below. %% TODO: add table etc
+
+The most notable aspect of these features
+are the \textit{message} and \textit{rawmessage}.
+\textit{Message} holds the <varsinainen> %% TODO: !
+information written by the RPA agent during automation execution. %% TODO: Wording ok?
+This includes details about the issue,
+what part of the process failed,
+and possible stack trace of the error.
+\textit{Rawmessage} is JSON-formatted representation
+of all the default features,
+including the message
+and multiple other additional features
+that RPA agent is able to output regarding the execution.
+These additional fields are what vary from row to row. %% TODO: phrasing?
+Some of the possible fields are listed in a table below, %% TODO: add table etc.
+but several other field types exist.
 
 %% ************************************************************************************************************
 
@@ -167,18 +190,11 @@ if goal is to find possible problems in RPA runtime
 and not detect individual customer related problems.
 This way it was not necessary to achieve adequate security
 by less secure and more effort consuming ways
-such as pseudonymization or k-anonymization,
+such as pseudonymization or k-anonymization
+(explained in the section \ref{subsec:bg-data-sensitivity}), %% TODO: Check it's explained
 which would have also required strict inspections
 before data could have been approved for cloud processing.
 \todo{References?}
-%% TODO: references?
-%% TODO: Refer to k-anonymization and pseudonymization. Explain BRIEFLY
-\begin{itcomment}
-    Here we could explain more about pseudonymization and k-anonymization,
-    but is it necessary as they were not used or considered?
-    It would bring something more to the study, of course,
-    but is it worth the time?
-\end{itcomment}
 
 As production environment is built on Microsoft Server based solution,
 and because it was highly unrecommended
@@ -205,6 +221,8 @@ before the results were seemed adequate.
 \todo{Appendix of the script used. Does this need more explaining?}
 %% TODO: appendix of the script used
 
+%% TODO: add more details about regex and features anonymized
+
 %% ************************************************************************************************************
 
 \subsection{Data formatting}\label{subsec:meth-data-formatting}
@@ -218,8 +236,7 @@ For ML algorithms to be able to read the given data with ease
 this kind of impurities needed to be cleared from the data.
 
 When feeding the log data to anomaly detection algorithm
-it was necessary that all the rows were
-as minimally unique as possible
+it was necessary that all the rows were as minimally unique as possible
 in order to use the pattern finding abilities of the algorithm.
 Too unique data points would have made all of them anomalies
 compared to each other.
@@ -276,50 +293,28 @@ that was unique for each data point.
 
 \subsection{Machine learning pipeline}\label{subsec:meth-ml-pipeline}
 
-\todo{this section is under construction}
-As stated in section~\ref{subsec:bg-machine-learning},
-the approach in this thesis is,
-if expression is allowed, unorthodox.
-Typically,
-it is not a good idea to use
-same data points in ML algorithm training and validating.
-Acting otherwise
-leads to algorithm processing with
-same data it was trained with
-thus creating a situation
-where algorithm already knows what to do with the current datapoint.
-If the results were validated after this
-the algorithm would get unreliable score
-as it had the validation data already in the training phase.
-This could be compared to
-giving some right answers to students
-during test and scoring test results as if
-no help was given.
+Azure ML Studio makes ML pipeline creation easy
+and comparing different methods and algorithms effortless.
+Nevertheless,
+with hybrid approach having two different phases
+and result comparison being done against anomaly hypothesis,
+the pipeline drafts started to accumulate in content.
 
-\todo{explain why we did it anyway!}
-
-\begin{itcomment}
-    Depending on the results (still working on it...)
-    it is possible that this unorthodox training method doesn't give good results
-    compared to proper training pipeline.
-\end{itcomment}
-
-Initial plan when starting the ML pipeline testing
-was to feed the log data to anomaly detection algorithm
+When starting the ML pipeline testing
+the initial plan was to feed the log data to anomaly detection algorithm
 and try to get some sort of estimate of possible anomaly count.
 This plan had several problems.
-
 First, as stated, logging is very abundant
 and several thousands of rows is logged
 during a single day.
 Some errors encountered are not critical
-and RPA robot is able to recover from them
+and RPA agent is able to recover from them
 finalizing the initial task.
-This means, that errors that could be deemed anomalous
+This means that errors that could be deemed anomalous
 may not result to a ticket in the end.
 
 In addition,
-one single error case
+one single error case noticed by bank clerks
 may be linked to several problems in runtime,
 meaning that one ticket received is,
 in fact, linked to multiple, dozens or
@@ -327,14 +322,138 @@ even hundreds of log rows.
 
 Two different algorithms were needed.
 In phase 1,
-algorithm defines how likely one datapoint
+algorithm defines how likely one datapoint, or log row,
 is to be considered an anomaly.
 In phase 2,
 another algorithm aims to predict
 how many tickets are to be expected to receive
 within a time frame.
+This dual algorithm approach is referred as a hybrid machine learning approach. %% TODO: refs?
+
+In this subsection
+we discuss each phase and their %% TODO: open what we discuss here?
+
+%% ............................................................................................................
+
+
+
+%% TODO: rearrange subsubsection
+
+\subsubsection*{Time frame compression and statistical features}
+To avoid the problem with random delay
+between log rows and technical ticket timestamps,
+as stated in the section~\ref{subsec:bg-random-delay},
+log rows were grouped by time stamp
+into certain time frame groups %% TODO: explain in more detail than in background
+with a method we call \enquote{time frame compression},
+
+%% TODO: Is there anything to refer to??? If exists, move to background.
+This means that
+in order to eliminate the effects of random delay
+we compress some features in certain time frame
+which is at least as long as the longest estimated delay.
+Simply put,
+if we count possible anomalies during one hour of log,
+we cannot compare this number to actual tickets received
+at the same hour or the next.
+What we can do,
+with time frame compression,
+is that we count some statistical values of anomaly estimates,
+for example, the mean and median values of a week,
+and then compare these numbers with the tickets received
+during the same week.
+
+
+
+%% TODO: combination with ticket data. SQL queries
+\begin{itcomment}
+    This part explains some statistical features used when starting regression training
+    in hybrid ML phase 2.
+    These features consist of both log row amounts
+    and PCA-component output values.
+    All these values are grouped together in timescales.
+\end{itcomment}
+
+%% ............................................................................................................
+
+
+\subsubsection*{Unconventional training approach}
+
+As stated in section~\ref{subsec:bg-machine-learning},
+the approach used in this study is,
+if expression is allowed, unorthodox. %% TODO! Check!
+Typically,
+data points used in ML algorithm training and validating
+should always be different.
+Acting otherwise
+leads to algorithm processing with
+same data it was trained with
+thus creating a situation
+where algorithm already knows what to do with the current data point.
+If the results were validated after this
+the algorithm would get unreliable score
+as it had the validation data already in the training phase.
+This could be compared to
+giving some right answers to students
+during test and scoring test results as if
+no help was given.
+However,
+due to the nature of the study problem and contents of the data,
+it was decided to test whether bending this rule
+would provide better results in algorithm training.
+
+Even though the amount of data was large enough
+to cause issues with memory,
+the hybrid approach and the time frame compression discussed <later in this section> %% TODO: check!
+lead to significant reduction of data in phase 2.
+As a general rule of thumb in ML training,
+only 20--30\% of the data is used to validate the algorithm.
+With the hybrid ML approach,
+the validation results in phase 1
+are what actually form the data used in the phase 2.
+This data is further compressed to time frame groups
+leading to only a few dozen data points in phase 2 ML training %% TODO: more accurate numbers?
+compared to millions of rows in phase 1.
+
+Because of the way the anomaly detection algorithms work
+the over-lapping data points is not as big of an issue
+as it would be with other types of algorithms
+like regression algorithms. %% TODO: do they though?
+This is why we could use part of the data
+for training the anomaly detection algorithm as usual
+and then use all of the available data for validation
+without overfitting the algorithm. %% TODO: check and refer to something?
+Also, because the main forecasting functionality comes in the phase 2,
+overtraining %% TODO: check wording
+in phase 1 may not cause issues. %% TODO: phrasing?
+
+To verify if this unconventional training method gives good results without issues,
+the trained algorithms were tested with new production data
+that had zero overlapping data points with training and validation data.
+This way we were able to compare different training approaches
+to determine the best overall pipeline.
+
+
+
+%% ............................................................................................................
+
 
 \todo{Under construction below:}
+
+\subsubsection*{ML Pipeline sketching}
+
+\todo{Something about the pipeline as a full. Or move to results section.}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=150mm]{./appendices/pipeline-draft}
+    \caption{Pipeline in all its glory
+    \label{fig:pipeline draft}}
+\end{figure}
+
+
+%% ............................................................................................................
+
 
 %% TODO: Mention that data splits in phase 1 have to be un-random
 %% Otherwise, possible anomaly values used in phase 2 would be randomly included
@@ -431,6 +550,7 @@ the issue was declared to be linked with
 compute instance property limitations.
 However, this was not certain.
 
+\todo{Limitations to components}
 %% TODO: limitations to components
 %% limitations to data size
 %% effects on choises in components?
@@ -512,36 +632,6 @@ is linked to a real life support ticket received,
 the bigger a single anomaly probability value is for a log row
 the more likely that row is related to a ticket inducing event.
 
-
-%% TODO: make sure below points are mentioned SOMEWHERE
-\begin{verbatim}
-  * Random delay! Solving issue by grouping
-  * Hybrid ML with anomaly detection and regression
-  => Can this give any results for forecasting?
-  ?? Assumption to lean on:
-    !! Ticket causing log rows are ANOMALIES in log data.
-    TODO: explain why this assumption is necessary!!!
-    - Log amount is not necessarily proportional to ticket creating error amount, even with info-types filtered out
-    - Considerable amount of rows may be related to one, or several different, tickets
-\end{verbatim}
-
-
-%% ............................................................................................................
-
-\subsubsection*{Time frame compression and statistical features}
-To avoid the problem with random delays
-between log rows and technical ticket timestamps,
-log rows were grouped by time stamp
-into certain time frame groups. %% TODO: explain in more detail than in background
-
-%% TODO: combination with ticket data. SQL queries
-\begin{itcomment}
-    This part explains some statistical features used when starting regression training
-    in hybrid ML phase 2.
-    These features consist of both log row amounts
-    and PCA-component output values.
-    All these values are grouped together in timescales.
-\end{itcomment}
 
 %% ............................................................................................................
 
