@@ -187,6 +187,11 @@
 \usepackage[autostyle=true]{csquotes}
 \MakeOuterQuote{"}
 
+% Table line breaks
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
+
 %% Predefined abbreviation macros, such as \ie, \eg, \etc
 \input{macros.tex}
 
@@ -287,7 +292,7 @@ log analyzing\spc random delay\spc Microsoft Azure ML Studio}
 %% as the abstract page.
 %%
 \thesisabstract{
-%% TODO: Lorem ipsum, replace
+%% TODO !!!! Lorem ipsum, replace
 Your abstract in English.
 Keep the abstract short.
 The abstract explains your research topic,
@@ -387,6 +392,7 @@ Otherwise, the metadata abstract text must be identical to the text on the abstr
   lokin analysointi, satunnainen viive, satunnaisviive, Microsoft Azure ML Studio}
 %% Abstract text
 \begin{abstractpage}[finnish]
+  %% TODO !!!!!! DUMMY, REPLACE
   Tiivistelmässä on lyhyt selvitys kirjoituksen tärkeimmästä sisällöstä:
   mitä ja miten on tutkittu,
   sekä mitä tuloksia on saatu. 
@@ -397,6 +403,8 @@ Otherwise, the metadata abstract text must be identical to the text on the abstr
 %% This section is optional. Remove it if you do not want a preface.
 \mysection{Preface}
 %\mysection{Esipuhe}
+%% TODO !!!!!!!! DUMMY, REPLACE
+
 Terve,
 
 ja kiitos kaloista.
@@ -447,7 +455,9 @@ Otaniemi, {\today}
   JSON        & JavaScript Object Notation \\
   CSV         & Comma-Separated Values \\
   GDPR        & General Data Protection Regulation \\
-  ADA         & Anomaly Detection Algorithm
+  ADA         & Anomaly Detection Algorithm \\
+  IoT         & Internet of Things \\
+  UI          & User Interface
 \end{tabular}
 
 
@@ -461,6 +471,7 @@ Otaniemi, {\today}
 \input{introduction.tex}
 \input{background.tex}
 \input{methods.tex}
+\input{pipeline.tex}
 \input{results.tex}
 \input{summary.tex}
 

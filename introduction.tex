@@ -14,18 +14,17 @@ more and more fields of business.
 In banking business they are already used in
 fraud detection, risk management and service recommendations.\cite{donepudi2017machine}
 Even though these
-modern big data utilizing technologies
+modern technologies utilizing big data
 are widely used abroad,
-in Finnish banking field AI and ML are not popularly utilized.
+AI and ML are not that popular in Finnish banking field.
 Instead,
 many self-acting solutions are being used
 to streamline manual labor
-which could be called intelligent, %% TODO: if IPA is used, it is somewhat intelligent!
+which could be called intelligent,
 but are merely highly automated processes
 and thus cannot be included in the AI category.
 One of these technologies used in Finnish banking systems
 is Robotic Process Automation (RPA).
-%% TODO: Should IPA be mentioned (Intelligent Process Automation) and in what level?
 
 RPA operates \enquote{on the user interface of other computer systems
 in the way a human would do},\cite{van2018robotic}
@@ -35,24 +34,24 @@ such as faulty input.
 RPA, like generally all other software,
 produces log to \enquote{register
 the automatically produced and time-stamped documentation
-of events, behaviors and conditions
+of events, behaviors, and conditions
 relevant to a particular system}\cite{delarosa2018log}.
 Logs don't have any standards or form guidelines to follow
 which tends to make
 log analysis and log based problem-solving troublesome.
-This is also the case with RPA's developed by Oy Samlink Ab.
+This is also the case with RPAs developed by Oy Samlink Ab.
 
 Oy Samlink Ab (Samlink from now on)
 was founded in 1994
 and is now owned by Kyndryl.
-From the early years
-while going by the name of Samcom
+From the early years,
+while going by the name of Samcom,
 the company was owned by several Finnish banks
-developing all sorts IT solutions for them.
+developing all sorts of IT solutions for them.
 Nowadays,
 Samlink offers a wide variety of banking solutions
 from basic banking system to end user targeted software
-such as Codeapp-mobile application.
+such as Codeapp mobile application.
 
 Besides banking,
 Samlink develops multiple other IT solutions
@@ -220,8 +219,6 @@ automatically without human interaction.
 This would reduce significantly the time and labour needed
 from developers and bank clerks alike. %% TODO: Check grammar
 
-\toimhuom{This chapter is good to go!}
-
 %% ************************************************************************************************************
 
 \subsection{Research objectives}\label{subsec:intro-research-objectives}
@@ -316,7 +313,17 @@ behind actions taken during anonymization process.
 \subsubsection*{Azure setup}
 The ML training and result scoring
 is done in Azure ML environment.
-Azure is used because... %% TODO: Justify reasons behind selecting Azure ML Studio
+Azure is used for ML processes
+because Samlink already had licenses in Azure Cloud
+that are used for RPA process control.
+Integrating existing Azure resources
+with ML pipelines and endpoints constructed during this study
+was seen as a big advantage.
+Thus,
+no other ML cloud provider was considered.
+However,
+other Azure competitors are mentioned to the extent
+that their existence is recognised.
 
 As one of the objectives is to create
 an initial guideline for ML process commissioning
@@ -392,13 +399,22 @@ the general machine learning concepts
 and terms relevant to this study case.
 We also discuss these topics from the perspective of
 existing studies. %% TODO: improve wording.
+
 The third section,
 \textbf{Research material and methods},
-explains in detail %% TODO: ?!?
-the data format and contents
-as well as the steps used in each... %% TODO: CLEARER!
+explains in detail the data format and contents
+as well as the steps used to sanitize and preformat it
+for ML algorithm training.
+In addition,
+resources needed to set up the ML designing and training environment
+are discussed.
+At the end of the section,
+the ML pipelines used in the study are unfolded
+as well as their contents explained in detail.
+
 \textbf{Results} section reveals how the selected algorithms performed
-and how well the research questions could be answered %% TODO. Omstart...
+and how well the research questions could be answered.
+
 Finally,
 in the section \textbf{Summary},
 we summarize the research outcomes,
