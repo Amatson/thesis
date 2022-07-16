@@ -4,7 +4,6 @@
 %% ************************************************ 3 ************************************************
 
 \section{Research material and methods}\label{sec:research-material-and-methods}
-%\section{Tutkimusaineisto ja -menetelmät}
 
 In the next section
 we explain in more detail
@@ -28,11 +27,11 @@ This was done by anonymizing the log data
 and using only timestamps from the support tickets.
 
 After confirming the results of anonymization,
-the data was preprocessed into a better form
+the data was preprocessed into a better format
 to make it more usable by algorithms.
 More processing was done inside the pipeline
 as ML Studio offered several usable components for this
-but main cleaning was easier and to execute in local environment.
+but main cleaning was easier to execute in local environment.
 This was also done with PowerShell scripting.
 
 The actual ML pipeline structure
@@ -60,7 +59,7 @@ these clerks then send a support request ticket
 to Samlink technical help desk
 and ask to fix the issue.
 
-When clerks send the ticket to technical support
+When clerks send the ticket to technical support,
 a verbose description of the situation is written
 to help developers to identify the problem.
 This description often contains sensitive end customer information
@@ -89,29 +88,28 @@ This log data is not in consistent structure
 as it is formed out of typical CSV data
 and injected with even more inconsistent JSON data
 that varies in contents vastly.
-\todo{refer to appendices, include examples of data}
+Example of log data after anonymization phase
+can be seen in the appendix~\ref{sec:app-log-data-input}.
 
 RPA log data is stored in SQL database.
 The database is split in live production log
 that is gathered for two weeks
-and then moved to archive that has
-several years worth of log.
+and then moved to archive
+that has several years worth of log.
 In this study we used archived data
 as it was easier to acquire in one run
 without the need to merge different parts together.
-Archive also had data
-that was considered as sufficient amount
+Archive also had amount of data
+that was considered sufficient
 for machine learning algorithm training,
 with data entries spanning almost two and a half years
 and rowcount exceeding 80 million.
 
-%% TODO: Discuss about rawmessage memory issues in result section!
-
-%% TODO: check below to make sense
 Samlink RPA logs have few standard fields.
-These are listed in a table below~\ref{tab:log-row-fields}.
-The most notable aspect of these fields
-are the \textit{message} and \textit{rawmessage} fields.
+These are listed in a table~\ref{tab:log-row-fields}.
+The most notable aspects here
+are the fields named message and rawmessage.
+
 \textit{Message} holds the short log message
 written by the RPA agent during automation execution.
 This includes details about the issue,
@@ -122,24 +120,12 @@ and possible stack trace of the error.
 of all the default features,
 including the message
 and multiple other additional features
-that RPA agent is able to output regarding the execution.
+that RPA agent is able to output regarding the log event.
 These additional fields are what vary from log entry to log entry.
 Some of the possible fields are shown in a table~\ref{tab:log-row-fields},
-but several other field types exist,
-and the JSON data in them can be nested in multiple layers.
-
-Without rawmessage,
-the data was in pure CSV-format.
-However,
-it was not certain
-that rawmessage would not hold usable data for ML~.
-In the end,
-the usage of rawmessage was not studied in satisfying extent
-as it demanded too much resources in ML Studio to process.
-
-%% TODO:!! below:
-% In the data preprocessing phase the rawmessage was kept along
-% and it lead to some interesting and most likely reusable preprocessing scripts.
+but several other field types exist.
+JSON data in them can be nested in multiple layers,
+as seen in the appendix~\ref{sec:app-log-data-input}.
 
 \begin{table}[]
     \centering
@@ -157,7 +143,7 @@ as it demanded too much resources in ML Studio to process.
         robotName          & Name of the agent executing automation          & RPA-BANK-1-1234                                                              \\ \hline
         machineId          & Workstation ID number                           & 5                                                                            \\ \hline
         message            & Short message regarding the entry               & Throw exception: Saldo ei riitä | \newline Tarkistettiin A:n nimi                    \\ \hline
-        rawmessage         & JSON formatted message including most of the above columns and several more fields regarding the log entry &
+        rawmessage         & JSON formatted message including most of the columns above and several more fields regarding the log entry &
         \{
         \textbf{"message"}: "Siirryttiin Varallisuus-sivulle.",\newline
         \textbf{"level"}: "Information",\newline
@@ -179,7 +165,39 @@ as it demanded too much resources in ML Studio to process.
     \label{tab:log-row-fields}
 \end{table}
 
-\todo{Maybe some more info about the log data? Open up the table?}
+Without rawmessage,
+the data was in pure CSV-format
+and could have been more easily processable from the start.
+However,
+it was not certain
+that rawmessage would not hold usable data for ML
+as in some cases plain message-field did not include
+all the most interesting keywords that were present
+in the extra fields of rawmessage.
+Nevertheless,
+using rawmessage in anomaly detection
+posed another problem.
+
+When feeding the log data to anomaly detection algorithm,
+it was crucial that all the rows were as minimally unique as possible
+in order to use the pattern finding abilities of the algorithm.
+Too unique data points would have made all of them anomalies
+compared to each other.
+Because rawmessage included other column data in a long text format,
+certain unique information such as fingerprint and timestamp
+were necessary to remove from within the data manually,
+as they could not be extracted easily
+with tools in Azure ML Studio
+during ML pipeline execution.
+Thus,
+it was seen easier to preprocess the data
+with another script in local environment
+before exporting it to the cloud.
+The final script is presented in the appendix~\ref{sec:app-data-cleaning-script}.
+When training ML algorithm with rawmessage,
+timestamp and job ID values were included retrospectively
+from their corresponding columns outside rawmessage.
+
 
 %% ************************************************************************************************************
 
@@ -215,13 +233,216 @@ that personal customer details are not critical information
 for ML algorithm training
 if goal is to find possible problems in RPA runtime
 and not detect individual customer related problems.
-This way it was not necessary to achieve adequate security
-by less secure and more effort consuming ways
+Also,
+as mentioned in section~\ref{subsec:bg-data-sensitivity},
+all customer and user related information was excluded from support ticket data,
+making individual customer information redundant in the log data.
+Thus,
+it was not necessary to achieve just adequate security
+by less safe and more effort consuming ways
 such as pseudonymization or k-anonymization
-(explained in the section \ref{subsec:bg-data-sensitivity}), %% TODO: Check it's explained
+(explained in the section~\ref{subsec:bg-data-sensitivity}),
 which would have also required strict inspections
 before data could have been approved for cloud processing.
-\todo{References?}
+
+During thesis kickoff,
+several sensitive information types were recognized from the log data,
+and all possible types and their different forms were considered
+before anonymization script was approved to be used in production environment.
+Anonymization was executed by replacing sensitive information
+with general pattern describing the replaced information type.
+With this,
+it was at least possible to keep the information
+whether a log row had included customer sensitive data,
+and what type of data was involved.
+Thus,
+it was theoretically still possible to recognize repeating anomalies
+that had, for example,
+social security number included in the log event.
+List of considered sensitive info types, their examples,
+as well as values replacing the sensitive data
+has been listed in the table~\ref{tab:regex-sensitive-info}.
+
+\begin{table}[]\small
+    \tabcolsep=0.11cm
+    \begin{tabularx}{\textwidth}{|L{0.17\textwidth}|L{0.27\textwidth}|L{0.30\textwidth}|Y|}
+        \hline
+        \textbf{Info type} &
+        \textbf{Example} &
+        \textbf{Replaced value} &
+        \textbf{Comment}
+        \\ \hline
+        Social security number &
+        010190-0123 &
+        10105051470101 &
+        Includes '-','+' and 'a' format
+        \\ \hline
+        Email &
+        author@thesis.fi &
+        EmailAddress0101 &
+        \\ \hline
+        IBAN number &
+        FI8612345600000123 &
+        1010IBANnumber0101 &
+        Only Finnish format
+        \\ \hline
+        BBAN number with dash &
+        123456-123 &
+        1010BBANnumber0101 &
+        \\ \hline
+        Phonenumber, international &
+        +358501234567 &
+        1010PhoneNumberInt0101 &
+        With or without whitespaces
+        \\ \hline
+        Phonenumber, local &
+        050-1234567 &
+        1010980230101 &
+        With or without whitespaces or dashes
+        \\ \hline
+        Business ID &
+        1234567-8 &
+        1010BusinessID0101 &
+        Finnish format
+        \\ \hline
+        Business ID, international &
+        FI12345678 &
+        101086512350101 &
+        \\ \hline
+        Business ID, int.\ zero form &
+        0012345678 &
+        1010865123500101 &
+        \\ \hline
+        Credit card number &
+        4920191061682346 &
+        1010664900101 &
+        \\ \hline
+        Windows Identity &
+        K123456 &
+        1010WinID0101 &
+        Used in company processes
+        \\ \hline
+        Address, common &
+        Teekkarikuja 1 a 42 &
+        1010AddressCommon0101 &
+        Common street name endings
+        \\ \hline
+        Address, ZIP &
+        Bulevardi 2 B 69, 00100 &
+        1010AddressZip0101 &
+        Disregards city name after ZIP
+        \\ \hline
+        Bank ID &
+        12345678 &
+        10108426100101 &
+        Bank user ID
+        \\ \hline
+        BBAN without dash &
+        12345600000123 &
+        101088420101 &
+        \\ \hline
+        Artificial business ID &
+        8123456789 &
+        101086512354970101 &
+        Used in RPA processes
+        \\ \hline
+    \end{tabularx}
+    \caption{Information replaced with Regex search from log data.
+        Data values are replaced with patterns with numbers or numbers and letters
+        depending on the original format in the data.
+        Patterns are formatted uniquely so that they can be recognized amongst the anonymized data,
+        each starting with 1010 and ending with 0101,
+        and having a typewise identifier in the middle.
+        With numeric patters,
+        numbers are selected as letter representations,
+        like business ID = 8651235 (BUSINES)}
+    \label{tab:regex-sensitive-info}
+\end{table}
+
+Script searched for repeating patterns related to sensitive information types.
+This was done with regular expression, or regex, searching.
+With regular expressions,
+different repeating patterns can be extracted and replaced from the data.
+Each sensitive data type has some sort of unifying feature,
+such as string length, number of digits, or location of certain character.\cite{li2008regular}
+Some types are clear and standardised like social security number
+(6 numbers, '-', '+' or 'a', three numbers and a number or a letter),
+or credit card number (15-16 numbers),
+while with some other types it may be hard
+to take all possibilities into consideration,
+like address (one or more words, at least one number,
+possibly one letter or more in case of 'apartment' or 'apt', more numbers \etc).
+Still,
+most of the cases could be considered to a degree
+that was deemed satisfying from a security point of view.
+All regex search clauses are listed in the table~\ref{tab:regex-sensitive-regex}
+
+%% TODO: increase font size! Use line breaks!
+
+\begin{table}[]
+    \begin{tabularx}{\textwidth}{|L{0.18\textwidth}|Y|}
+        \hline
+        \textbf{Info type} &
+        \textbf{Regex} \\ \hline
+        SSN &
+        \tiny{\verb=?<![a-zA-Z0-9])[\d]{6}[-a+]?[\d]{3}[\w]{1}(?:0{0}|0{3})(?![a-zA-Z0-9])=}
+        \\ \hline
+        Email &
+        \tiny{\verb=[^\`"\s]+@[\.\w-]*[\w]=}
+        \\ \hline
+        IBAN &
+        \tiny{\verb&(?:(?<![a-zA-Z0-9])|(?<=\\\D))(?:FI|fi)(?: ?\d){16}(?![a-zA-Z0-9])&}
+        \\ \hline
+        BBANwithDash &
+        \tiny{\verb=(?<![a-zA-Z0-9])[\d]{6}-[\d]{2,8}(?![a-zA-Z0-9])=}
+        \\ \hline
+        PhoneInt &
+        \tiny{\verb=(?<![a-zA-Z0-9])\+358(?: ?\d){8,10}(?![a-zA-Z0-9])=}
+        \\ \hline
+        PhoneLoc &
+        \tiny{\verb=(?<![a-zA-Z0-9-])[0][\d]{2,3}[ -]?(?: ?\d){6,8}(?![a-zA-Z0-9-])=}
+        \\ \hline
+        BusinessId &
+        \tiny{\verb=(?<![a-zA-Z0-9])[\d]{7}-[\d]{1}(?![a-zA-Z0-9])=}
+        \\ \hline
+        BusinessIdInt &
+        \tiny{\verb=(?<![a-zA-Z0-9])[a-zA-Z]{2}[\d]{8}(?![a-zA-Z0-9])=}
+        \\ \hline
+        BusinessIdIntZero &
+        \tiny{\verb=(?<![a-zA-Z0-9])[0]{2}[\d]{8}(?![a-zA-Z0-9])=}
+        \\ \hline
+        CreditCard &
+        \tiny{\verb=(?<![a-zA-Z0-9-.])[\d]{1}(?: ?\d){14,15}(?![a-zA-Z0-9-])=}
+        \\ \hline
+        WinId &
+        \tiny{\verb=(?<![a-zA-Z0-9])[a-zA-Z]{1,2}[\d]{6}(?![a-zA-Z0-9])=}
+        \\ \hline
+        AddressCom &
+        \tiny{\verb=[^\s""',.]* ?=\texttt{(katu|tie|kuja|polku|kaari|linja|raitti|rinne|penger|ranta|väylä|taival|tanhua|portti}
+        \texttt{|veräjä|laita|reuna|syrjä|aukio|tori|laituri|tunneli)}\verb=[\d]{1,3}( ?[a-zA-Z.]{1,4} ?[\d]{0,3})?(?!\w)=}
+        \\ \hline
+        AddressZip &
+        \tiny{\verb&(?<=\s)[\S]* [\d]{1,3}( ?[a-zA-Z.]{1,4} ?[\d]{0,3})?(\s|,\s)[\d]{5}(?!\w)&}
+        \\ \hline
+        BankId &
+        \tiny{\verb=(?<![a-zA-Z0-9-])[\d]{8}(?![a-zA-Z0-9-])=}
+        \\ \hline
+        BBANnoDash &
+        \tiny{\verb=(?<![a-zA-Z0-9])[\d]{14}(?![a-zA-Z0-9])=}
+        \\ \hline
+        ArtifBusinessId &
+        \tiny{\verb=(?<![a-zA-Z0-9])[89]{1}[\d]{9}(?![a-zA-Z0-9])=}
+        \\ \hline
+    \end{tabularx}
+    \caption{Regex search patterns for sensitive info finding.
+    Most of the regex patterns start with negative lookbehind
+    and end with negative lookahead
+    so that found pattern is not part of another string.
+    Order of the regex patterns as listed on the table is important
+    as some patterns give overlapping matches
+    so we wish to recognize certain patterns before others.}
+    \label{tab:regex-sensitive-regex}
+\end{table}
 
 As production environment is built on Microsoft Server based solution,
 and because it was highly unrecommended
@@ -233,56 +454,18 @@ for database SQL querying
 and stream editing.
 The amount of data was significant
 which made straight file editing impossible
-due to the memory limitations.
+due to the local machine memory limitations.
 Thus, stream editing was necessary
 for finding and replacing
 sensitive information from the data.
-\todo{maybe references?}
-%% TODO: References!
 
 Anonymization took good proportion of the time in workdays
 as processes were slow,
 the amount of data was huge
 and multiple re-runs were needed
 before the results were seemed adequate.
-\todo{Appendix of the script used. Does this need more explaining?}
-%% TODO: appendix of the script used
-
-%% TODO: add more details about regex and features anonymized
-
-%% ************************************************************************************************************
-
-\subsection{Data formatting}\label{subsec:meth-data-formatting}
-At the beginning of the research,
-the log data from RPA was in SQL database.
-However,
-the database used was not "pure"
-in a way that typical relational databases are,
-but some columns included JSON-formatted data in them.
-For ML algorithms to be able to read the given data with ease
-this kind of impurities needed to be cleared from the data.
-
-When feeding the log data to anomaly detection algorithm,
-it was necessary that all the rows were as minimally unique as possible
-in order to use the pattern finding abilities of the algorithm.
-Too unique data points would have made all of them anomalies
-compared to each other.
-Thus, all unique features were stripped from the data,
-such as the fingerprint value
-that was unique for each data point.
-As rawmessage-field included data in textual JSON form
-that identified unique automation executions at some extent,
-it was processed with additional script
-which removed manually such field values.
-These fields were
-timestamp, fingerprint, and job ID values.
-When training ML algorithm with rawmessage,
-timestamp and job ID values were included
-from their corresponding fields outside rawmessage.
-
-%% TODO:
-\todo{Add reference to appendices}
-
+The final anonymization script
+is introduced in the appendix~\ref{sec:app-anonymization-script}.
 
 %% ************************************************************************************************************
 

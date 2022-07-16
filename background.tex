@@ -203,59 +203,49 @@ Differences of each service provider are listed in a table~\ref{fig:mlaas-compar
 \end{figure}
 
 Amazon's new SageMaker service
-has replaced the old Amazon Machine Learning service.
-It is very much like Azure Machine Learning service
+has replaced the old Amazon Machine Learning service,
+and is very much like Azure Machine Learning service
 produced by Microsoft.
-Azure, however,
-has one major advantage
-which is the ML Studio environment.
-Most of the MLaaS provider's solutions
-have some sort of no-code to low-code design features
-which makes pipeline designing easy.
-Azure ML Studio lets the developer design and deploy
-full ML pipelines with drag-and-drop user interface.
 Compared to SageMaker and Azure,
 Google AI Platform is missing anomaly detection and ranking abilities.
 IBM Watson has even less features,
-as demonstrated in the table \ref{fig:mlaas-comparison}.~\cite{altexsoft2021mlaas}
+as demonstrated in the table~\ref{fig:mlaas-comparison}.~\cite{altexsoft2021mlaas}
 
-%% ************************************************************************************************************
-
-\subsection{Azure ML Studio}\label{subsec:bg-azure-ml-studio-algorithms}
-
-Microsoft Azure offers a Machine Learning Studio environment
-for easy ML pipeline designing.
-ML Studio gives ML designer a possibility to
-train algorithms and publish cloud endpoints
-utilizing all Azure resources
-connecting the power of ML
-to all other Azure features
-like data storages, IoT-services, and cloud computing.~\cite{altexsoft2021mlaas,microsoft2022azureml}
+Azure, however,
+has one major advantage compared to SageMaker and other competitors,
+which is the UI environment of ML Studio.
+Most of the MLaaS providers' solutions
+have some sort of no-code to low-code design features
+which makes pipeline designing easy.
+Azure ML Studio lets the developer design and deploy
+full ML pipelines with drag-and-drop user interface.~\cite{altexsoft2021mlaas,microsoft2022azureml}
 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=150mm]{./appendices/azure-ml-studio-example}
     \caption{With drag-and-drop pipeline designer
     it is easy to get started with ML programming in Azure ML Studio,
-        and visualizing the process helps understand all pipeline components
-        and their relations to each other.
+    and visualizing the process helps understand all pipeline components
+    and their relations to each other.
     \label{fig:azure-ml-studio-example}}
 \end{figure}
 
-Each component in pipeline can be tuned
+Each component in pipeline designer can be tuned
 to a certain extent.
 ML Studio has a predefined set of ready algorithms to use.
 Example of Azure ML Studio interface
-is shown in figure \ref{fig:azure-ml-studio-example}.
+is shown in figure~\ref{fig:azure-ml-studio-example}.
 Data to the ML Studio environment
 can be imported from local storage,
 but also from various other Azure services
 such as storage accounts with table and blob data.
-Trained ML pipeline can be inserted into wider operation chain
-combining other Azure services to it.
+Trained ML pipeline can be published as a cloud endpoint
+and inserted into wider operation chain
+combining other Azure services to it,
+like data storages and cloud computing resources.
 This allows designer to use ML computing capabilities
 with existing production environments
-utilizing services like IoT, API, or Kubernetes.
+utilizing services such as IoT, API, or Kubernetes.
 
 
 %% ************************************************************************************************************
@@ -365,7 +355,7 @@ without significant resource demands.
 
 %% ************************************************************************************************************
 
-\subsection{Robotic process automation in Samlink}\label{subsec:bg-rpa-in-samlink}
+\subsection{Robotic process automation}\label{subsec:bg-rpa}
 \todo{Short explanation of RPA in Samlink, mostly to clear out the terms used in this study}
 
 Robotic process automation, or RPA,
@@ -381,7 +371,7 @@ such as inputting text to a certain named field on the UI,
 or logging in with given username and password
 regardless of the location of those fields on the layout.
 
-\todo{references!}
+\todo{references!} %% TODO!!
 
 In Samlink RPA operations,
 a central coordinating system called \enquote{Orchestrator}
@@ -456,188 +446,29 @@ as it cannot be reversed.
 If personal information is essential for the use case of ML algorithm,
 this method weakens the algorithm results.~\cite{byun2007efficient}
 
-However,
-because it was determined that
-individual information in the log data used in this study
+Eventually,
+due to high customer data sensitivity and strict data safety policies,
+it was determined that individual information in the log data used in this study
 was not relevant for connecting the log events to technical support ticket timestamps,
-full anonymization was decided to execute on the log data.
+and full anonymization was decided to execute on the log data.
 This way,
 each personal information was replaced with a general token
 disclosing only what type of information (phone number, email address \etc) was anonymized.
-
-
-\begin{table}[]\small
-    \tabcolsep=0.11cm
-    \begin{tabularx}{\textwidth}{|L{0.17\textwidth}|L{0.27\textwidth}|L{0.30\textwidth}|Y|}
-        \hline
-        \textbf{Info type} &
-        \textbf{Example} &
-        \textbf{Replaced value} &
-        \textbf{Comment}
-        \\ \hline
-        Social security number &
-        010190-0123 &
-        10105051470101 &
-        Includes '-','+' and 'a' format
-        \\ \hline
-        Email &
-        author@thesis.fi &
-        EmailAddress0101 &
-        \\ \hline
-        IBAN number &
-        FI8612345600000123 &
-        1010IBANnumber0101 &
-        Only Finnish format
-        \\ \hline
-        BBAN number with dash &
-        123456-123 &
-        1010BBANnumber0101 &
-        \\ \hline
-        Phonenumber, international &
-        +358501234567 &
-        1010PhoneNumberInt0101 &
-        With or without whitespaces
-        \\ \hline
-        Phonenumber, local &
-        050-1234567 &
-        1010980230101 &
-        With or without whitespaces or dashes
-        \\ \hline
-        Business ID &
-        1234567-8 &
-        1010BusinessID0101 &
-        Finnish format
-        \\ \hline
-        Business ID, international &
-        FI12345678 &
-        101086512350101 &
-        \\ \hline
-        Business ID, int. zero form &
-        0012345678 &
-        1010865123500101 &
-        \\ \hline
-        Credit card number &
-        4920191061682346 &
-        1010664900101 &
-        \\ \hline
-        Windows Identity &
-        K123456 &
-        1010WinID0101 &
-        Used in company processes
-        \\ \hline
-        Address, common &
-        Teekkarikuja 1 a 42 &
-        1010AddressCommon0101 &
-        Common street name endings
-        \\ \hline
-        Address, ZIP &
-        Bulevardi 2 B 69, 00100 &
-        1010AddressZip0101 &
-        Disregards city name after ZIP
-        \\ \hline
-        Bank ID &
-        12345678 &
-        10108426100101 &
-        Bank user ID
-        \\ \hline
-        BBAN without dash &
-        12345600000123 &
-        101088420101 &
-        \\ \hline
-        Artificial business ID &
-        8123456789 &
-        101086512354970101 &
-        Used in RPA processes
-        \\ \hline
-    \end{tabularx}
-    \caption{Information replaced with Regex search from log data.
-    Data values are replaced with patterns with numbers or numbers and letters
-    depending on the original format in the data.
-    Patterns are formatted uniquely so that they can be recognized amongst the anonymized data,
-    each starting with 1010 and ending with 0101,
-    and having a typewise identifier in the middle.
-    With numeric patters,
-    numbers are selected as letter representations,
-    like business ID = 8651235 (BUSINES)}
-    \label{tab:regex-sensitive-info}
-\end{table}
-
-
-
-\begin{table}[]
-    \begin{tabularx}{\textwidth}{|L{0.18\textwidth}|Y|}
-        \hline
-        \textbf{Info type} &
-        \textbf{Regex} \\ \hline
-        SSN &
-        \tiny{\verb=?<![a-zA-Z0-9])[\d]{6}[-a+]?[\d]{3}[\w]{1}(?:0{0}|0{3})(?![a-zA-Z0-9])=}
-         \\ \hline
-        Email &
-        \tiny{\verb=[^\`"\s]+@[\.\w-]*[\w]=}
-         \\ \hline
-        IBAN &
-        \tiny{\verb&(?:(?<![a-zA-Z0-9])|(?<=\\\D))(?:FI|fi)(?: ?\d){16}(?![a-zA-Z0-9])&}
-        \\ \hline
-        BBANwithDash &
-        \tiny{\verb=(?<![a-zA-Z0-9])[\d]{6}-[\d]{2,8}(?![a-zA-Z0-9])=}
-         \\ \hline
-        PhoneInt &
-        \tiny{\verb=(?<![a-zA-Z0-9])\+358(?: ?\d){8,10}(?![a-zA-Z0-9])=}
-         \\ \hline
-        PhoneLoc &
-        \tiny{\verb=(?<![a-zA-Z0-9-])[0][\d]{2,3}[ -]?(?: ?\d){6,8}(?![a-zA-Z0-9-])=}
-         \\ \hline
-        BusinessId &
-        \tiny{\verb=(?<![a-zA-Z0-9])[\d]{7}-[\d]{1}(?![a-zA-Z0-9])=}
-         \\ \hline
-        BusinessIdInt &
-        \tiny{\verb=(?<![a-zA-Z0-9])[a-zA-Z]{2}[\d]{8}(?![a-zA-Z0-9])=}
-         \\ \hline
-        BusinessIdIntZero &
-        \tiny{\verb=(?<![a-zA-Z0-9])[0]{2}[\d]{8}(?![a-zA-Z0-9])=}
-         \\ \hline
-        CreditCard &
-        \tiny{\verb=(?<![a-zA-Z0-9-.])[\d]{1}(?: ?\d){14,15}(?![a-zA-Z0-9-])=}
-         \\ \hline
-        WinId &
-        \tiny{\verb=(?<![a-zA-Z0-9])[a-zA-Z]{1,2}[\d]{6}(?![a-zA-Z0-9])=}
-         \\ \hline
-        AddressCom &
-        \tiny{\verb=[^\s""',.]* ?=\texttt{(katu|tie|kuja|polku|kaari|linja|raitti|rinne|penger|ranta|väylä|taival|tanhua|portti}
-        \texttt{|veräjä|laita|reuna|syrjä|aukio|tori|laituri|tunneli)}\verb=[\d]{1,3}( ?[a-zA-Z.]{1,4} ?[\d]{0,3})?(?!\w)=}
-        \\ \hline
-        AddressZip &
-        \tiny{\verb&(?<=\s)[\S]* [\d]{1,3}( ?[a-zA-Z.]{1,4} ?[\d]{0,3})?(\s|,\s)[\d]{5}(?!\w)&}
-         \\ \hline
-        BankId &
-        \tiny{\verb=(?<![a-zA-Z0-9-])[\d]{8}(?![a-zA-Z0-9-])=}
-         \\ \hline
-        BBANnoDash &
-        \tiny{\verb=(?<![a-zA-Z0-9])[\d]{14}(?![a-zA-Z0-9])=}
-         \\ \hline
-        ArtifBusinessId &
-        \tiny{\verb=(?<![a-zA-Z0-9])[89]{1}[\d]{9}(?![a-zA-Z0-9])=}
-         \\ \hline
-    \end{tabularx}
-    \caption{Regex search patterns for sensitive info finding.
-    Most of the regex patterns start with negative lookbehind
-    and end with negative lookahead
-    so that found pattern is not part of another string.
-    Order of the regex patterns is as shown on the table
-    as some patterns gives overlapping matches.
-    By searching shorter patterns before longer
-    it is possible to recognize the type of anonymized information
-    with higher reliability.}
-    \label{tab:regex-sensitive-info2}
-\end{table}
+Frankly,
+it was not certain if identifiable personal data had improved algorithm results,
+but because corresponding support ticket data
+was stripped from all other information except timestamps,
+any possible connections between personal data in logs and in tickets
+were lost in any case.
 
 Data anonymization was executed in production environment
 with PowerShell script.
 Several predefined identification features were searched with
 regular expression (or regex) patterns and replaced with
 default keys.
+Anonymization scripts and data format
+is described more in the section~\ref{subsec:meth-data-anonymization}.
 
-%% TODO: WIP! Refer to tables!
 
 %% ************************************************************************************************************
 
