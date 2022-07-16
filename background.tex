@@ -10,7 +10,7 @@ Machine learning, or ML,
 is a subcategory of the AI field and data science.
 Typically, ML refers to
 a set of technologies used to \enquote{build computers
-that improve automatically through experience}.\cite{jordan2015machine}
+that improve automatically through experience}.~\cite{jordan2015machine}
 This is generally considered a machine way
 to simulate human learning process.
 ML usage has become more common
@@ -26,7 +26,7 @@ or where amount of data is just too much
 for people to process.
 This is why ML has proved its power
 in various empirical science fields,
-such as biology, cosmology or social science.\cite{jordan2015machine}
+such as biology, cosmology or social science.~\cite{jordan2015machine}
 
 In this section, 
 key concepts of ML are explained briefly
@@ -43,7 +43,7 @@ and how it had to be addressed during this study.
 Algorithm means a finite sequence of (typically) mathematical operations
 that are used to solve a specific problem,
 generally by repetition of some steps
-until the problem resolves.\cite{merriam2022algorithm}
+until the problem resolves.~\cite{merriam2022algorithm}
 Algorithms are the main component inside machine learning~
 By iterating through all the data points
 algorithm is able to, for example,
@@ -57,9 +57,9 @@ algorithm is first trained by tuning these parameters
 to fit the current case.
 Usually,
 ML algorithms can be trained in three ways:
-supervised, unsupervised, and reinforced learning.\cite{jordan2015machine}
+supervised, unsupervised, and reinforced learning.~\cite{jordan2015machine}
 Even more training methods exist
-that usually combine those mentioned.\cite{ayodele2010types, mahesh2020machine}
+that usually combine those mentioned.~\cite{ayodele2010types, mahesh2020machine}
 For the sake of simplicity,
 we focus on those three main methods.
 
@@ -67,17 +67,17 @@ In \textbf{supervised learning},
 algorithm is given data with ready answers on
 how the data needs to be interpreted.
 Algorithm then tries to figure out the rules behind
-how given data and the correct answers are related.\cite{ayodele2010types}
+how given data and the correct answers are related.~\cite{ayodele2010types}
 In \textbf{unsupervised learning},
 on the other hand,
 algorithm does not get model data from which to train itself,
 but instead it tries to find clusters or groups inside the data
-that are linked together more closely than to other data points.\cite{winky}
+that are linked together more closely than to other data points.~\cite{winky}
 \textbf{Reinforced learning} refers to a method
 where a computer program is given a goal
 and provided feedback as a reward.
 This reward is what program aims to maximize
-by adjusting given parameters.\cite{ayodele2010types}
+by adjusting given parameters.~\cite{ayodele2010types}
 
 In ML,
 there are multiple algorithms to solve different problems
@@ -85,7 +85,7 @@ and no jack-of-all-trades algorithm exists.
 Each algorithm is suitable for certain type of problem.
 To simplify,
 algorithms are usually divided into three or four categories
-based on the problem type.\cite{vickery2019mltypes}
+based on the problem type.~\cite{vickery2019mltypes}
 
 \textbf{Regression algorithms} predict values
 and are typically used with supervised learning.
@@ -96,7 +96,7 @@ such as building
 year,location, number of rooms \etc.
 With these varying features
 the algorithm then gives each feature a weight value
-which determine the final price of the house.\cite{vickery2019mltypes}
+which determine the final price of the house.~\cite{vickery2019mltypes}
 
 \textbf{Classification algorithms} predict categories
 and are also used most commonly with supervised learning.
@@ -104,7 +104,7 @@ Depending on the algorithm,
 they can predict between two or several categories.
 Examples of classification problems
 could be spam mail identification with two class classification,
-or flower species recognition from images with multiclass classification.\cite{vickery2019mltypes}
+or flower species recognition from images with multiclass classification.~\cite{vickery2019mltypes}
 
 \textbf{Clustering algorithms} use unsupervised learning
 to find structures inside data.
@@ -113,17 +113,17 @@ for instance,
 by first providing the amount of clusters to search to algorithm,
 which then calculates a center point for each cluster
 so that they are as far away from each other as possible
-while data points surrounding each center are as close to each other as possible.\cite{mahesh2020machine}
+while data points surrounding each center are as close to each other as possible.~\cite{mahesh2020machine}
 This could be used,
 for example,
 to find meaningful customer segments from transaction data
-in order to improve targeted advertising.\cite{chen2017purtreeclust}
+in order to improve targeted advertising.~\cite{chen2017purtreeclust}
 
 \textbf{Dimension reduction algorithms} are a separate type of algorithms used with unsupervised learning,
 but they are usually combined with other algorithms
 to solve the main problem.
 With dimension reduction,
-main algorithm calculations are streamlined by first reducing the amount of feature dimensions.\cite{li2017mlalgorithm}
+main algorithm calculations are streamlined by first reducing the amount of feature dimensions.~\cite{li2017mlalgorithm}
 
 These four ML problem types
 and most known algorithms of each type
@@ -143,7 +143,7 @@ where anomalies are rare incidents outside common clusters.
 However,
 in this study we utilize PCA-based anomaly detection algorithm,
 where PCA refers to Principal Component Analysis,
-and which is a dimension reduction algorithm.\cite{li2017mlalgorithm}
+and which is a dimension reduction algorithm.~\cite{li2017mlalgorithm}
 More about PCA
 is discussed later in this section.
 In addition,
@@ -158,7 +158,7 @@ is used as training data.
 The rest is used to validate the results
 so that validation data and training data do not overlap.
 Instead, trained algorithm is given data it has not seen before
-and the result it produces with it is then validated.\cite{baheti2022datasplit}
+and the result it produces with it is then validated.~\cite{baheti2022datasplit}
 For example,
 in supervised learning
 the key values the algorithm is trained to find out
@@ -180,7 +180,7 @@ Machine learning algorithms are not light to operate.
 ML is at its best with big data
 where amount of data points
 makes it easier for algorithms
-to find repeating patterns more reliably.\cite{zhou2017machine}
+to find repeating patterns more reliably.~\cite{zhou2017machine}
 Data amount, however,
 requires huge resources in terms of memory and computing power.
 Especially with online applications
@@ -217,7 +217,7 @@ full ML pipelines with drag-and-drop user interface.
 Compared to SageMaker and Azure,
 Google AI Platform is missing anomaly detection and ranking abilities.
 IBM Watson has even less features,
-as demonstrated in the table \ref{fig:mlaas-comparison}.\cite{altexsoft2021mlaas}
+as demonstrated in the table \ref{fig:mlaas-comparison}.~\cite{altexsoft2021mlaas}
 
 %% ************************************************************************************************************
 
@@ -230,7 +230,7 @@ train algorithms and publish cloud endpoints
 utilizing all Azure resources
 connecting the power of ML
 to all other Azure features
-like data storages, IoT-services, and cloud computing.\cite{altexsoft2021mlaas,microsoft2022azureml}
+like data storages, IoT-services, and cloud computing.~\cite{altexsoft2021mlaas,microsoft2022azureml}
 
 \begin{figure}[htb]
     \centering
@@ -403,41 +403,277 @@ supervises the RPA processes.
 %% ************************************************************************************************************
 
 \subsection{Data sensitivity}\label{subsec:bg-data-sensitivity}
-\todo{some basic stuff about anonymization, data sensitivity and data protection}
-\todo{Just practicalities, not much about theory or background}
 
 During this study,
 it was necessary to make sure no sensitive data
 was moved out of the production environment.
-This was mostly due to regulations described in GDPR. %% TODO: wording? More?
+This was mostly due to restrictions imposed by GDPR\@.
+In order to maintain the data security,
+data had to be anonymized
+before it could be exported to the cloud environment.
+After anonymization,
+data would not include any information
+that can be connected to real individuals.
+Three different anonymization methods were considered,
+which were pseudonymization, k-anonymization and full anonymization.
+
+Pseudonymization refers to a method
+where sensitive information is de-identified.
+This means,
+that each sensitive piece of information
+is replaced with a decrypted value
+so that no information is lost
+but human cannot identify individuals
+when reading the data.
+Decryption and de-identification
+could be reversed, \ie data could be re-identified,
+with decryption key which tells computer
+how to convert the replaced value back to the original form.
+As machine learning algorithms do not care about the meanings
+behind personal identification information,
+such as phone numbers or addresses,
+pseudonymization would preserve the information in the data unchanged
+for ML algorithms to use so that no information would be lost.~\cite{noumeir2007pseudonymization}
+
+As pseudonymization is reversible operation with encryption key,
+it is not the safest way to anonymize the data
+because encryption key leaking is always a risk.
+K-anonymization is the next step to secure the data sensitivity.
+Excluding all unique identifiers such as full name or social security number,
+information like home street, age, workplace or last name
+are not on their own enough to identify certain individual,
+but combined they can single out a person.
+K-anonymization is unreversable anonymization approach
+where identifying information is generalized
+to mask individuals into crowd.
+With k-anonymization,
+algorithm replaces single informative details
+with more general variants,
+for instance,
+address to hometown or age to age range.
+K-anonymization loses information
+as it cannot be reversed.
+If personal information is essential for the use case of ML algorithm,
+this method weakens the algorithm results.~\cite{byun2007efficient}
+
+However,
+because it was determined that
+individual information in the log data used in this study
+was not relevant for connecting the log events to technical support ticket timestamps,
+full anonymization was decided to execute on the log data.
+This way,
+each personal information was replaced with a general token
+disclosing only what type of information (phone number, email address \etc) was anonymized.
+
+
+\begin{table}[]\small
+    \tabcolsep=0.11cm
+    \begin{tabularx}{\textwidth}{|L{0.17\textwidth}|L{0.27\textwidth}|L{0.30\textwidth}|Y|}
+        \hline
+        \textbf{Info type} &
+        \textbf{Example} &
+        \textbf{Replaced value} &
+        \textbf{Comment}
+        \\ \hline
+        Social security number &
+        010190-0123 &
+        10105051470101 &
+        Includes '-','+' and 'a' format
+        \\ \hline
+        Email &
+        author@thesis.fi &
+        EmailAddress0101 &
+        \\ \hline
+        IBAN number &
+        FI8612345600000123 &
+        1010IBANnumber0101 &
+        Only Finnish format
+        \\ \hline
+        BBAN number with dash &
+        123456-123 &
+        1010BBANnumber0101 &
+        \\ \hline
+        Phonenumber, international &
+        +358501234567 &
+        1010PhoneNumberInt0101 &
+        With or without whitespaces
+        \\ \hline
+        Phonenumber, local &
+        050-1234567 &
+        1010980230101 &
+        With or without whitespaces or dashes
+        \\ \hline
+        Business ID &
+        1234567-8 &
+        1010BusinessID0101 &
+        Finnish format
+        \\ \hline
+        Business ID, international &
+        FI12345678 &
+        101086512350101 &
+        \\ \hline
+        Business ID, int. zero form &
+        0012345678 &
+        1010865123500101 &
+        \\ \hline
+        Credit card number &
+        4920191061682346 &
+        1010664900101 &
+        \\ \hline
+        Windows Identity &
+        K123456 &
+        1010WinID0101 &
+        Used in company processes
+        \\ \hline
+        Address, common &
+        Teekkarikuja 1 a 42 &
+        1010AddressCommon0101 &
+        Common street name endings
+        \\ \hline
+        Address, ZIP &
+        Bulevardi 2 B 69, 00100 &
+        1010AddressZip0101 &
+        Disregards city name after ZIP
+        \\ \hline
+        Bank ID &
+        12345678 &
+        10108426100101 &
+        Bank user ID
+        \\ \hline
+        BBAN without dash &
+        12345600000123 &
+        101088420101 &
+        \\ \hline
+        Artificial business ID &
+        8123456789 &
+        101086512354970101 &
+        Used in RPA processes
+        \\ \hline
+    \end{tabularx}
+    \caption{Information replaced with Regex search from log data.
+    Data values are replaced with patterns with numbers or numbers and letters
+    depending on the original format in the data.
+    Patterns are formatted uniquely so that they can be recognized amongst the anonymized data,
+    each starting with 1010 and ending with 0101,
+    and having a typewise identifier in the middle.
+    With numeric patters,
+    numbers are selected as letter representations,
+    like business ID = 8651235 (BUSINES)}
+    \label{tab:regex-sensitive-info}
+\end{table}
+
+
+
+\begin{table}[]
+    \begin{tabularx}{\textwidth}{|L{0.18\textwidth}|Y|}
+        \hline
+        \textbf{Info type} &
+        \textbf{Regex} \\ \hline
+        SSN &
+        \tiny{\verb=?<![a-zA-Z0-9])[\d]{6}[-a+]?[\d]{3}[\w]{1}(?:0{0}|0{3})(?![a-zA-Z0-9])=}
+         \\ \hline
+        Email &
+        \tiny{\verb=[^\`"\s]+@[\.\w-]*[\w]=}
+         \\ \hline
+        IBAN &
+        \tiny{\verb&(?:(?<![a-zA-Z0-9])|(?<=\\\D))(?:FI|fi)(?: ?\d){16}(?![a-zA-Z0-9])&}
+        \\ \hline
+        BBANwithDash &
+        \tiny{\verb=(?<![a-zA-Z0-9])[\d]{6}-[\d]{2,8}(?![a-zA-Z0-9])=}
+         \\ \hline
+        PhoneInt &
+        \tiny{\verb=(?<![a-zA-Z0-9])\+358(?: ?\d){8,10}(?![a-zA-Z0-9])=}
+         \\ \hline
+        PhoneLoc &
+        \tiny{\verb=(?<![a-zA-Z0-9-])[0][\d]{2,3}[ -]?(?: ?\d){6,8}(?![a-zA-Z0-9-])=}
+         \\ \hline
+        BusinessId &
+        \tiny{\verb=(?<![a-zA-Z0-9])[\d]{7}-[\d]{1}(?![a-zA-Z0-9])=}
+         \\ \hline
+        BusinessIdInt &
+        \tiny{\verb=(?<![a-zA-Z0-9])[a-zA-Z]{2}[\d]{8}(?![a-zA-Z0-9])=}
+         \\ \hline
+        BusinessIdIntZero &
+        \tiny{\verb=(?<![a-zA-Z0-9])[0]{2}[\d]{8}(?![a-zA-Z0-9])=}
+         \\ \hline
+        CreditCard &
+        \tiny{\verb=(?<![a-zA-Z0-9-.])[\d]{1}(?: ?\d){14,15}(?![a-zA-Z0-9-])=}
+         \\ \hline
+        WinId &
+        \tiny{\verb=(?<![a-zA-Z0-9])[a-zA-Z]{1,2}[\d]{6}(?![a-zA-Z0-9])=}
+         \\ \hline
+        AddressCom &
+        \tiny{\verb=[^\s""',.]* ?=\texttt{(katu|tie|kuja|polku|kaari|linja|raitti|rinne|penger|ranta|väylä|taival|tanhua|portti}
+        \texttt{|veräjä|laita|reuna|syrjä|aukio|tori|laituri|tunneli)}\verb=[\d]{1,3}( ?[a-zA-Z.]{1,4} ?[\d]{0,3})?(?!\w)=}
+        \\ \hline
+        AddressZip &
+        \tiny{\verb&(?<=\s)[\S]* [\d]{1,3}( ?[a-zA-Z.]{1,4} ?[\d]{0,3})?(\s|,\s)[\d]{5}(?!\w)&}
+         \\ \hline
+        BankId &
+        \tiny{\verb=(?<![a-zA-Z0-9-])[\d]{8}(?![a-zA-Z0-9-])=}
+         \\ \hline
+        BBANnoDash &
+        \tiny{\verb=(?<![a-zA-Z0-9])[\d]{14}(?![a-zA-Z0-9])=}
+         \\ \hline
+        ArtifBusinessId &
+        \tiny{\verb=(?<![a-zA-Z0-9])[89]{1}[\d]{9}(?![a-zA-Z0-9])=}
+         \\ \hline
+    \end{tabularx}
+    \caption{Regex search patterns for sensitive info finding.
+    Most of the regex patterns start with negative lookbehind
+    and end with negative lookahead
+    so that found pattern is not part of another string.
+    Order of the regex patterns is as shown on the table
+    as some patterns gives overlapping matches.
+    By searching shorter patterns before longer
+    it is possible to recognize the type of anonymized information
+    with higher reliability.}
+    \label{tab:regex-sensitive-info2}
+\end{table}
 
 Data anonymization was executed in production environment
 with PowerShell script.
 Several predefined identification features were searched with
-regular expression (or regex), patterns and replaced with
+regular expression (or regex) patterns and replaced with
 default keys.
-%% TODO: examples
-%% TODO: Sources!
-%% TODO: How does anonymization affect to ML algorithm functionalities/usages?
 
-%% TODO: references?
-%% TODO: Refer to k-anonymization and pseudonymization. Explain BRIEFLY
-\begin{itcomment} %% Moved from Methods-section
-    Here we could explain more about pseudonymization and k-anonymization,
-    but is it necessary as they were not used or considered?
-    It would bring something more to the study, of course,
-    but is it worth the time?
-\end{itcomment}
-
+%% TODO: WIP! Refer to tables!
 
 %% ************************************************************************************************************
 
-\subsection{Log data analyzing with ML}\label{subsec:bg-log-data-analyzing-with-ml}
-\todo{Some research should exist}
-TODO: In this section, we look
-what studies and cases of ML log data analyzing exists in the IT field.
-Only briefly, nothing too deep.
+\subsection{Log data analyzing and anomaly detection with ML}\label{subsec:bg-log-data-analyzing-and-anomaly-detection-with-ml}
 
+Using machine learning for log data analyzing
+is not a new field of study.~\cite{rantala2019applying,allagi2019analysis,kondo2017early,cao2017machine}
+Key issue tends to be the format of the log data
+which shifts the dilemma to natural language processing.
+Some studies also combine anomaly detection using machine learning
+to log data analysis.~\cite{liu2019loganomaly, zhang2019robust}
+Comparing existing studies to our case
+raises at least one major suggestion for improvement:
+log data refining.
+
+When log data has consistent format,
+multiple different algorithms can be utilized
+for anomaly detection and log analyzing.
+Log events can be clustered
+and different types of events can be counted
+if the amount of types is finite and known.~\cite{liu2019loganomaly}
+
+If training data already have information
+we wish to teach the algorithm to forecast (\ie data is labeled),
+combining the results of the log data analysis to external features
+is more feasible.
+With labeled data,
+supervised learning methods can improve the results of the algorithm forecast abilities.
+~\cite{rantala2019applying}
+
+As explained in the section~\ref{subsec:meth-efecte-ticket-data},
+data features connected to anomaly detection results
+are pure datetime values.
+With more insight to ticket data properties,
+ML algorithms could be able to extract more valuable information
+from the log data.
 
 %% ************************************************************************************************************
 
@@ -491,7 +727,7 @@ refers to an ML technique
 where two or more ML methods are combined
 to overcome the limitations of
 or to boost the estimation capabilities of
-a single method alone.\cite{Anifowose2020hml}
+a single method alone.~\cite{Anifowose2020hml}
 In this study,
 we combine PCA-based anomaly detection algorithm
 with regression algorithm
@@ -499,7 +735,7 @@ in order to amplify the prediction powers of our ML algorithm
 when trying to determine the possible ticket count
 based on log events.
 
-Hybrid machine learning is not rare technique in ML field.\cite{shon2007hybrid,tsai2010credit,mohan2019effective,
+Hybrid machine learning is not rare technique in ML field.~\cite{shon2007hybrid,tsai2010credit,mohan2019effective,
     hsieh2005hybrid,jain2007hybrid,kim2007hybrid,lee2002credit,malhotra2002differentiating}
 %% TODO:
 \todo{Something about the HML in ADA}
