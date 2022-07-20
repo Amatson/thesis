@@ -377,61 +377,66 @@ most of the cases could be considered to a degree
 that was deemed satisfying from a security point of view.
 All regex search clauses are listed in the table~\ref{tab:regex-sensitive-regex}
 
-%% TODO: increase font size! Use line breaks!
-
 \begin{table}[]
     \begin{tabularx}{\textwidth}{|L{0.18\textwidth}|Y|}
         \hline
         \textbf{Info type} &
         \textbf{Regex} \\ \hline
         SSN &
-        \tiny{\verb=?<![a-zA-Z0-9])[\d]{6}[-a+]?[\d]{3}[\w]{1}(?:0{0}|0{3})(?![a-zA-Z0-9])=}
+        \verb=?<![a-zA-Z0-9])[\d]{6}[-a+]?[\d]{3}[\w]{1}=
+        \verb=(?:0{0}|0{3})(?![a-zA-Z0-9])=
         \\ \hline
         Email &
-        \tiny{\verb=[^\`"\s]+@[\.\w-]*[\w]=}
+        \verb=[^\`"\s]+@[\.\w-]*[\w]=
         \\ \hline
         IBAN &
-        \tiny{\verb&(?:(?<![a-zA-Z0-9])|(?<=\\\D))(?:FI|fi)(?: ?\d){16}(?![a-zA-Z0-9])&}
+        \verb&(?:(?<![a-zA-Z0-9])|(?<=\\\D))(?:FI|fi)&
+        \verb&(?: ?\d){16}(?![a-zA-Z0-9])&
         \\ \hline
         BBANwithDash &
-        \tiny{\verb=(?<![a-zA-Z0-9])[\d]{6}-[\d]{2,8}(?![a-zA-Z0-9])=}
+        \verb=(?<![a-zA-Z0-9])[\d]{6}-[\d]{2,8}(?![a-zA-Z0-9])=
         \\ \hline
         PhoneInt &
-        \tiny{\verb=(?<![a-zA-Z0-9])\+358(?: ?\d){8,10}(?![a-zA-Z0-9])=}
+        \verb=(?<![a-zA-Z0-9])\+358(?: ?\d){8,10}(?![a-zA-Z0-9])=
         \\ \hline
         PhoneLoc &
-        \tiny{\verb=(?<![a-zA-Z0-9-])[0][\d]{2,3}[ -]?(?: ?\d){6,8}(?![a-zA-Z0-9-])=}
+        \verb=(?<![a-zA-Z0-9-])[0][\d]{2,3}[ -]?=
+        \verb=(?: ?\d){6,8}(?![a-zA-Z0-9-])=
         \\ \hline
         BusinessId &
-        \tiny{\verb=(?<![a-zA-Z0-9])[\d]{7}-[\d]{1}(?![a-zA-Z0-9])=}
+        \verb=(?<![a-zA-Z0-9])[\d]{7}-[\d]{1}(?![a-zA-Z0-9])=
         \\ \hline
         BusinessIdInt &
-        \tiny{\verb=(?<![a-zA-Z0-9])[a-zA-Z]{2}[\d]{8}(?![a-zA-Z0-9])=}
+        \verb=(?<![a-zA-Z0-9])[a-zA-Z]{2}[\d]{8}(?![a-zA-Z0-9])=
         \\ \hline
         BusinessIdIntZero &
-        \tiny{\verb=(?<![a-zA-Z0-9])[0]{2}[\d]{8}(?![a-zA-Z0-9])=}
+        \verb=(?<![a-zA-Z0-9])[0]{2}[\d]{8}(?![a-zA-Z0-9])=
         \\ \hline
         CreditCard &
-        \tiny{\verb=(?<![a-zA-Z0-9-.])[\d]{1}(?: ?\d){14,15}(?![a-zA-Z0-9-])=}
+        \verb=(?<![a-zA-Z0-9-.])[\d]{1}(?: ?\d){14,15}=
+        \verb=(?![a-zA-Z0-9-])=
         \\ \hline
         WinId &
-        \tiny{\verb=(?<![a-zA-Z0-9])[a-zA-Z]{1,2}[\d]{6}(?![a-zA-Z0-9])=}
+        \verb=(?<![a-zA-Z0-9])[a-zA-Z]{1,2}[\d]{6}(?![a-zA-Z0-9])=
         \\ \hline
         AddressCom &
-        \tiny{\verb=[^\s""',.]* ?=\texttt{(katu|tie|kuja|polku|kaari|linja|raitti|rinne|penger|ranta|väylä|taival|tanhua|portti}
-        \texttt{|veräjä|laita|reuna|syrjä|aukio|tori|laituri|tunneli)}\verb=[\d]{1,3}( ?[a-zA-Z.]{1,4} ?[\d]{0,3})?(?!\w)=}
+        \verb=[^\s""',.]* ?=\texttt{(katu|tie|kuja|polku|kaari|linja|raitti}
+        \texttt{|rinne|penger|ranta|väylä|taival|tanhua|portti}
+        \texttt{|veräjä|laita|reuna|syrjä|aukio|tori|laituri|tunneli)}
+        \verb=[\d]{1,3}( ?[a-zA-Z.]{1,4} ?[\d]{0,3})?(?!\w)=
         \\ \hline
         AddressZip &
-        \tiny{\verb&(?<=\s)[\S]* [\d]{1,3}( ?[a-zA-Z.]{1,4} ?[\d]{0,3})?(\s|,\s)[\d]{5}(?!\w)&}
+        \verb&(?<=\s)[\S]* [\d]{1,3}( ?[a-zA-Z.]{1,4} ?&
+        \verb&[\d]{0,3})?(\s|,\s)[\d]{5}(?!\w)&
         \\ \hline
         BankId &
-        \tiny{\verb=(?<![a-zA-Z0-9-])[\d]{8}(?![a-zA-Z0-9-])=}
+        \verb=(?<![a-zA-Z0-9-])[\d]{8}(?![a-zA-Z0-9-])=
         \\ \hline
         BBANnoDash &
-        \tiny{\verb=(?<![a-zA-Z0-9])[\d]{14}(?![a-zA-Z0-9])=}
+        \verb=(?<![a-zA-Z0-9])[\d]{14}(?![a-zA-Z0-9])=
         \\ \hline
         ArtifBusinessId &
-        \tiny{\verb=(?<![a-zA-Z0-9])[89]{1}[\d]{9}(?![a-zA-Z0-9])=}
+        \verb=(?<![a-zA-Z0-9])[89]{1}[\d]{9}(?![a-zA-Z0-9])=
         \\ \hline
     \end{tabularx}
     \caption{Regex search patterns for sensitive info finding.
@@ -471,43 +476,35 @@ is introduced in the appendix~\ref{sec:app-anonymization-script}.
 
 \subsection{Azure cloud resources}\label{subsec:meth-azure-cloud resources}
 
-\todo{This section is under construction! Here are some things we are discussing here:}
-\begin{itcomment}
-    Azure resources, such as virtual networks, storage spaces, connections to ML studio \etc
-
-    What kind of resources were usable based on the issue at hand
-    and limitations by the company (cost, basically).
-    We discuss some things about Azure ML Studio
-    but only in extent of what parts needed configuring.
-\end{itcomment}
-
-%% TODO: <Azure resources, virtual network etc.>
-%% TODO: Azure architecture
-
 Azure provides a vast set of tools and resources
 for different kinds of cloud projects.
 Resources needed for Azure ML Studio usage
 depends on the subscription used
-and security restrictions set by subscription administrators.
+and security restrictions set by subscription manager.
 When starting this study,
 due to these restrictions,
 all resources used for ML training in this project
 needed to be inside the same virtual network.
 Azure ML Studio environment could be opened from any network,
 but most of the features were unavailable
-if computer browsing studio UI was outside this virtual network.
+if computer browsing web UI of the studio was outside this virtual network.
 Thus,
 a virtual machine had to be acquired as Azure resource
 from within the same network as other resources
 and ML Studio UI had to be opened with the browser on this machine.
-Later on it was found
+Later on it was found,
 that Azure Machine Learning Workspace networking feature
 could be configured to allow public access
-making possible to access ML Studio UI from all networks.
+making it possible to access ML Studio UI from all networks.
 
-
-%% TODO: explain picture
-\todo{Explain picture}
+Resources needed for Azure ML Studio usage and their relations
+are shown in the picture~\ref{fig:azure-diagram}.
+This is the configuration required
+with the existing subscription models of the Samlink,
+albeit different configuration combinations could be possible
+depending on the subscription and network restrictions.
+Most crucial parts were
+the storage account, private endpoint and virtual network.
 
 \begin{figure}[htb]
     \centering
@@ -516,63 +513,72 @@ making possible to access ML Studio UI from all networks.
     \label{fig:azure-diagram}}
 \end{figure}
 
+Storage account \textit{worspacemlrpa}
+was linked to the Azure Machine Learning workspace.
+This storage is the main disk
+that stores all the input data used for algorithm training
+as well as the result data from said algorithms.
+Virtual network \textit{vnet-test-machine-learning}
+is the mentioned network
+that includes both ML workspace and virtual machine
+used to access the ML Studio web UI\@.
+Private endpoint \textit{endpoint-ml-nic01}
+acted as a final link between ML workspace and virtual network.
+
+
 %% ............................................................................................................
 
 \subsection{Azure ML Studio}\label{subsec:meth-azure-ml-studio}
 
-During the initial pipeline runs
-the execution came to an abrupt stop
-and Azure notified about memory issues. %% TODO: Add reference to issue
-These problems were linked to the data amount
-which had to be reduced to 600 megabytes
-before any pipeline could be finished using the data.
-This reduction was against the initial goal
-where preferably all the data could have been used.
+The actual machine learning pipeline design and algorithm training
+is done with ML Studio portal,
+which is a graphic web user interface.
+It is a separate tool usable outside usual Azure environment
+after configuring the workspace in Azure resources.
+Inside ML Studio,
+there are two important resources needed to set up
+before pipeline designing can start.
 
-Considerable amount of time was used
-to fix or avoid this issue
-but nothing clear was found
-that would explain the error received.
-While working with the issue
-it was also noted
-that data needed more cleaning
-in order to ease the preprocessing phase
-as described with more detail in section~\ref{subsec:meth-data-anonymization}
-Thus,
-the data had to be imported from log archive
-and anonymized once more.
-
-To advance the study more efficiently
-it was decided to trim info-type log messages from data
-hence reducing the data amount considerably.
-Final data included 8.6 million log rows
-which was about 10\% of the original data size.
-Before final cleaning operations
-the data took 8.1GB od disk space,
-and after cleaning the rawmessage-field
-the final disk size was 6.6GB\@.
-Even with this data size,
-some Azure ML components faced this memory issue
-and forced us to choose such components
-that were able to handle these data amounts.
-
-%% TODO: Move some parts of the above memory problem elsewhere
+First,
+the data have to be registered as an usable asset.
+Multiple pre-existing data sources are available to choose
+from online sources,
+and designer can also choose to use
+other accessible web file sources.
+Besides these,
+datasets can be imported from Azure datastore accounts.
+Data can be uploaded from local machine through the Studio UI
+so it is saved to the chosen datastore.
+As datastores are usable with all Azure service resources,
+it is possible to use data gathered from any other Azure service
+for machine learning training.
+In this study,
+the data anonymized and preprocessed in local machine
+was imported with a separate Azure software to the storage account
+and registered as ML dataset from Studio UI.
 
 In addition to the data we used to train the algorithm,
 we needed to set up computing instance
 in Azure ML studio.
 Some predefined resource limitations
-affected the computing instance choosing
-and the memory issue encouraged us
-to pick memory prioritized instances.
+affected the computing instance choosing.
+After encountering some memory related issues in pipeline training,
+we were encouraged to pick memory prioritized instances.
 Single computing instance did not work,
 but we needed to choose a computing cluster instead
 to be able to run ML training pipeline.
-%% TODO: Maybe what other choises were possible?
+After choosing suitable virtual machine properties for compute cluster instances,
+a number of nodes is possible to set.
+Each of these nodes are a copy of the virtual machine
+chosen in the previous step.
+If more than one node is chosen,
+computing cluster scales to use more nodes
+depending on the ML training demands.
 
-%% TODO: Data stores etc?
-
-\todo{Some more info about the resources needed}
+For the purposes of this study,
+we chose to use maximum two nodes.
+The virtual machine properties chosen
+were 4 core machine with 28 GB of RAM and 200 GB of disk space.
 
 
 \clearpage

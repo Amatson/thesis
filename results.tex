@@ -49,4 +49,73 @@ the coefficient of determination was over 0.35.
 
 %% TODO: Discuss about rawmessage memory issues in result section!
 
+
+\subsection{Memory issues and limitations}\label{subsec:pipe-memory-issues}
+Memory is crucial resource in ML training.
+Algorithms take multiple steps while iterating the data
+and intermediate results are stored in the RAM rather than on the disk.
+%% TODO: something more to say or back that up?
+While building ML pipeline in Azure ML studio,
+a memory issue emerged
+that affected several components
+and caused serious limitations
+in terms of usable components and data size.
+Due to the time limits of this study
+this issue was not resolved
+and the problem behind it was not found.
+As several conditions
+considering the environment costs
+were already issued by the company,
+the issue was supposed to be linked with
+compute instance property limitations
+and thus could not be resolved without cost overruns.
+However, this was not certain.
+
+\todo{Limitations to components. List effects of this problem.}
+%% TODO: limitations to components
+%% limitations to data size
+%% effects on choises in components?
+
+
+
+
+During the initial pipeline runs
+the execution came to an abrupt stop
+and Azure notified about memory issues. %% TODO: Add reference to issue
+These problems were linked to the data amount
+which had to be reduced to 600 megabytes
+before any pipeline could be finished using the data.
+This reduction was against the initial goal
+where preferably all the data could have been used.
+
+Considerable amount of time was used
+to fix or avoid this issue
+but nothing clear was found
+that would explain the error received.
+While working with the issue
+it was also noted
+that data needed more cleaning
+in order to ease the preprocessing phase
+as described with more detail in section~\ref{subsec:meth-data-anonymization}
+Thus,
+the data had to be imported from log archive
+and anonymized once more.
+
+To advance the study more efficiently
+it was decided to trim info-type log messages from data
+hence reducing the data amount considerably.
+Final data included 8.6 million log rows
+which was about 10\% of the original data size.
+Before final cleaning operations
+the data took 8.1GB od disk space,
+and after cleaning the rawmessage-field
+the final disk size was 6.6GB\@.
+Even with this data size,
+some Azure ML components faced this memory issue
+and forced us to choose such components
+that were able to handle these data amounts.
+
+%% TODO: Move some parts of the above memory problem elsewhere
+
+
 \clearpage

@@ -475,3 +475,48 @@ exit
 \clearpage
 
 %% ************************************************************************************************************
+
+\section{Example of R-script}\label{sec:app-r-script}
+
+
+
+\begin{Verbatim}[fontsize=\small]
+
+    azureml_main <- function(dataframe1, dataframe2){
+        library(dplyr)
+        library(rlang)
+        library(lubridate)
+
+        print("R script run.")
+        df1 <- dataframe1 %>% mutate(timeStamp= as.Date(timeStamp)) %>%
+        mutate(ScoredProbabilities = as.numeric(`Scored Probabilities`)) %>%
+        group_by(timeStamp = as.Date(floor_date(timeStamp, "1 week",
+            week_start=getOption("lubridate.week.start", 1)))) %>%
+        summarize(LogRowCount = n(),
+        UniqueJobIDs= n_distinct(jobId),
+        AnomalyProbMean = mean(ScoredProbabilities),
+        AnomalyProbMedian = median(ScoredProbabilities),
+        Quantile90 = quantile(ScoredProbabilities, c(0.90)),
+        CountOverQ90 = sum(ScoredProbabilities > Quantile90)
+        )
+
+        df2 <- dataframe2 %>% mutate(timeStamp= as.Date(timeStamp)) %>%
+        group_by(timeStamp = as.Date(floor_date(timeStamp, "1 week",
+            week_start=getOption("lubridate.week.start", 1)))) %>%
+        summarize(TicketCount = n())
+
+        df3 <- inner_join(df1, df2, by = 'timeStamp')
+        df4 <- df3
+        df3$timeStamp <- strftime(df3$timeStamp, format = "%Y-%m-%V")
+
+        # Return datasets as a Named List
+        return(list(dataset1=df3, dataset2=df4))
+    }
+\end{Verbatim}
+
+\clearpage
+
+%% ************************************************************************************************************
+
+
+

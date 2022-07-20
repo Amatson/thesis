@@ -44,7 +44,7 @@ Algorithm means a finite sequence of (typically) mathematical operations
 that are used to solve a specific problem,
 generally by repetition of some steps
 until the problem resolves.~\cite{merriam2022algorithm}
-Algorithms are the main component inside machine learning~
+Algorithms are the main component inside machine learning.
 By iterating through all the data points
 algorithm is able to, for example,
 find repeating patterns,
@@ -250,13 +250,138 @@ utilizing services such as IoT, API, or Kubernetes.
 
 %% ************************************************************************************************************
 
-\subsection{Regression algorithm}\label{subsec:bg-regression-ml}
-\todo{science and math behind regression algorithm}
-Regression analysis is typical approach in statistical science.
-It is used to find relationships with a set of variables.
-%% TODO!
-%% TODO: REFERENCES!
-%% TODO: Mathematical background
+\subsection{Regression analysis}\label{subsec:bg-regression-ml}
+
+Regression analysis is typical approach in statistical science,
+and thus, in machine learning too.
+Algorithms based on regression analysis
+are used to find relationships between a set of variables,
+providing the means to \enquote{predict values of one variable
+when given values of the others}
+making them a fundamental component in ML field.~\cite{merriam2022regression}
+
+Regression algorithms intend to create a mathematical model
+that explains the data.
+This usually means an algebraic equation
+which can be generalized in the following form,
+\begin{equation}
+    \label{eqn:general-regression-model}
+    Y = f(X_{m},\beta_{p})+\epsilon
+\end{equation}
+where $f$ is some function of $m$ independent variables $(X_{m})$,
+and $p$ coefficients $(\beta_{p})$.
+$X_{m}$ can be opened as $X_{1},...,X_{m}$,
+and $\beta_{p}$ as $\beta_{1},...,\beta_{p}$.
+Note, that $m$ and $p$ do not have to be equal.
+A single $X_{i}$ refers to a value of $i$th data row.
+The $\epsilon$ refers to error term.
+The goal is to determine the coefficients $\beta_{p}$
+in order to find a model that explains the data.~\cite{freund2006regression}
+
+As an example,
+one of the best known principles for coefficient value solving
+is the least square principle,
+which aims to minimize the sum of squared errors (SSE).
+Now,
+the smaller the $SSE$ is,
+the closer each data point is to the suggested model,
+and the better the model explains the data
+and can be used to make predictions.
+The equation to solve in the least square principle
+derived from the generalized form,
+\begin{equation}
+    \label{eqn:sum-of-squared-errors}
+    SSE = \Sigma\epsilon^{2} = \Sigma[(Y-f(X_{1},...,X_{m},\beta_{1},...,\beta_{p}))]^{2}.
+\end{equation}
+Exact solution for this does not usually exist
+as there can be more coefficients than independent variables $(p>m))$,
+and minimizing the $SSE$ does not result into linear equation.
+This is typically the case in ML,
+and thus the model must be found
+by iterative search process.
+As mentioned in the section~\ref{subsec:bg-machine-learning},
+this is what algorithms are build for.
+
+To improve the efficiency of algorithm calculations,
+general regression model can be converted into a matrix form.
+The same function in equation~\ref{eqn:general-regression-model}
+can thus be represented as,
+
+\begin{equation}
+    Y = XB+E
+\end{equation}
+where $Y$ is an $n\times1$ matrix of values in the data,
+$X$ is an $n\times(m+1)$ matrix of independent variables,
+$B$ is an $(m+1)\times1$ matrix of unknown coefficient parameters,
+and finally, $E$ is an $n\times1$ matrix of error parameters.
+Thus, the equation of squared errors (equation~\ref{eqn:sum-of-squared-errors})
+that is to be minimized can be written as
+\begin{equation}
+    E'E = (Y-XB)'(Y-XB) = Y'Y-2B'X'Y+B'X'XB.
+\end{equation}
+In order to minimize this, we can take the derivative of matrix $B$,
+\begin{equation}
+    \frac{\partial(E'E)}{\partial B} = -2X'Y + 2X'XB
+\end{equation}
+and equating to zero gives
+\begin{equation}
+    (X'X)\hat{B} = X'Y.
+\end{equation}
+The solutions of coefficient parameters are thus
+\begin{equation}
+    \hat{B} = (X'X)^{-1}X'Y.
+\end{equation}
+
+Ultimately,
+there usually is no one perfect model to describe real world data.
+The function $f$ in the general regression model
+can describe the relation of $X_{i}$ and $\beta_{i}$ as product of both terms.
+This would mean, that
+\begin{equation}
+    f(X_{1},...,X_{m},\beta_{1},...,\beta_{m})=\beta_{0}+\beta_{1}x_{1}+...+\beta_{m}x_{m}
+\end{equation}
+which would be a linear regression model.
+Example of an algorithm using this method
+is visualized in the picture~\ref{fig:linear-regression-example}.
+However,
+real world problems cannot always be explained with linear model.
+Fitting a polynomial curve to the data
+may improve the results of regression to a certain degree,
+but it also has its limits.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.5\textwidth]{./appendices/linear-regression}
+    \caption{Linear least squares algorithm.
+    Algorithm tries to fit a linear model (red line) on the data points,
+        represented by the black dots,
+        by minimizing the difference between all the data points
+        and the model estimate.~\cite{stulp2015many}
+        \label{fig:linear-regression-example}}
+\end{figure}
+
+Consider an algorithm that tries to keep a car
+driving on a straight road in its lane.
+The model output is how much we should turn the steering wheel
+based on how much we are off from the straight line.
+We might have constant parameters such as
+wind effect, continuous error of the axes, and tilt of the road.
+However,
+we also have parameters that change over time
+and are dependent from other factors,
+such as the weight of the car,
+and temperature and wear of the tires.
+So, with the same location at the road,
+same car and same weather conditions,
+our result could be different
+depending on how long has been driven before that current moment
+which affects the tire temperature and thus pressure.
+Finding a model that fits the best to the data
+depends also on the type of problem.
+There are numerous algorithms to suit different situations,
+and usually the best algorithm can be found
+only by trial and error.
+
 
 %% ************************************************************************************************************
 
@@ -292,22 +417,24 @@ in a ready component level. %% TODO: check wording.
 %% TODO: This is also usable in azure, but not suitable in our case
 %% TODO: make sure this is mentioned in places where "only one is pca" is considered
 
-Azure ML Studio has also another anomaly detection algorithm to use.
+Azure ML Studio has,
+or used to have,
+also another anomaly detection algorithm to use.
 This module is called One-Class Support Vector Machine.
-In our case, however,
-this module was not deemed suitable
+However,
+this module was not usable in the renewed ML Studio environment,
+but was only usable in the \textit{classic} Azure ML Studio.
+In addition,
+this module was not deemed suitable in our case,
 as the documentation mentioned that
 \enquote{The dataset that you use for training
 can contain all or mostly normal cases.}
 Because the content of the data used did not meet this requirement,
-the usage of this component was decided to skip.
-
-%% TODO: https://docs.microsoft.com/en-us/previous-versions/azure/machine-learning/studio-module-reference/one-class-support-vector-machine
-%% TODO: add some reference to module
+the usage possibilities of this component were not decided to investigate.~\cite{azure2021oneclasssvm}
 
 %% ************************************************************************************************************
 
-\subsection{N-gram features and feature hashing}\label{subsec:bg-ngram-features}
+\subsection{N-gram features and feature hashing}\label{subsec:bg-ngram-features-and-hashing}
 %% TODO:
 \todo{cover basic n-gram features and ML connection}
 
@@ -506,47 +633,6 @@ With more insight to ticket data properties,
 ML algorithms could be able to extract more valuable information
 from the log data.
 
-%% ************************************************************************************************************
-
-%% TODO: Workname. Check.
-\subsection{Random delay in log event analyzing}\label{subsec:bg-random-delay}
-\todo{Anything about the topic?}
-
-Random delay in input data features
-is not unusual aspect in time-series forecasting.
-Time-series in ML context
-refers to data features that varies over time
-and is usually affected by past values.
-As an example,
-ML algorithm could try to predict future weather
-based on measured temperature and air pressure.
-Both these features change over time
-and also affect to their own future values.
-
-Random delay in such an example
-could be due to some other local or global features
-like
-%% TODO: find proper exampe about time series forecasting and random delay!
-%% TODO: REFERENCES
-
-This study, however,
-is not time-series
-because the majority of the log rows
-are not affected by previously logged events.
-Random delay in this case
-is caused by banking clerks
-finding the issue and writing a technical support request.
-This delay can span from hours to several days
-depending on the weekday and time the issue occurred.
-
-%% TODO: More to background?
-
-As random delay of such
-does not seem to be trivial to take into account
-with ML algorithms, %% TODO: Any sources?
-a simple method to solve this was used
-which we call \enquote{time frame compression method}.
-More about this approach is discussed in the section~\ref{subsec:pipe-timeframe-compression-and-statistics}
 
 %% ************************************************************************************************************
 
