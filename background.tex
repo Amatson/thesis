@@ -4,7 +4,6 @@
 %% ************************************************ 2 ************************************************
 
 \section{Background}\label{sec:background}
-%\section{Aikaisempi tutkimus}
 
 Machine learning, or ML,
 is a subcategory of the AI field and data science.
@@ -386,44 +385,230 @@ only by trial and error.
 %% ************************************************************************************************************
 
 \subsection{PCA-based anomaly detection}\label{subsec:bg-pca-ada}
-\todo{Explain PCA and mention other ADA algorithms}
-%% TODO: rename subsection if more algorithms are introduced?
 
 Principal Component Analysis, or PCA,
 is a machine learning technique
-used to analyze data and explain the variance inside it.~\cite{azure2022pca}
+used to analyze data and explain the variance inside it.
+PCA analyzes data with multiple variables
+and looks for correlations among them.
+The final output PCA gives
+is a new feature space,
+\ie a smaller set of features (variables),
+called \textit{principal components}.~\cite{azure2022pca}
 
+In other words,
+PCA works by reducing the dimensionality of the data.
+First,
+data must be standardized
+so that mean of each variable is zero
+and the scale of each feature is the same.
+\begin{equation}
+    Standardized\; data\; point = \frac{data\; point\; value - mean\; value\; of\; the\; feature}{standard\; deviation\; of\; the\; feature}
+\end{equation}
+In practice,
+the data points of each variable, or column,
+is shifted so that their center is at 0
+and the scale is adjusted to match all the variables.
 
+Next, covariance matrix for all the columns is determined.
+As it is known,
+covariance value between variables (or dimensions)
+is calculated with
+\begin{equation}
+    cov(X,Y) = \frac{\Sigma_{i=1}^{n}(X_{i}-\bar{X})(Y_{i}-\bar{Y})}{(n-1)}
+\end{equation}
+where $X$ and $Y$ are different columns or variables,
+$\bar{X}$ and $\bar{Y}$ their mean values (which both are zero after standardization),
+$n$ is the number of rows or values in the data,
+and so $X_{i}$ is the $i$th data point in the column $X$.~\cite{smith2002tutorial}
 
-Other anomaly detection methods exist, but they are not supported by ML Studio
-in a ready component level. %% TODO: check wording.
-\todo{Something about Anomaly and Novelty detection differences?}
-%% TODO: Mathematical background
-%% TODO: How PCA works for anomaly detection? How is it used in it?
-%% TODO: Differences for other anomaly detection methods? What other methods are there?
+Covariance matrix is formed
+by calculating the covariance value between each of the dimensions (including self).
+For example,
+for 3 dimensional data with dimensions $x$, $y$, and $z$,
+covariance matrix would be
+\begin{equation}
+    C =
+    \begin{pmatrix}
+        cov(x,x) & cov(x,y) & cov(x,z) \\
+        cov(y,x) & cov(y,y) & cov(y,z) \\
+        cov(z,x) & cov(z,y) & cov(z,z)
+    \end{pmatrix}.
+\end{equation}
+Generally,
+covariance matrix for $n$ dimensions would be then, of course
+\begin{equation}
+    C =
+    \begin{pmatrix}
+        cov(1,1)    & \cdots    & cov(1,n)    \\
+        \vdots      & \ddots    & \vdots        \\
+        cov(n,1)    & \cdots    & cov(n,n)
+    \end{pmatrix}.
+\end{equation}
 
-%% TODO!
-\todo{placeholder picture. replace with mathematical explanation}
+We next find the eigenvectors and eigenvalues
+for the square-shaped covariance matrix.
+As defined,
+for $n\times n$ dimensional matrix $A$,
+if exists a vector $x$ that satisfies
+\begin{equation}
+    Ax = \lambda x,
+\end{equation}
+where $\lambda$ is a scalar value,
+such vector $x$ is an \textit{eigenvector} of matrix $A$,
+and $\lambda$ is an \textit{eigenvalue},
+forming the \textit{eigenpair} of $(\lambda,x)$.~\cite{borm2012numerical}
+
+Eigenvectors have a property,
+that either a matrix has zero of them,
+or there are $n$ eigenvectors for $n\times n$ dimensional matrix.
+As being formed for the covariance matrix of the original (standardized) data,
+eigenvectors create,
+in fact,
+a new feature space made of principal components.
+More over,
+eigenvalues describe their importance,
+so that the greater the eigenvalue is,
+the more significant the eigenvector is describing the original data
+in principal component feature space.
+When finding eigenpairs,
+we actually find the largest possible variance in the data.
+Each eigenvector describes a principal component
+that is a linear combination of the original variables.
+In the picture~\ref{fig:pca-example} we can see an example of
+how eigenvectors of the covariance matrix define a new axis system
+or new feature dimensions.~\cite{zhu2019dimension}
+Each eigenvector, or a principal component,
+is perpendicular with one another.
+Thus, data can be represented
+in the new axis system formed by eigenvectors.
+
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=150mm]{./appendices/pca-nutshell}
-    \caption{PCA in a nutshell
-        \label{fig:pca-nutshell}}
+    \includegraphics[width=0.7\textwidth]{./appendices/pca-example}
+    \caption{Principal components form a new axis system.
+    In this two dimensional example,
+        eigenvectors $\mu_{1}$ and $\mu_{2}$ of the covariance matrix
+        define new feature dimensions.
+        Thus, data point $(x_{1}^{i},x_{2}^{i})$ of dimensions $x_{1}$ and $x_{2}$
+        can be presented as a point $(\mu_{1}^{i},\mu_{2}^{i})$ of the dimensions $\mu_{1}$ and $\mu_{2}$.
+        The origin point of each principal component axis is at the mean values of the data ($\bar{x}_{1}$ and $\bar{x}_{2}$)
+        as the data is standardized.
+        ~\cite{zhu2019dimension}
+        \label{fig:pca-example}}
 \end{figure}
+
+By comparing the eigenvalues,
+we can determine a set of eigenvectors,
+or principal components,
+that form a new feature space with fewer dimensions than original data,
+without losing significant amount of information.
+We can calculate a comparison value for each eigenvalue $\lambda_{i}$ with
+\begin{equation}
+    Percentage\; of\; variance = \frac{\lambda_{i}}{\Sigma\lambda}\cdot100
+\end{equation}
+Organized from highest to lowest,
+we can make a scree plot to visualize their relationship.
+Example of an 8 dimensional data,
+thus 8 principal components,
+with their eigenvalue variances ordered
+can be seen in a picture~\ref{fig:pc-variance-values}.
+
+\begin{figure}[htb]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis} [
+            ybar,
+            ylabel={Percentage of variance},
+            xlabel={Principal components},
+            symbolic x coords={1,2,3,4,5,6,7,8},
+            xtick=data
+        ]
+            \addplot coordinates {
+                (1,47)
+                (2,22)
+                (3,14)
+                (4,7)
+                (5,5)
+                (6,3)
+                (7,1)
+                (8,1)
+            };
+        \end{axis}
+    \end{tikzpicture}
+\caption{Principal components significance.
+In this example, eigenvalues, or the variance of each principal component,
+    are ordered on a scree plot.
+    Values are first converted to a percentage of the sum of all values
+    in order to visualize both their relationship to each other
+    and their total share of information the corresponding eigenvectors hold.
+    \label{fig:pc-variance-values}}
+\end{figure}
+
+Practically,
+as principal component space describes the data
+and eigenvalues describe the importance of each component,
+the percentage of variance is the portion of the total information each principal component holds.
+Simply put,
+in our example picture~\ref{fig:pc-variance-values},
+first two principal components hold almost 70\% of the original information,
+first three over 80\%,
+and last seven hold less than 20\% of the information.
+Thus,
+by creating a new data set using first three components,
+we can keep 80\% of the information
+while reducing the dimensions from 8 to 3,
+which would be significant improvement
+in terms of computing resources needed.
+The amount of top principal components we choose to keep
+depends on the situation,
+but one guideline is to select all components
+that describe more than a single variable's worth of information.
+For our 8 dimensional example,
+that would mean $1/8$th, or $12.5\%$,
+meaning that we would select top 3 principal components
+and discard the rest that are under $12.5\%$ of variance.
+The remaining vectors form a new matrix
+called \textit{feature vector}:
+\begin{equation}
+    Feature\; vector\; (F) = (x_{1} x_{2} ... x_{p})
+\end{equation}
+where $x_{i}$ is the $i$th eigenvector or feature component we chose to keep,
+and $p$ is the amount of them, where $p<n$, $n$ being the original amount of dimensions of the data.
+
+Finally,
+we reorient our data from the original axes
+to the space defined by the principal components
+with the following equation:
+\begin{equation}
+    Final\; data = F^{T} A^{T}
+\end{equation}
+where $A$ is the original data set with standardized data,
+which is transposed as well as the feature vector multiplying it.\cite{jaadi2021pca,holland2008principal,smith2002tutorial}
+
+With principal components describing the distribution and variance of the data majority,
+we can use PCA to detect anomalies.
+This is done by analyzing each input
+and computing its
+\enquote{projection on the eigenvectors,
+    together with a normalized reconstruction error.
+    The normalized error is used as the anomaly score.
+    The higher the error, the more anomalous the instance is}~\cite{azure2022pca}.
+Normalized error means,
+that each anomaly score is between zero and one.
+
 
 %% ............................................................................................................
 
-\subsubsection*{One-Class support vector machine}
-%% TODO: This is also usable in azure, but not suitable in our case
-%% TODO: make sure this is mentioned in places where "only one is pca" is considered
+\subsection{Other anomaly detection algorithms}\label{bg-other-ada}
 
 Azure ML Studio has,
 or used to have,
-also another anomaly detection algorithm to use.
+also another anomaly detection algorithm to use besides PCA-based one.
 This module is called One-Class Support Vector Machine.
 However,
-this module was not usable in the renewed ML Studio environment,
-but was only usable in the \textit{classic} Azure ML Studio.
+it was not usable in the renewed ML Studio environment,
+but was only available in the \textit{classic} Azure ML Studio.
 In addition,
 this module was not deemed suitable in our case,
 as the documentation mentioned that
@@ -431,62 +616,133 @@ as the documentation mentioned that
 can contain all or mostly normal cases.}
 Because the content of the data used did not meet this requirement,
 the usage possibilities of this component were not decided to investigate.~\cite{azure2021oneclasssvm}
+To limit the scope of this study to reasonable proportions,
+we will not discuss other anomaly detection algorithms (ADAs) further.
 
 %% ************************************************************************************************************
 
 \subsection{N-gram features and feature hashing}\label{subsec:bg-ngram-features-and-hashing}
-%% TODO:
-\todo{cover basic n-gram features and ML connection}
 
-\toimhuom{unorganized text below:}
-As stated before, %% TODO: state before!
+As discussed before,
 features are the key elements in ML algorithm training.
-As textual input does not have any meaning to machines as itself,
+As textual input does not have any meaning to computers as itself,
 it is necessary to create a connection between words and features for algorithm.
-In ML training, one typical approach is to convert textual input to numerical features.
+In ML training,
+one typical approach is to convert textual input to numerical features.
 For example, by creating a dictionary of words used in the input
 and assigning each word an identification number,
-we can express words as a count of certain words used.
+we can express sentences as a count of certain words used.
 In addition,
-as words include meanings not only individually but also
-with relation to each other and in their order, %% TODO: Some example!
-we can add more information for the algorithm
+words include meanings not only individually but also
+with relation to each other and with their order.
+For example,
+words "success without errors"
+has the opposite meaning than "errors without success"
+where same words exist in a different order.
+We can add more information for the algorithm
 by creating word pairs and groups in the dictionary.
 These groups are referred as word grams,
 where \textbf{n} in n-gram refers to the maximum number of words
-in a group of consecutive words in the input sentence.
+in a group of consecutive words in the input sentence.~\cite{furnkranz1998study}
 
-%% TODO: check above
-%% TODO: REFERENCES!
-%% TODO: More?
-%% TODO: mathematical theories?
+Example of n-gram composition of a sentence can be seen
+in the table~\ref{bg-n-gram-example}.
+Usually,
+the unnecessary stop words are removed from the text
+(such as "the"),
+as they don't bring any additional meaning to words or sentence.
+One word grams are called \textit{unigrams},
+two word grams \textit{bigrams}, \etc.
+To compose the sentence \textit{"Lorem ipsum dolor sit amet, quisquam est, qui dolor ipsum qui dolor sit amet"}
+with different n-gram dictionaries,
+we could make, for example,
+the following presentation with unigram dictionary:
+\begin{equation}
+    1,2,3,4,5,6,7,8,3,2,8,3,4,5
+\end{equation}
+where each number represents the index of a word in unigram dictionary from table~\ref{tab:bg-n-gram-example}.
 
-\todo{explain feature hashing component functionality briefly}
-%% TODO: Clarifying example!
+\begin{table}[]
+    \begin{tabularx}{\textwidth}{|L{0.1\textwidth}|L{0.17\textwidth}|L{0.25\textwidth}|Y|}
+        \hline
+        \textbf{Index} &
+        \textbf{Unigrams} &
+        \textbf{Bigrams} &
+        \textbf{Trigrams}
+        \\ \hline
+        1	&	lorem       &	lorem ipsum     &	lorem ipsum dolor  \\ \hline
+        2	&	ipsum       &	ipsum dolor     &	ipsum dolor sit  \\ \hline
+        3	&	dolor       &	dolor sit       &	dolor sit amet  \\ \hline
+        4	&	sit         &	sit amet        &	sit amet quisquam  \\ \hline
+        5	&	amet        &	amet quisquam   &	amet quisquam est  \\ \hline
+        6	&	quisquam    &   quisquam est    &	quisquam est qui \\ \hline
+        7	&	est         &   est qui 		&	est qui dolor  \\ \hline
+        8	&	qui         &   qui dolor 	    &	qui dolor ipsum \\ \hline
+        9	&	            &  	dolor ipsum 	&   dolor ipsum qui \\ \hline
+        10	&	            &  	ipsum qui 		&   ipsum qui dolor \\ \hline
+        11	&	            &  	 				&   qui dolor sit \\ \hline
+    \end{tabularx}
+    \caption{N-gram feature extraction from a sentence
+    "Lorem ipsum dolor sit amet, quisquam est, qui dolor ipsum qui dolor sit amet".}
+    \label{tab:bg-n-gram-example}
+\end{table}
+
+N-gram representation of the text
+streamlines the algorithm processing of textual features.
+However,
+each new word creates a new feature
+when converting text to n-grams.
+This happens,
+because in order to present text as numerical features,
+we need to create a new feature space out of the n-gram dictionary.
+Consider our unigram dictionary from the previous example.
+This would convert one text column into 8 unigram features,
+as seen in the table~\ref{tab:bg-n-gram-features}.
+
+\begin{table}[htb]\small
+\begin{tabularx}{\textwidth}{|L{0.07\textwidth}|L{0.09\textwidth}|L{0.09\textwidth}|L{0.08\textwidth}|L{0.07\textwidth}|L{0.07\textwidth}|Y|L{0.07\textwidth}|L{0.07\textwidth}|}
+    \hline
+    \textbf{row} &
+    \textbf{lorem} &
+    \textbf{ipsum} &
+    \textbf{dolor} &
+    \textbf{sit}	&
+    \textbf{amet} &
+    \textbf{quisquam} &
+    \textbf{est} &
+    \textbf{qui}
+    \\ \hline
+    1	&	1	&	2	&	3	&	1	&	2	&	1	&	1	&	2 \\ \hline
+\end{tabularx}
+\caption{One row with a textual feature presented as n-gram feature transformation.
+Each new word in the n-gram dictionary adds a new feature and thus a dimension to the data.}
+\label{tab:bg-n-gram-features}
+\end{table}
 
 As the number of word grams in a dictionary can increase significantly
 in complex input cases,
 it is necessary to limit the resource usage by decreasing the features analyzed.
-One way to do this is use feature hashing.
-This means that instead of pure n-gram count
+In order to compress the dimensions,
+one way is to use feature hashing for n-gram features.~\cite{azure2021fhash}
+This means that instead of pure n-gram features representing a single n-gram instance,
 we use hashed value of several n-grams
 thus reducing the amount of features.
+Hashing can be done in different ways,
+for example by multiplying each original feature together,
+or calculating a weight value based on the frequency of each feature.
 As a drawback,
-the amount of information might also get reduced as the data is "compressed"
+the amount of information might also get reduced as the data is "compressed".
+The more dimensions are compressed into hashing values,
+the more information is bound to be lost,
 but this way we can include more features for algorithm training
-without significant resource demands.
-
-%% TODO: check above
-%% TODO: REFERENCES!
-%% TODO: More?
+without significant resource demands.~\cite{caragea2012protein,shi2009hash}
 
 %% ************************************************************************************************************
 
 \subsection{Robotic process automation}\label{subsec:bg-rpa}
-\todo{Short explanation of RPA in Samlink, mostly to clear out the terms used in this study}
 
 Robotic process automation, or RPA,
-is used to automate mechanical tasks.
+is used to automate mechanical tasks executed on computer software.
 Usually it operates on the UI level
 and can be used to repeat meaningful functions
 instead of mechanical actions.
@@ -496,25 +752,28 @@ RPA automation, however,
 is able to repeat the functionalities those actions trigger,
 such as inputting text to a certain named field on the UI,
 or logging in with given username and password
-regardless of the location of those fields on the layout.
-
-\todo{references!} %% TODO!!
+regardless of the location of those fields on the layout.~\cite{tripathi2018learning}
 
 In Samlink RPA operations,
-a central coordinating system called \enquote{Orchestrator}
+a central coordinating system called \textit{Orchestrator}
 supervises the RPA processes.
+RPA process is executed by following
+an \textit{RPA automation},
+a predefined operation instruction build by RPA developer.
+The software responsible of the automation execution
+is called an \textit{RPA agent}.
+Agents are located in the \textit{workstations},
+where several agents may be running in a single workstation.
+Each agent executes one automation at a time
+and communicates with Orchestrator during the execution.
+This hierarchy is visualized in the picture~\ref{fig:rpa-hierarchy}.
 
-\todo{Add reference to hierarchy picture}
-
-\todo{Dummy picture, replace with better}
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=100mm,angle=270]{./appendices/rpa-hierarchy}
-    \caption{TODO:! Dummy. To be replaced with proper picture.
-    Hierarchy of RPA components explaining the terms and their relations
-        \label{fig:rpa-hierarchy}}
+    \includegraphics[width=\textwidth,]{./appendices/RPA-hierarchy}
+    \caption{Hierarchy of RPA components explaining the terms and their relations.
+    \label{fig:rpa-hierarchy}}
 \end{figure}
-
 
 
 %% ************************************************************************************************************
@@ -629,77 +888,9 @@ supervised learning methods can improve the results of the algorithm forecast ab
 As explained in the section~\ref{subsec:meth-efecte-ticket-data},
 data features connected to anomaly detection results
 are pure datetime values.
-With more insight to ticket data properties,
+With more insight to ticket data properties than just timestamps,
 ML algorithms could be able to extract more valuable information
 from the log data.
-
-
-%% ************************************************************************************************************
-
-
-\subsection{Hybrid machine learning approach in anomaly detection}\label{subsec:bg-hybrid-ml-approach-with-anomaly-detection}
-
-Hybrid machine learning (HML)
-refers to an ML technique
-where two or more ML methods are combined
-to overcome the limitations of
-or to boost the estimation capabilities of
-a single method alone.~\cite{Anifowose2020hml}
-In this study,
-we combine PCA-based anomaly detection algorithm
-with regression algorithm
-in order to amplify the prediction powers of our ML algorithm
-when trying to determine the possible ticket count
-based on log events.
-
-Hybrid machine learning is not rare technique in ML field.~\cite{shon2007hybrid,tsai2010credit,mohan2019effective,
-    hsieh2005hybrid,jain2007hybrid,kim2007hybrid,lee2002credit,malhotra2002differentiating}
-%% TODO:
-\todo{Something about the HML in ADA}
-
-In order to clarify whether hybrid approach is suitable for the current study problem
-we will compare the results of hybrid ML technique
-with a single ML algorithm usage.
-
-
-\todo{Include wireframe model about hybrid model}
-%% TODO: Include wireframe model about hybrid model
-
-
-%% TODO: Move to methods section?
-With ML algorithm utilizing n-gram features combined with time frame compression
-it is possible to get estimates
-about the support tickets based on the log events.
-It is not feasible to use anomaly detection on its own to do this
-as plain sum of anomalies detected
-is not correlating with tickets received.
-
-We can, however,
-amplify our ticket estimating algorithm with anomaly value features.
-As we first count the anomaly numbers with anomaly detection algorithm %% TODO: better wording?
-and their calculated statistical features with another algorithm,
-like regression algorithm,
-we get more relative information to use
-when creating the final ticket number estimations. %% TODO: check sensability
-
-
-
-\begin{itcomment}
-    Hybrid ML as a term is used here to explain that we
-    use two different ML algorithms in two separate phases.
-    In first phase we try to give an anomaly certainty value for each log row
-    using PCA-based anomaly detection component.
-    In second phase we use this value as a feature to estimate ticket amount in time range
-    by utilizing regression algorithm.
-
-    Dual algorithm approach should not be unusual in ML field,
-    but how existing studies or case examples relate to our way is uncertain.
-
-    If nothing exists about the topic (at least nothing easily to be found)
-    it should be worth to mention.
-    But if there is a lot of case examples about this, it feels unnecessary
-    to discus about it in more detail.
-\end{itcomment}
 
 
 \clearpage

@@ -580,5 +580,59 @@ we chose to use maximum two nodes.
 The virtual machine properties chosen
 were 4 core machine with 28 GB of RAM and 200 GB of disk space.
 
+%% ************************************************************************************************************
+
+
+\subsection{Hybrid machine learning}\label{subsec:bg-hybrid-ml}
+
+Hybrid machine learning (HML)
+refers to an ML technique
+where two or more ML methods are combined
+to overcome the limitations of
+or to boost the estimation capabilities of
+a single method alone.~\cite{Anifowose2020hml}
+Hybrid machine learning is not rare technique in ML field.~\cite{shon2007hybrid,tsai2010credit,mohan2019effective,
+    hsieh2005hybrid,jain2007hybrid,kim2007hybrid,lee2002credit,malhotra2002differentiating}
+In this study,
+we combine PCA-based anomaly detection algorithm
+with regression algorithm
+in order to amplify the prediction powers of our ML algorithm
+when trying to determine the possible ticket count
+based on log events.
+
+We use two different algorithms and two particular data sets
+in two separate phases as visualized in the picture~\ref{fig:hybrid-ml-model}.
+The results of the first ML algorithm are combined
+with the second set of data,
+and this combination is used to train the ML algorithm in second phase.
+In order to clarify whether hybrid approach is suitable for the current study problem
+we will compare the results of hybrid ML technique
+with a single ML algorithm usage.
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=0.5\textwidth,]{./appendices/hybrid-ml-model}
+    \caption{Simplistic example of hybrid machine learning model.
+    The first algorithm learns from the initial data,
+        and the results are used with a second data set to train another algorithm.
+        \label{fig:hybrid-ml-model}}
+\end{figure}
+
+%% TODO: Continue here!
+
+With ML algorithm utilizing n-gram features combined with time frame compression
+it is possible to get estimates
+about the support tickets based on the log events. %% TODO: Move or delete this sentence about time frame compression!
+It is not feasible to use anomaly detection on its own to do this
+as plain sum of anomalies detected
+is not correlating with tickets received.
+
+We can, however,
+amplify our ticket estimating algorithm with anomaly value features.
+As we first count the anomaly numbers with anomaly detection algorithm %% TODO: better wording?
+and their calculated statistical features with another algorithm,
+like regression algorithm,
+we get more relative information to use
+when creating the final ticket number estimations. %% TODO: check sensibility
 
 \clearpage
