@@ -280,8 +280,7 @@
 %% Aaltologo: syntax:
 %% \uselogo{aaltoRed|aaltoBlue|aaltoYellow|aaltoGray|aaltoGrayScale}{?|!|''}
 %% The logo language is set to be the same as the thesis language.
-%% TODO: Select smart logo
-\uselogo{aaltoPurple}{?}
+\uselogo{aaltoGrayScale}{?}
 %%
 
 %% The English abstract:
@@ -291,8 +290,8 @@
 %% Note! The keywords are separated using the \spc macro
 %%
 %% TODO: CHECK THESE!
-\keywords{Machine learning algorithms\spc Robotic process automation\spc
-log analyzing\spc random delay\spc Microsoft Azure ML Studio}
+\keywords{Machine learning \spc Robotic process automation\spc anomaly detection\spc
+log analyzing\spc Hybrid machine learning\spc Microsoft Azure ML Studio}
 %%
 
 %% The abstract text. This text is included in the metadata of the pdf file as well
@@ -395,11 +394,14 @@ Otherwise, the metadata abstract text must be identical to the text on the abstr
 \major{Ohjaus, robotiikka ja autonomiset järjestelmät}
 %% The keywords need not be separated by \spc now.
 %% TODO: CHECK THESE!
-\keywords{Koneoppiminen, koneoppimisalgoritmit, ohjelmistorobotiikka, loki,
-  lokin analysointi, satunnainen viive, satunnaisviive, Microsoft Azure ML Studio}
+\keywords{Koneoppiminen, ohjelmistorobotiikka, anomalioiden tunnistaminen,
+  lokien analysointi, Microsoft Azure ML Studio}
 %% Abstract text
 \begin{abstractpage}[finnish]
   %% TODO !!!!!! DUMMY, REPLACE
+
+
+
   Tiivistelmässä on lyhyt selvitys kirjoituksen tärkeimmästä sisällöstä:
   mitä ja miten on tutkittu,
   sekä mitä tuloksia on saatu. 
@@ -417,7 +419,7 @@ Terve,
 ja kiitos kaloista.
 
 \vspace{5cm}
-Otaniemi, {\today}
+Jyväskylä, {\today}
 
 \vspace{5mm}
 {\hfill Matti Haukilintu \hspace{1cm}}
@@ -438,18 +440,16 @@ Otaniemi, {\today}
 \subsection*{Symbols}
 
 \begin{tabular}{ll}
-  %% TODO: dummies, replace
-  $\mathbf{P}$  & placeholder-symbol  \\
-  $\mathbf{A}$  & another placeholder-symbol
+  $\mathbf{\epsilon}$  & Error term
 \end{tabular}
 
 \subsection*{Operators}
 
-\begin{tabular}{ll}
-  %% TODO: dummies, replace
-  $\nabla \times \mathbf{A}$    & curl of vectoring $\mathbf{A}$\\
-  +     &  yep, a plus
-\end{tabular}
+\begin{tabularx}{\textwidth}{l X}
+  $A^{\mathbf{T}}$    & Transpose of vector $\mathbf{A}$ \\
+  $\mathbf{f}(X_{n},Y_{n})$    & Undefined algebraic equation between operands $X_{n},Y_{n}$,
+  for example $X_{1}^{Y_{1}}-X_{2}^{Y_{2}}-...-X_{n}^{Y_{n}}$
+\end{tabularx}
 
 \subsection*{Abbreviations}
 

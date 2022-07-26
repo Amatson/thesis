@@ -2,18 +2,61 @@
 %% %% ***************** Summary *****************
 
 \section{Summary}\label{sec:summary}
-\todo{Very under construction...}
 
-<Sum up here what we did and why>
+This thesis study investigated possibilities to utilize machine learning
+in order to predict technical ticket arrival
+based on RPA log events and ticket timestamps
+using anomaly detection.
+Several steps were required before the actual algorithm training could be initialized.
+
+First,
+the data had to be anonymized.
+We compared the possible outcome of full anonymization of sensitive data
+with pseudonymization and k-anonymization.
+Data security restrictions and the probable type of log events inducing technical tickets
+settled us to choose full anonymization,
+which was carried out with PowerShell script in production environment.
+
+Next,
+local data preprocessing was needed
+before the data was deemed suitable for ML training.
+As data consisted of miscellaneous types of input,
+we had to create another script to reformat the data in a consistent form.
+
+After this,
+the proper ML training steps in Azure ML Studio environment could begin.
+One of the main problems we had to solve
+was how to combine log events with simple timestamp data of the technical tickets
+with an unknown span of random delay.
+We decided to use hybrid machine learning
+fused with time frame compression method
+to avoid the random delay issue.
+This, however,
+leaned heavily on the hypothesis that most anomalous log events
+are related to technical tickets received.
+This hypothesis had to be validated
+by comparing the results of the final algorithm training
+with an ML pipeline branch where anomaly values had been removed.
+
+In order to find the best possible combination of ML components for hybrid machine learning
+both in terms of suitable algorithms and input data features,
+several combinations were tested and compared with each other.
+In the end, however,
+it became clear that
+either our original hypothesis had to be assumed incorrect
+and anomalous events are not linked to technical support tickets,
+or more studying is required to find the connection between the log events and ticket timestamps.
+
 
 \subsection{Discussion}\label{subsec:discussion}
-<Here some thinking what should have been improved>
+
+\todo{This section is Work-In-Progress. Topics listed here will be discussed briefly.}
 
 Integrating with real time logging?
 
 \subsubsection*{Data formatting}
-The most time-consuming tasks in the study
-was without a doubt
+The most time-consuming tasks in the study was,
+without a doubt,
 the anonymization and preformatting of the data.
 Although sensitive information may sometimes be crucial in error fixing
 as problems may consider just one client,
@@ -21,7 +64,7 @@ it is necessary that the data sanitation is possible to do
 in order to use the data in less secure environment.
 By preformatting the data in such way
 that all different personal information types
-do not differ between use cases.
+do not differ between use cases, %% TODO
 %% TODO: hetu in weird form
 
 
@@ -32,9 +75,7 @@ based on some log metrics in time frame?
 
 Memory error fixing would have given more options.
 
-\todo{Something else specifically needed?}
-
-If log would have been better organized/preformatted
+If logs had been better organized/preformatted
 it would have been possible to use One-Class Support Vector Machine.
 This, however,
 would have needed a manually constructed dataset
@@ -51,10 +92,6 @@ provides better results.
 By splitting data randomly
 it is possible to miss important anomalous rows that come in groups
 which would provide necessary insight to identify anomalous events.
-
-%% TODO:
-\todo{Show some explaining graphics, here or elsewhere.}
-
 
 The original hypothesis was
 that anomalous events in the logs
@@ -74,5 +111,11 @@ it could have been possible to get better results.
 %% TODO:
 \todo{Could anomaly probability metrics be calculated per job ID?}
 
+%% TODO: just n-gram features used in phase 2, skipping anomaly metrics?
+
+%% TODO: Different pipeline component combinations with different regression algorithms?
+%% This was skipped due to time limits in the study
+
+%% TODO: algorithm parameter tuning!
 
 \clearpage

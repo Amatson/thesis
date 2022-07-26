@@ -9,34 +9,34 @@
 \thispagestyle{empty}
 
 Artificial intelligence (AI) and machine learning (ML)
-has found their way into
+have found their way into
 more and more fields of business.
-In banking business they are already used in
+In the banking business they are already used in
 fraud detection, risk management and service recommendations.\cite{donepudi2017machine}
 Even though these
 modern technologies utilizing big data
 are widely used abroad,
-AI and ML are not that popular in Finnish banking field.
+AI and ML are not yet that commonly in the Finnish banking field.
 Instead,
-many self-acting solutions are being used
+many self-acting solutions are used
 to streamline manual labor
 which could be called intelligent,
-but are merely highly automated processes
-and thus cannot be included in the AI category.
+but are these solutions are merely highly automated processes
+and thus cannot be included in the category of AI.\@
 One of these technologies used in Finnish banking systems
 is Robotic Process Automation (RPA).
 
 RPA operates \enquote{on the user interface of other computer systems
 in the way a human would do},\cite{van2018robotic}
-but is strictly bounded by predefined operations
-thus being prone to unforeseen situations
+but is strictly bounded by predefined operations,
+which makes it prone to unforeseen situations
 such as faulty input.
 RPA, like generally all other software,
 produces log to \enquote{register
 the automatically produced and time-stamped documentation
 of events, behaviors, and conditions
 relevant to a particular system}\cite{delarosa2018log}.
-Logs don't have any standards or form guidelines to follow
+Logs don't follow any standards or form guidelines
 which tends to make
 log analysis and log based problem-solving troublesome.
 This is also the case with RPAs developed by Oy Samlink Ab.
@@ -47,38 +47,38 @@ and is now owned by Kyndryl.
 From the early years,
 while going by the name of Samcom,
 the company was owned by several Finnish banks
-developing all sorts of IT solutions for them.
+for which it developed all sorts of IT solutions for them.
 Nowadays,
 Samlink offers a wide variety of banking solutions
 from basic banking system to end user targeted software
 such as Codeapp mobile application.
 
-Besides banking,
+In addition to banking,
 Samlink develops multiple other IT solutions
-to extensive range of customers,
+to an extensive range of customers,
 for example
 entertainment platform solutions for DNA\@.
 Even though Samlink can be considered
 a modern technology company,
-the most modern AI technologies has not yet been adopted
-in the variety of tools used in development.
+the most modern AI technologies have not yet been adopted
+as a part of the variety of tools used in development.
 However,
 RPA has been actively used
 in some banking solutions
 to reduce the amount of manual labor required
 from banking clerks.
 
-In addition to continuous development
-as well as product maintenance services,
+Along with continuous development
+and product maintenance services,
 Samlink also offers a technical help desk
-regarding the software solutions produced.
-As no IT solutions comes without bugs or misbehaviour,
-Samlink service desk has to use considerable amount of labor
-to resolve the possible reason
+regarding the software solutions it produces.
+As no IT solution comes without bugs or misbehaviour,
+Samlink's service desk has to use considerable amount of labor
+to resolve the possible issue
 behind the technical support request tickets received.
 In many cases,
 the problem-solving starts by reading the log
-and analyzing the data written by processes in question.
+and analyzing the data written by the processes in question.
 
 In this study,
 we aim to find if it is possible to utilize
@@ -94,18 +94,17 @@ in the production.
 %% ************************************************************************************************************
 
 \subsection{Background and motivation}\label{subsec:intro-background-and-motivation}
-In the field of information technology
+In the field of information technology,
 logging is one of the most important methods
 in problem-solving,
 be it software or operating system related.\cite{delarosa2018log}
 Typically,
-at least in Samlink processes,
-logging is a bit more verbose
+at least in Samlink's processes,
+logging is more verbose
 than it needs to be.
-This is usually because when the problem occurs
+This is usually because when the problem occurs,
 it is easier to already have the verbose logs available
-than trying to replicate the issue
-after setting logging to more verbose mode.
+than setting logging to more verbose mode and trying to replicate the issue.
 Too verbose logging, however,
 leads into two problematic issues for developers.
 
@@ -114,10 +113,10 @@ and finding the critical parts
 related to the problem in hand
 takes more time.
 Of course,
-with more strict logging
-pinpointing the issue from within the logs
-would be faster,
-but then again,
+with stricter logging,
+pinpointing the faulty event from within the logs
+would be faster.
+However,
 solving the problem with only critical error messages
 could be more time-consuming
 if crucial context is missing.
@@ -125,29 +124,26 @@ if crucial context is missing.
 Secondly,
 a well-designed software
 is able to retry the process after first failure,
-but logging is done in real time,
-not after final results of the process has been determined.
+but logging is done in real time regardless of the process result.
 This means,
 that each process failure is logged
-even though said process eventually succeeds.
+even though said process might eventually succeed on later attempt.
 Thus,
-logs may include dozens of rows of information about a problem encountered,
-which are not critical information after all.
+logs may include dozens of rows of information about a problem,
+which is not critical information after all.
 These issues make log analyzing considerably laborious.
 
 Production logs are usually not viewed
 if everything is presumably working as intended.
 Technical support tickets are both
-last and most visible indicator
-that something is wrong.
+the last and most visible indicators of an issue in the system.
 When a technical support ticket is received from banking clerks
 it means that something is wrong
 in a very visible way.
 Roughly speaking,
-technical tickets that are due to
-clear misbehavior of the RPA systems
-and not, for example, user errors,
-can be divided into two categories.
+there are two types of technical tickets
+that are because of a clear misbehavior of the RPA system
+(not, for example, due to a user error).\@
 First are the tickets
 that uncover an unknown bug in the system
 which can be either fixed
@@ -160,33 +156,32 @@ or by rebooting the process.
 
 Typically,
 in software systems,
-if issue is known and can be fixed by rebooting something,
+if an issue is known and can be fixed by rebooting something,
 developers can create log monitors
 that search for certain keywords
-and raise an alert if encountered.
+and raise an alert if they are encountered.
 Developers can either run a reboot manually
 after a log alert has been received
 or set up an automated script to do it immediately
 when such keyword has been found.
 However,
-when it comes to RPA's and technical tickets considering them,
-it is hard to say what type of issue is in question
+when it comes to RPA's and technical tickets,
+it is hard to say what the issue in question is
 by reading the RPA logs word by word without context.
 New kind of issues can be more frequent
 than already confronted ones,
-and clear keyword linked to
+and a clear keyword linked to
 a certain problem may not exist
 without considerable amount of false positive matches.
 
 Machine learning algorithms are widely used
 to find patterns from massive amount of data
-making it an ideal tool for log analyzing.
+making ML an ideal tool for log analysis.
 Patterns, however,
 need a connection to a visible issue to be useful.
-If RPA system has encountered an error
+If the RPA system has encountered an error
 but is able to retry successfully,
-then no issue has practically happened
-that needs immediate concern.
+then no issue that requires immediate concern has actually happened.
 Hence,
 RPA log analyzing with ML can find meaningful patterns
 only if they relate to actual technical tickets.
@@ -198,23 +193,23 @@ it takes some time for the clerk to notice the issue,
 write a help request to first support level,
 which then redirects the ticket to the corresponding team.
 Furthermore,
-if the issue is noticed during friday,
-it takes few more days to be handled by RPA developers
-due to weekend.
-This leads to noticeable delay in processes
+if the issue is noticed on friday,
+it takes a few more days to be handled by RPA developers
+due to the weekend.
+This leads to a noticeable delay in processes
 that were supposed to be dealt by RPA
 but which now have to be manually taken care of
-by said clerks.
+by clerks.
 
-If a correlation between logs and tickets received exists
+If a correlation between logs and received tickets exists
 and an ML algorithm is able to find it,
 it could be possible to create an ML-based log analyzer
-that can send an alert to developers
+that can alert developers
 about an ongoing issue before banking clerks encounter it.
 With automated scripts set up to receive such alerts,
 some issues could even be fixed in the production
 automatically without human interaction.
-This would reduce significantly the time and labor needed
+This would significantly reduce the time and labor needed
 from developers and bank clerks alike.
 
 %% ************************************************************************************************************
@@ -225,23 +220,22 @@ pave the way for machine learning application developers
 inside Samlink.
 Multiple obstacles need to be tackled
 as most of the phases in this study
-has not yet been encountered inside the company.
+have not yet been encountered inside the company.
 
-First and foremost,
+First,
 it is crucial to construct some basic rules
 considering the format of log data
-to make it usable by ML algorithms.
+to make it usable for ML algorithms.
 Log data formatting
-is one of the key elements in automatic log analyzing applications
+is one of the key elements in automatic log analysis applications
 as it is not for just machines
 but also for people to read.
 
-As today more and more concern is set on anonymization
-not only due to GDPR,
+As today more and more concern is set on anonymization,
 the data used for machine learning must be sanitized.
-Because of this,
+As a consequence,
 one major objective is to create a clean dataset
-that is safe to use in cloud environment
+that is safe to use in a cloud environment
 without raising concern around security and privacy issues.
 In addition to this,
 data must also be clean enough
@@ -250,16 +244,16 @@ are able to process it.
 
 As mentioned,
 Samlink has not yet developed ML applications.
-In order facilitate deployment of applications
+In order to facilitate deployment of applications
 for future ML application developers,
 this study aims to document the process of ML deployment
-well enough to create a simple guide to follow
-in the possible future ML projects in Samlink.
+thoroughly enough to create a simple guide to follow
+in possible future ML projects in Samlink.
 
 Finally,
-the main question this research is aiming to answer is:
+the main questions this research aims to answer are:
 \textit{is there such a correlation between RPA run logs and technical support tickets
-that ML algorithm is able to find it,
+that an ML algorithm is able to find,
 and can this correlation be used to forecast a ticket arrival}?
 
 
@@ -270,41 +264,40 @@ and can this correlation be used to forecast a ticket arrival}?
 In order to limit the study
 to feasible length and content,
 it is necessary to define the scope for the thesis.
-Before diving in to the scope of research objectives,
+Before diving in to the scope of the research objectives,
 we must first make one assumption regarding the data
-that ML is going to find some meaning from.
+from which ML is going to find some meaning.
 In order to find a connection between log data and support tickets,
 we make a hypothesis that errors leading to tickets
 are visible to or parseable by ML algorithm.
 In addition,
-as we are going to utilize anomaly detection algorithm in log analyzing,
-we must also assume that these errors in log
+as we are going to utilize an anomaly detection algorithm in log analysis,
+we must also assume that these errors on the log
 are, in fact, anomalies.
-We will, however,
-compare the results against these assumptions
-to test this hypothesis.
+The results will be compared against these assumptions
+to the test this hypothesis.
 
 %% ............................................................................................................
 
 \subsubsection*{Data anonymization}
 Anonymization in the context of this thesis
-refers to data sanitization process
+refers to a data sanitization process
 purposed to edit the data into
-more secure form in the privacy point of view.
+a more secure form in the point of view of privacy.
 In this study
-we aim to create a dataset usable in ML training.
+we aim to create a dataset that can be used in ML training.
 In this respect,
-anonymization is not in the main focus of the study
+anonymization is not the main focus of the study
 but only treated as a sub-phase
-of the data preprocessing in whole.
+of the data preprocessing.
 Nevertheless,
-anonymization is from the privacy perspective
-the most important phase of data preprocessing.
+anonymization is the most important phase of data preprocessing
+from the privacy perspective.
 
 Keeping this in mind,
 anonymization is covered rather superficially,
 only enough to explain the reasons
-behind actions taken during anonymization process.
+behind actions taken during the anonymization process.
 
 %% ............................................................................................................
 
@@ -312,8 +305,8 @@ behind actions taken during anonymization process.
 The ML training and result scoring
 is done in Azure ML environment.
 Azure is used for ML processes
-because Samlink already had licenses in Azure Cloud
-that are used for RPA process control.
+because Samlink already had licenses for Azure Cloud
+that is used for RPA process control.
 Integrating existing Azure resources
 with ML pipelines and endpoints constructed during this study
 was seen as a big advantage.
@@ -324,7 +317,7 @@ other Azure competitors are mentioned to the extent
 that their existence is recognised.
 
 As one of the objectives is to create
-an initial guideline for ML process commissioning
+an initial guideline for ML process commissioning,
 the Azure setup phase is documented in such detail
 reflecting the importance of this information
 for future developers
@@ -333,35 +326,35 @@ starting Azure ML projects in Samlink.
 %% ............................................................................................................
 
 \subsubsection*{Data requirements}
-Data purity in a sense of
-how easy it is to be used by ML algorithms
+
+Data purity in the perspective of machine learning algorithms
 creates challenges at the beginning of ML training.
 If data is not consistent,
 has lots of missing values
-or is formed in unanticipated way,
+or is formed in an unanticipated way,
 it requires considerable amount of preprocessing
-slowing the training process
-and causing errors in pipeline runs.
+which slows the training process
+and causes errors in pipeline runs.
 
-In order to create a baseline for Samlink ML projects
-this study aims to give basic criterion
+In order to create a baseline for Samlink ML projects,
+this study aims to give basic criteria for
 what is required from the data,
 so it is easily analyzable by ML algorithms.
 
 %% ............................................................................................................
 
 \subsubsection*{Machine learning methods}
-Several different machine learning algorithms exist
-that are aimed for different applications in mind.
+Several different machine learning algorithms have been created
+for different applications.
 For example,
 to make an algorithm that can predict
-the price of an apartment listed\cite{winky}
-we could be using linear regression,
-and in order to detect
-possible cyber threats from network traffic\cite{ghanem}
+the price of a listed apartment\cite{winky}
+we could use linear regression,
+and in order create an algorithm that detects
+possible cyber threats from network traffic\cite{ghanem},
 a two-class support vector machine could be utilized.
 These two methods are very different in usage
-and has their pros and cons in different applications.
+and have their pros and cons for different applications.
 
 As different methods can be used in creative ways
 in very different applications
@@ -373,14 +366,14 @@ that were seen suitable to answer the study objectives.
 
 When it comes to anomaly detection algorithms (ADA),
 only principal component analysis (PCA) is considered
-because PCA-based Anomaly Detection component is the only one usable
-from existing two anomaly detection algorithms
-in Azure ML Studio.
-As purely Azure ML Studio is used during this study,
+because PCA-based Anomaly Detection component is the only one
+out of the two existing anomaly detection algorithms
+that is usable in Azure ML Studio.
+As only Azure ML Studio is used during this study,
 no other anomaly detection algorithms are debated.
 The other ADA-component,
 One-Class Support Vector Machine,
-is discussed briefly to explain its unsuitableness for current case.
+is discussed briefly to explain its unsuitableness for the current case.
 
 
 %% ************************************************************************************************************
@@ -389,26 +382,27 @@ is discussed briefly to explain its unsuitableness for current case.
 
 In the \textbf{Introduction} section
 we explained the research motivation,
-main objectives and study scope.
+main objectives and scope of the study.
 The next section, \textbf{Background},
 clarifies the general machine learning concepts
-and terms relevant to this study case.
-We also discuss these topics from the perspective of
-existing studies.
+and RPA terms relevant to this thesis.
+We also discuss the mathematical theories
+behind the most significant algorithms utilized in this study,
+and the main methods that can be used to secure data privacy.
 
 The third section,
 \textbf{Research material and methods},
 explains in detail the data format and contents
-as well as the steps used to sanitize and preformat it
+as well as the steps used to sanitize and preformat the data
 for ML algorithm training.
 In addition,
 resources needed to set up the ML designing and training environment
 are discussed.
-At the end of the section,
-the ML pipelines used in the study are unfolded
-as well as their contents explained in detail.
+This section is followed by \textbf{Machine learning pipeline structure},
+which describes the ML pipelines set up during the study
+and specifies their contents in detail.
 
-\textbf{Results} section reveals how the selected algorithms performed
+The \textbf{Results} section compares how different algorithms performed
 and how well the research questions could be answered.
 
 Finally,

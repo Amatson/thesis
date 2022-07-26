@@ -4,65 +4,29 @@
 
 \section{Results}\label{sec:results}
 
-%% TODO: preface for the section
-%We start this section by looking at
-%the Azure resources needed for ML training
-%both in general Azure environment and in ML Studio.
-%Next we analyze the results of
-%different ML algorithms and pipelines.
-
-%% ************************************************************************************************************
-
-
-\todo{Contents of this section has been reorganized to methods and pipeline -sections. Final results are still gathered. Below is some quickly written notes, subjected to change.}
-
-Even though with rawmessage we were forced to reduce the data amount significantly,
-it was seen as valuable data source
-as it included more data than pure message had in JSON structure.
-As data amount was skimmed to less than 1\% of the original amount,
-the results may not be reliable.
-However, with rawmessage preprocessing used
-with decision forest regression,
-the coefficient of determination was over 0.35.
-
-\begin{table}[]
-    \begin{tabularx}{\textwidth}{|Y|L{0.12\textwidth}|L{0.12\textwidth}|L{0.12\textwidth}|L{0.12\textwidth}|L{0.12\textwidth}|}
-        \hline
-        \textbf{Algorithm} &
-        \textbf{Mean Absolute Error} &
-        \textbf{Root Mean Squared Error} &
-        \textbf{Relative Squared Error} &
-        \textbf{Relative Absolute Error} &
-        \textbf{Coefficient of Determination} \\ \hline
-        Rawmsg, unconventional training                          & 3.5      & 4.355313 & 0.890083 & 0.924528 & 0.109917 \\ \hline
-        Rawmsg, unconventional training, anomaly values excluded & 3.544643 & 4.204987 & 0.8297   & 0.936321 & 0.1703   \\ \hline
-        Rawmsg, proper training                                  & 2.848214 & 3.696191 & 0.641063 & 0.752358 & 0.358937 \\ \hline
-        Rawmsg, proper training, anomaly values excluded         & 3.133929 & 4.025449 & 0.760362 & 0.82783  & 0.239638 \\ \hline
-    \end{tabularx}
-    \caption{Rawmessage with text preprocessed, Decision Forest Regresssion used in phase 2}
-    \label{tab:results-raw-message}
-\end{table}
+This section presents the results of HML pipeline combinations.
+The values of algorithm evaluations are compared
+and the results are judged.
+Before that,
+we discuss about the memory issue encountered
+that affected our pipeline component choices.
 
 
 %% ************************************************************************************************************
 
 
-%% TODO: Discuss about rawmessage memory issues in result section!
-
-
-\subsection{Memory issues and limitations}\label{subsec:pipe-memory-issues}
+\subsection{Memory issues and limitations}\label{subsec:res-memory-issues}
 Memory is crucial resource in ML training.
 Algorithms take multiple steps while iterating the data
 and intermediate results are stored in the RAM rather than on the disk.
-%% TODO: something more to say or back that up?
-While building ML pipeline in Azure ML studio,
+While building ML pipeline in Azure ML Studio,
 a memory issue emerged
 that affected several components
 and caused serious limitations
 in terms of usable components and data size.
-Due to the time limits of this study
+Due to the time limits of this study,
 this issue was not resolved
-and the problem behind it was not found.
+and the problem causing it was not found.
 As several conditions
 considering the environment costs
 were already issued by the company,
@@ -71,13 +35,14 @@ compute instance property limitations
 and thus could not be resolved without cost overruns.
 However, this was not certain.
 
-\todo{Limitations to components. List effects of this problem.}
+\todo{Limitations to components. List effects of this problem. This subsection is still work-in-progress}
 %% TODO: limitations to components
 %% limitations to data size
 %% effects on choises in components?
 
 
-
+%% TODO: Results: Feature Hashing runs out of memory in Model Training with full data (unconventional training)
+%% Trying with smaller splits, which, once again, reduces data amount.
 
 During the initial pipeline runs
 the execution came to an abrupt stop
@@ -116,6 +81,227 @@ and forced us to choose such components
 that were able to handle these data amounts.
 
 %% TODO: Move some parts of the above memory problem elsewhere
+%%
+
+Even though with rawmessage we were forced to reduce the data amount significantly,
+it was seen as valuable data source
+as it included more data than pure message had in JSON structure.
+As data amount was skimmed to less than 1\% of the original amount,
+the results may not be reliable.
+
+
+%% ************************************************************************************************************
+
+\subsection{Algorithm estimation results}\label{subsec:res-algorithm-estimation-results}
+
+Based on the first pipeline experiments,
+the Decision Forest Regression algorithm gave the most promising results,
+so the values listed in this section are based on the use of this algorithm unless otherwise stated.
+However, this first impression was a misinterpretation,
+as the final results show.
+For unknown reasons,
+when time frame compression was carried out with SQL queries instead of R-script,
+the results were considerably better.
+However, these results could not be relied upon,
+as further investigation showed that the time frame compression was incorrect.
+This was verified by calculating the total number of log rows
+and comparing it to the sum of the line counts in all time frames.
+As something did not work as intended with SQL queries,
+SQL-based time frame compression was decided to reject.
+It was also much easier to include more statistical metrics
+with R-scripting than with SQL queries.
+
+As explained in the section~\ref{subsec:pipe-branching},
+the amount of pipeline component combinations to compare was significant.
+It was decided to run initial experiments with a few basic component combinations
+and select the most promising branches to continue with.
+For this reason,
+it was decided to reject pure n-gram feature extraction in the final analysis
+because the memory issue affected so much its reliability in terms of the amount of data.
+Feature hashing, however,
+could be included.
+The amount of data was seen sufficient to consider the results reliable,
+although, to make this possible,
+a lot of information was lost due to the level of compression used.
+
+In the table~\ref{tab:results-decision-forest-all},
+the final results of the pipelines using Decision Forest Regression algorithm in phase 2
+are listed for comparison.
+When interpreting the comparison metrics,
+it was decided to focus on the coefficient of determination (CoD-value),
+mean absolute error (MAE-value),
+and their difference with the corresponding metrics
+in cases where the anomaly probability value was omitted from phase 2.
+Like we explained in the section~\ref{subsec:pipe-branching},
+we assumed that anomaly probability values calculated by the anomaly detection algorithm
+provides valuable information for ticket count estimating.
+Thus,
+if these values are removed before the phase 2 algorithm training,
+the estimation capabilities of the algorithm should weaken.
+Hence,
+we decided to experiment more with those pipeline component combinations
+which resulted in noticeably better results
+than their anomaly-probability-omitted counterparts.
+
+\begin{table}[htb]
+    \begin{tabularx}{\textwidth}{|Y|L{0.091\textwidth}|L{0.096\textwidth}|L{0.077\textwidth}|L{0.077\textwidth}|L{0.105\textwidth}|}
+        \hline
+        \textbf{Combination} &
+        \textbf{MAE} &
+        \textbf{RMSE} &
+        \textbf{RSE} &
+        \textbf{RAE} &
+        \textbf{CoD} \\ \hline
+        Msg PropT           				& 3.6875				& 4.2886					& 1.6966					& 1.3169					& -0.6966		\\
+        Msg PropT NA	     				& 3.5125				& 4.2718					& 1.6834					& 1.2544					& -0.6834		\\
+        \hline
+        Msg UnconT             				& 3.5236				& 4.3578					& 1.3493					& 1.1313					& -0.3493		\\
+        Msg UnconT NA         				& 4.0405				& 4.8958					& 1.7030					& 1.2972					& -0.7030		\\
+        \hline
+        PreP.Msg PropT     					& 3.25  				& 3.7720					& 1.3125					& 1.1607					& -0.3125		\\
+        PreP.Msg PropT NA            		& 3.5125				& 4.2718					& 1.6834					& 1.2544					& -0.6834		\\
+        \hline
+        PreP.Msg UnconT       				& 3.7905				& 4.5707					& 1.4843					& 1.2169					& -0.4843		\\
+        PreP.Msg UnconT NA           		& 4.0405				& 4.8958					& 1.7030					& 1.2972					& -0.7030		\\
+        \hline
+        \textbf{Msg FHash PropT }   		& 2.4875				& 2.8611					& 0.7551					& 0.8883					& \textbf{0.24484}		\\
+        Msg FHash PropT NA  				& 2.85  				& 3.1922					& 0.9400					& 1.0178					& \textbf{0.05990}		\\
+        \hline
+        Msg FHash UnconT        			& 2.6071				& 3.2484					& 0.7234					& 0.8488					& 0.27657		\\
+        Msg FHash UnconT NA        			& 2.6562				& 3.2593					& 0.7282					& 0.8648					& 0.27171		\\
+        \hline
+        PreP.Msg FHash PropT	   			& 3.05  				& 3.4058					& 1.0701					& 1.0892					& -0.0701		\\
+        PreP.Msg FHash PropT NA  			& 2.6   	 			& 2.8858					& 0.7682					& 0.9285					& 0.23172		\\
+        \hline
+        PreP.Msg FHash UnconT	       		& 2.7901				& 3.4467					& 0.8144					& 0.908						& 0.18556  		\\
+        PreP.Msg FHash UnconT NA      		& 2.8616				& 3.4125					& 0.7983					& 0.9316					& 0.20162 		\\
+        \hline
+        \textbf{RawMsg UnconT }        		& 2.9   				& 3.8200					& 0.7859					& 0.7928					& \textbf{0.21402}		\\
+        RawMsg UnconT NA              		& 3.0733				& 3.9588					& 0.8441					& 0.8402					& \textbf{0.15588}		\\
+        \hline
+        \textbf{RawMsg PropT}       		& \textbf{1.3611}		& 1.8263					& 1.6678					& 1.0208					& -0.6678		\\
+        RawMsg PropT NA           			& \textbf{2.5833}		& 2.8694					& 4.1168					& 1.9375					& -3.1168		\\
+        \hline
+        \textbf{PreP.RawMsg UnconT}    		& 2.9466				& 3.7159					& 0.7437					& 0.8056					& \textbf{0.25627}		\\
+        PreP.RawMsg UnconT NA             	& 3.0733				& 3.9588					& 0.8441					& 0.8402					& \textbf{0.15588}		\\
+        \hline
+        \textbf{PreP.RawMsg PropT }  		& \textbf{0.5277}		& 0.6328					& 0.2002					& 0.3958					& \textbf{0.79976}		\\
+        PreP.RawMsg PropT NA        		& \textbf{2.5833}		& 2.8694					& 4.1168					& 1.9375					& \textbf{-3.1168}		\\
+        \hline
+        RawMsg FHash PropT					& 3.7916				& 5.3078					& 2.6361					& 1.3787					& -1.6361		\\
+        RawMsg FHash PropT NA        		& 4.0625				& 5.2026					& 2.5326					& 1.4772					& -1.5326		\\
+        \hline
+        RawMsg FHash UnconT    				& 2.875 				& 3.3994					& 1.0458					& 1.0267					& -0.0458		\\
+        RawMsg FHash UnconT NA         		& 2.9   				& 3.8249					& 1.3240					& 1.0357					& -0.3240		\\
+        \hline
+        PreP.RawMsg FHash PropT				& 2.8194				& 2.8993					& 1.4834					& 1.4097					& -0.4834		\\
+        PreP.RawMsg FHash PropT NA    		& 2.5694				& 3.0503					& 1.6419					& 1.2847					& -0.6419		\\
+        \hline
+        PreP.RawMsg FHash UnconT			& 2.6153				& 3.4303					& 0.8327					& 0.9324					& 0.16723		\\
+        PreP.RawMsg FHash UnconT NA	    	& 2.5384				& 3.1784					& 0.7149					& 0.9050					& 0.28503		\\
+        \hline
+    \end{tabularx}
+    \caption{Results of HML pipeline with Decision Forest regression algorithm in the phase 2.
+        \textbf{FHash} means \textit{Feature Hashing},
+        \textbf{PropT} indicates \textit{proper training},
+        \textbf{UnconT} that \textit{unconventional training} is done in phase 1,
+        \textbf{PreP.} means that \textit{text preprocessing} has been used, and
+        \textbf{NA} means that \textit{anomaly values has been removed} for comparison (NoAnomalies).
+        The most promising comparison metrics and their component combinations are bolded.
+    }
+    \label{tab:results-decision-forest-all}
+\end{table}
+
+As highlighted in the table\ref{tab:results-decision-forest-all},
+the most promising results have been received by using:
+\begin{itemize}
+    \setlength\itemsep{0pt}
+    \setlength{\parskip}{0pt}
+    \item message data, feature hashing and proper training
+    \item rawmessage data and unconventional training
+    \item rawmessage data and proper training
+    \item rawmessage data, preprocessed, proper training, and
+    \item rawmessage data, preprocessed, unconventional training.
+\end{itemize}
+
+We have made another assumption,
+that with different algorithms
+the same component combinations would give the best results.
+Next,
+these chosen combinations are tested with different regression algorithm in the phase 2.
+
+\begin{table}[htb]
+    \begin{tabularx}{\textwidth}{|Y|L{0.08\textwidth}|L{0.10\textwidth}|L{0.08\textwidth}|L{0.08\textwidth}|L{0.1\textwidth}|}
+        \hline
+        \textbf{Algorithm} &
+        \textbf{MAE} &
+        \textbf{RMSE} &
+        \textbf{RSE} &
+        \textbf{RAE} &
+        \textbf{CoD} \\ \hline
+        Poisson PropT				& 3.1045				& 3.4232				& 1.0810				& 1.1087				& -0.0810  \\
+        Poisson PropT NA 			& 3.0647			 	& 3.3359				& 1.0266			 	& 1.0945				& -0.0266  \\
+        \hline
+        Poisson UnconT				& 2.7530				& 3.4857			 	& 0.8329				& 0.8963			 	& 0.16704  \\
+        Poisson UnconT NA 			& 2.7412				& 3.3489			 	& 0.7688				& 0.8924			 	& 0.23113  \\
+        \hline
+        NeuralNet PropT				& 2.9549				& 3.5045				& 1.1330				& 1.0553				& -0.1330  \\
+        NeuralNet PropT NA			& 2.9368				& 3.4668				& 1.1087				& 1.0488				& -0.1087  \\
+        \hline
+        NeuralNet UnconT			& 3.629					& 4.6548			 	& 1.4854				& 1.1817			 	& -0.4854  \\
+        NeuralNet UnconT NA 		& 3.7330				& 4.7398			 	& 1.5401				& 1.2154			 	& -0.5401  \\
+        \hline
+        Boosted PropT				& 2.2013				& 2.8158			 	& 0.7314				& 0.7861				& 0.26852  \\
+        Boosted PropT NA			& 2.1983				& 2.7899				& 0.7180				& 0.7851				& 0.28193  \\
+        \hline
+        Boosted UnconT				& 3.0881				& 3.7033			 	& 0.9402				& 1.0054			 	& 0.05976  \\
+        Boosted UnconT NA 			& 2.9448				& 3.4691			 	& 0.8250				& 0.9587			 	& 0.17494  \\
+        \hline
+        Linear PropT				& 2.9491				& 3.1988				& 0.9439				& 1.0532				& 0.05602  \\
+        Linear PropT NA				& 2.8327			 	& 3.0956				& 0.8840			 	& 1.0117			 	& 0.11597  \\
+        \hline
+        Linear UnconT				& 2.8672				& 3.5982			 	& 0.8876				& 0.9335			 	& 0.11238  \\
+        Linear UnconT NA 			& 2.6735				& 3.3376			 	& 0.7637				& 0.8704			 	& 0.23628  \\
+        \hline
+        \textbf{DecFor PropT}	 	& 2.4875			 	& 2.8611				& 0.7551				& 0.8883				& \textbf{0.24484}  \\
+        DecFor PropT NA				& 2.85  		 		& 3.1922				& 0.9400				& 1.0178				& \textbf{0.05990}  \\
+        \hline
+        DecFor UnconT            	& 3.5236				& 4.3578				& 1.3493				& 1.1313				& -0.3493   \\
+        DecFor UnconT NA         	& 4.0405				& 4.8958				& 1.7030				& 1.2972				& -0.7030	\\
+        \hline
+    \end{tabularx}
+    \caption{Results of HML pipeline with different algorithms used in phase 2.
+        \textbf{Poisson} means \textit{Poisson regression},
+        \textbf{NeuralNet} indicates \textit{Neural Network regression},
+        \textbf{Boosted} means \textit{Boosted Decision Tree regression},
+        \textbf{Linear} means \textit{Linear regression}, and
+        \textbf{DecFor} means \textit{Decision Forest regression}.
+        Feature hashing has been used with message-column in each case.
+        Each algorithm is tested with unconventional (\textbf{UnconT}) vs. proper training (\textbf{PropT}),
+        and with or without anomaly probability values from phase 1 (\textbf{NA} means NoAnomalies).
+        The most promising results are bolded.
+    }
+    \label{tab:results-msg-fhash-algorithm-comparison}
+\end{table}
+
+In the table~\ref{tab:results-msg-fhash-algorithm-comparison},
+we can see the results of different regression algorithms
+with message data and feature hashing.
+However,
+as the results indicate,
+comparison metrics do not improve with different algorithms.
+Thus,
+Decision Forest Regression is selected for the final validation
+with fresh test data.
+
+\todo{Couple of more tables coming with final results with fresh test data set!}
+
+
+\todo{In final results, explain that mostly default component parameters were used, and show what they were}
+
+
+%% ************************************************************************************************************
+
 
 
 \clearpage

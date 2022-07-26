@@ -11,17 +11,17 @@ Typically, ML refers to
 a set of technologies used to \enquote{build computers
 that improve automatically through experience}.~\cite{jordan2015machine}
 This is generally considered a machine way
-to simulate human learning process.
+to simulate the human learning process.
 ML usage has become more common
 and is nowadays widely used in many fields,
 not just in general information technology and computer science.
 This is because data can be gathered from anywhere,
 and where there is data to be processed,
-ML can be there to process it.
+ML can be used to process it.
 Computer algorithms are able to find 
 statistical correlation and patterns
-from places overlooked by human mind,
-or where amount of data is just too much 
+from places overlooked by the human mind,
+or in cases where the amount of data is just too much
 for people to process.
 This is why ML has proved its power
 in various empirical science fields,
@@ -29,78 +29,78 @@ such as biology, cosmology or social science.~\cite{jordan2015machine}
 
 In this section, 
 key concepts of ML are explained briefly
-and several ML features are explored 
-that are most relevant to this study.
-We also discuss shortly about data sensitivity
-and how it had to be addressed during this study.
+and several ML features
+that are most relevant to this study
+are explored.
+We also briefly discuss about data sensitivity
+and how it was addressed during this study.
 
 %% ************************************************************************************************************
 
 
 \subsection{Machine learning algorithms and training}\label{subsec:bg-machine-learning}
 
-Algorithm means a finite sequence of (typically) mathematical operations
+An algorithm is a finite sequence of (typically) mathematical operations
 that are used to solve a specific problem,
-generally by repetition of some steps
+generally by repetition of certain steps
 until the problem resolves.~\cite{merriam2022algorithm}
 Algorithms are the main component inside machine learning.
-By iterating through all the data points
-algorithm is able to, for example,
+By iterating through all the data points,
+an algorithm is able to, for example,
 find repeating patterns,
 mathematical or logical connections,
-or unusual anomalies that would be seemingly normal for human eye.
+or unusual anomalies that would appear seemingly normal for the human eye.
 
-Algorithms operate on set of rules and parameters
+Algorithms operate on a set of rules and parameters.
 In order to utilize an algorithm to solve a problem,
-algorithm is first trained by tuning these parameters
+the algorithm is first trained by tuning these parameters
 to fit the current case.
 Usually,
 ML algorithms can be trained in three ways:
-supervised, unsupervised, and reinforced learning.~\cite{jordan2015machine}
+supervised, unsupervised, and reinforcement learning.~\cite{jordan2015machine}
 Even more training methods exist
 that usually combine those mentioned.~\cite{ayodele2010types, mahesh2020machine}
 For the sake of simplicity,
-we focus on those three main methods.
+we focus only on the three main methods.
 
 In \textbf{supervised learning},
-algorithm is given data with ready answers on
+the algorithm is given data with ready answers on
 how the data needs to be interpreted.
 Algorithm then tries to figure out the rules behind
-how given data and the correct answers are related.~\cite{ayodele2010types}
+how the given data and the correct answers are related.~\cite{ayodele2010types}
 In \textbf{unsupervised learning},
 on the other hand,
-algorithm does not get model data from which to train itself,
+the algorithm does not get model data from which to train itself,
 but instead it tries to find clusters or groups inside the data
 that are linked together more closely than to other data points.~\cite{winky}
-\textbf{Reinforced learning} refers to a method
+\textbf{Reinforcement learning} refers to a method
 where a computer program is given a goal
 and provided feedback as a reward.
-This reward is what program aims to maximize
-by adjusting given parameters.~\cite{ayodele2010types}
+This reward is what the program aims to maximize
+by adjusting the parameters it has been given.~\cite{ayodele2010types}
 
 In ML,
 there are multiple algorithms to solve different problems
 and no jack-of-all-trades algorithm exists.
-Each algorithm is suitable for certain type of problem.
+Each algorithm is suitable for a certain type of problem.
 To simplify,
 algorithms are usually divided into three or four categories
 based on the problem type.~\cite{vickery2019mltypes}
 
 \textbf{Regression algorithms} predict values
 and are typically used with supervised learning.
-Usual example of regression problem
+A usual example of a regression problem
 is house price prediction
 using typical house features
 such as building
-year,location, number of rooms \etc.
-With these varying features
-the algorithm then gives each feature a weight value
+year, location, number of rooms \etc.
+The algorithm then assigns each feature a weight value
 which determine the final price of the house.~\cite{vickery2019mltypes}
 
 \textbf{Classification algorithms} predict categories
 and are also used most commonly with supervised learning.
 Depending on the algorithm,
-they can predict between two or several categories.
+they can predict between two or more categories.
 Examples of classification problems
 could be spam mail identification with two class classification,
 or flower species recognition from images with multiclass classification.~\cite{vickery2019mltypes}
@@ -109,10 +109,10 @@ or flower species recognition from images with multiclass classification.~\cite{
 to find structures inside data.
 This is done,
 for instance,
-by first providing the amount of clusters to search to algorithm,
+by first providing the amount of clusters to search to the algorithm,
 which then calculates a center point for each cluster
-so that they are as far away from each other as possible
-while data points surrounding each center are as close to each other as possible.~\cite{mahesh2020machine}
+so that they are as far away from each other as possible,
+while the data points surrounding each center are as close to each other as possible.~\cite{mahesh2020machine}
 This could be used,
 for example,
 to find meaningful customer segments from transaction data
@@ -126,7 +126,7 @@ main algorithm calculations are streamlined by first reducing the amount of feat
 
 These four ML problem types
 and most known algorithms of each type
-are shown in the graphic~\ref{fig:ml-algorithm-cheatsheet}.
+are presented in the figure~\ref{fig:ml-algorithm-cheatsheet}.
 
 
 \begin{figure}[htb]
@@ -137,41 +137,42 @@ are shown in the graphic~\ref{fig:ml-algorithm-cheatsheet}.
 \end{figure}
 
 This study focuses on anomaly detection,
-which, roughly simplified, is a clustering problem
+which, simply put, is a clustering problem
 where anomalies are rare incidents outside common clusters.
 However,
-in this study we utilize PCA-based anomaly detection algorithm,
+in this study we utilize a PCA-based anomaly detection algorithm,
 where PCA refers to Principal Component Analysis,
 and which is a dimension reduction algorithm.~\cite{li2017mlalgorithm}
-More about PCA
-is discussed later in this section.
+PCA is discussed in more detail later in this section.
 In addition,
 we aim to find a connection between anomalies and incident tickets
 by their amount in a timeframe,
 which makes the topic in the end a regression problem.
 
 Typically,
-when training an algorithm,
-some predefined portion of the data
-is used as training data.
-The rest is used to validate the results
-so that validation data and training data do not overlap.
-Instead, trained algorithm is given data it has not seen before
-and the result it produces with it is then validated.~\cite{baheti2022datasplit}
+the data used in algorithm training
+is divided in two parts.
+One part is used for the training process,
+and the other is used to validate the results of the training.
+These data parts must not overlap,
+but the algorithm is given data to validate
+that it has not seen before.~\cite{baheti2022datasplit}
 For example,
 in supervised learning
-the key values the algorithm is trained to find out
-are hidden from the validation data.
+the key values the algorithm is trained to find
+are hidden in the validation data.
 The resulting values produced by the algorithm
-are compared to those hidden values
+are compared to the hidden values
 and the difference between the estimate and the real value
 can be used to determine how well the current trained algorithm compares to others.
 However, in this study,
 we are going to break that rule
-about non-overlapping training and validation data.
+of non-overlapping training and validation data.
 The reason for this is explained further in section~\ref{subsec:pipe-unconventional-training}.
 
 %% ************************************************************************************************************
+
+%% TODO: continue grammatics here!
 
 \subsection{Cloud ML platforms}\label{subsec:bg-cloud-ml-platforms}
 
@@ -260,14 +261,15 @@ when given values of the others}
 making them a fundamental component in ML field.~\cite{merriam2022regression}
 
 Regression algorithms intend to create a mathematical model
-that explains the data.
+that explains the relations of the data.
 This usually means an algebraic equation
 which can be generalized in the following form,
 \begin{equation}
     \label{eqn:general-regression-model}
     Y = f(X_{m},\beta_{p})+\epsilon
 \end{equation}
-where $f$ is some function of $m$ independent variables $(X_{m})$,
+where Y is the data feature we are looking to find relation to,
+$f$ is some function of $m$ independent variables $(X_{m})$,
 and $p$ coefficients $(\beta_{p})$.
 $X_{m}$ can be opened as $X_{1},...,X_{m}$,
 and $\beta_{p}$ as $\beta_{1},...,\beta_{p}$.
@@ -294,7 +296,7 @@ derived from the generalized form,
 \end{equation}
 Exact solution for this does not usually exist
 as there can be more coefficients than independent variables $(p>m))$,
-and minimizing the $SSE$ does not result into linear equation.
+and minimizing the $SSE$ does not always result into linear equation.
 This is typically the case in ML,
 and thus the model must be found
 by iterative search process.
@@ -305,7 +307,6 @@ To improve the efficiency of algorithm calculations,
 general regression model can be converted into a matrix form.
 The same function in equation~\ref{eqn:general-regression-model}
 can thus be represented as,
-
 \begin{equation}
     Y = XB+E
 \end{equation}
@@ -316,24 +317,25 @@ and finally, $E$ is an $n\times1$ matrix of error parameters.
 Thus, the equation of squared errors (equation~\ref{eqn:sum-of-squared-errors})
 that is to be minimized can be written as
 \begin{equation}
-    E'E = (Y-XB)'(Y-XB) = Y'Y-2B'X'Y+B'X'XB.
+    E^{T}E = (Y-XB)^{T}(Y-XB) = Y^{T}Y-2B^{T}X^{T}Y+B^{T}X^{T}XB.
 \end{equation}
 In order to minimize this, we can take the derivative of matrix $B$,
 \begin{equation}
-    \frac{\partial(E'E)}{\partial B} = -2X'Y + 2X'XB
+    \frac{\partial(E^{T}E)}{\partial B} = -2X^{T}Y + 2X^{T}XB
 \end{equation}
 and equating to zero gives
 \begin{equation}
-    (X'X)\hat{B} = X'Y.
+    (X^{T}X)\hat{B} = X^{T}Y.
 \end{equation}
 The solutions of coefficient parameters are thus
 \begin{equation}
-    \hat{B} = (X'X)^{-1}X'Y.
+    \hat{B} = (X^{T}X)^{-1}X^{T}Y.
 \end{equation}
 
 Ultimately,
 there usually is no one perfect model to describe real world data.
-The function $f$ in the general regression model
+As an example,
+the function $f$ in the general regression model
 can describe the relation of $X_{i}$ and $\beta_{i}$ as product of both terms.
 This would mean, that
 \begin{equation}
@@ -364,7 +366,7 @@ driving on a straight road in its lane.
 The model output is how much we should turn the steering wheel
 based on how much we are off from the straight line.
 We might have constant parameters such as
-wind effect, continuous error of the axes, and tilt of the road.
+wind effect, continuous error of the wheel axes, and tilt of the road.
 However,
 we also have parameters that change over time
 and are dependent from other factors,
@@ -598,6 +600,8 @@ Normalized error means,
 that each anomaly score is between zero and one.
 
 
+%% TODO: picture of anomaly detection with PCA?
+
 %% ............................................................................................................
 
 \subsection{Other anomaly detection algorithms}\label{bg-other-ada}
@@ -646,7 +650,7 @@ where \textbf{n} in n-gram refers to the maximum number of words
 in a group of consecutive words in the input sentence.~\cite{furnkranz1998study}
 
 Example of n-gram composition of a sentence can be seen
-in the table~\ref{bg-n-gram-example}.
+in the table~\ref{tab:bg-n-gram-example}.
 Usually,
 the unnecessary stop words are removed from the text
 (such as "the"),
@@ -662,7 +666,7 @@ the following presentation with unigram dictionary:
 \end{equation}
 where each number represents the index of a word in unigram dictionary from table~\ref{tab:bg-n-gram-example}.
 
-\begin{table}[]
+\begin{table}[htb]
     \begin{tabularx}{\textwidth}{|L{0.1\textwidth}|L{0.17\textwidth}|L{0.25\textwidth}|Y|}
         \hline
         \textbf{Index} &
@@ -754,8 +758,9 @@ such as inputting text to a certain named field on the UI,
 or logging in with given username and password
 regardless of the location of those fields on the layout.~\cite{tripathi2018learning}
 
-In Samlink RPA operations,
-a central coordinating system called \textit{Orchestrator}
+In Samlink,
+an RPA technology called UiPath is used as a base of RPA operations.
+A central coordinating system called \textit{UiPath Orchestrator}
 supervises the RPA processes.
 RPA process is executed by following
 an \textit{RPA automation},
@@ -763,8 +768,9 @@ a predefined operation instruction build by RPA developer.
 The software responsible of the automation execution
 is called an \textit{RPA agent}.
 Agents are located in the \textit{workstations},
-where several agents may be running in a single workstation.
-Each agent executes one automation at a time
+where a single agent is running in one workstation.
+Each agent executes one automation at a time,
+given by the Orchestrator,
 and communicates with Orchestrator during the execution.
 This hierarchy is visualized in the picture~\ref{fig:rpa-hierarchy}.
 
@@ -797,11 +803,11 @@ Pseudonymization refers to a method
 where sensitive information is de-identified.
 This means,
 that each sensitive piece of information
-is replaced with a decrypted value
+is replaced with an encrypted value
 so that no information is lost
 but human cannot identify individuals
 when reading the data.
-Decryption and de-identification
+Encryption and de-identification
 could be reversed, \ie data could be re-identified,
 with decryption key which tells computer
 how to convert the replaced value back to the original form.
