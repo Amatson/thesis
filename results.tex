@@ -11,11 +11,16 @@ Before that,
 we discuss about the memory issue encountered
 that affected our pipeline component choices.
 
+After presenting the results,
+the sensibility of the outcome is evaluated
+and suggestions for improvement are made.
+
 
 %% ************************************************************************************************************
 
 
 \subsection{Memory issues and limitations}\label{subsec:res-memory-issues}
+
 Memory is crucial resource in ML training.
 Algorithms take multiple steps while iterating the data
 and intermediate results are stored in the RAM rather than on the disk.
@@ -35,64 +40,55 @@ compute instance property limitations
 and thus could not be resolved without cost overruns.
 However, this was not certain.
 
-
-\todo{Limitations to components. List effects of this problem. This subsection is still work-in-progress}
-%% TODO: limitations to components
-%% limitations to data size
-%% effects on choises in components?
-
-
-
-
-
-
-During the initial pipeline runs
-the execution came to an abrupt stop
-and Azure notified about memory issues. %% TODO: Add reference to issue
-These problems were linked to the data amount
-which had to be reduced to 600 megabytes
-before any pipeline could be finished using the data.
-This reduction was against the initial goal
-where preferably all the data could have been used.
-
-Considerable amount of time was used
-to fix or avoid this issue
-but nothing clear was found
-that would explain the error received.
-While working with the issue
-it was also noted
-that data needed more cleaning
-in order to ease the preprocessing phase
-as described with more detail in section~\ref{subsec:meth-data-anonymization}
-Thus,
-the data had to be imported from log archive
-and anonymized once more.
-
-To advance the study more efficiently
-it was decided to trim info-type log messages from data
-hence reducing the data amount considerably.
-Final data included 8.6 million log rows
+In order to complete some of the ML pipeline runs
+the data amount had to be reduced to 600 megabytes.
+This was considerably less than what was assumed to be sufficient
+for reliable results,
+as this size of data would cover for just a few months of logging.
+To increase the time span of log data,
+it was decided to trim info-type log messages from the data.
+This way we were able to reduce the data to 8.6 million log rows
 which was about 10\% of the original data size.
-Before final cleaning operations
-the data took 8.1GB od disk space,
-and after cleaning the rawmessage-field
-the final disk size was 6.6GB\@.
+Before final cleaning operations,
+the data took 8.1GB of disk space,
+and after cleaning the rawmessage-field with the script in appendix~\ref{sec:app-data-cleaning-script},
+the final size in disk was 6.6GB\@.
 Even with this data size,
-some Azure ML components faced this memory issue
+some Azure ML components still faced this memory issue
 and forced us to choose such components
 that were able to handle these data amounts.
 
-%% TODO: Move some parts of the above memory problem elsewhere
-%%
+One of the most sensitive components for this issue
+was n-gram feature extraction module.
+As we explained in section~\ref{subsec:bg-ngram-features-and-hashing},
+each new n-gram or word creates a new column in the data.
+This module suffered greatly from the memory exhaustion,
+especially while processing rawmessage
+which it included more data in the JSON structure than pure message-field.
+With rawmessage,
+n-gram feature extraction was able to handle
+less than 1\% of the data amount,
+resulting to more than 1000 columns of n-gram feature columns.
+With message data,
+this situation was just slightly better,
+as the limit of data amount was in 2\%.
 
-%% TODO: Results: Feature Hashing runs out of memory in Model Training with full data (unconventional training)
-%% Trying with smaller splits, which, once again, reduces data amount.
+Feature hashing component was able to process more data than pure n-gram feature extracting module,
+but this required the compression level to be quite high.
+The main parameter to tune in feature hashing was the bitsize of the hashing.
+The smaller the hashing bitsize was,
+the greater the level of compression was thus resulting to more lost information.
+In order to utilize this module at all,
+the hashing bitsize had to be set to 7
+which produced approximately 130 hashed feature columns.
 
-Even though with rawmessage we were forced to reduce the data amount significantly,
-it was seen as valuable data source
-as it included more data than pure message had in JSON structure.
-As data amount was skimmed to less than 1\% of the original amount,
-the results may not be reliable.
+With some component combinations,
+additional data split modules were needed
+in order to finish the ML pipeline.
+For example,
+with rawmessage-data, feature hashing and unconventional training,
+the validation data had to be trimmed to 70\%
+so that the model scoring could be executed.
 
 
 %% ************************************************************************************************************
@@ -147,6 +143,9 @@ Hence,
 we decided to experiment more with those pipeline component combinations
 which resulted in noticeably better results
 than their anomaly-probability-omitted counterparts.
+As mentioned in the previous section,
+with MAE smaller is better,
+whereas with CoD bigger is better.
 
 \begin{table}[htb]
     \begin{tabularx}{\textwidth}{|Y|L{0.091\textwidth}|L{0.096\textwidth}|L{0.077\textwidth}|L{0.077\textwidth}|L{0.105\textwidth}|}
@@ -181,17 +180,17 @@ than their anomaly-probability-omitted counterparts.
         PreP.Msg FHash UnconT	       		& 2.7901				& 3.4467					& 0.8144					& 0.908						& 0.18556  		\\
         PreP.Msg FHash UnconT NA      		& 2.8616				& 3.4125					& 0.7983					& 0.9316					& 0.20162 		\\
         \hline
-        \textbf{RawMsg UnconT }        		& 2.9   				& 3.8200					& 0.7859					& 0.7928					& \textbf{0.21402}		\\
-        RawMsg UnconT NA              		& 3.0733				& 3.9588					& 0.8441					& 0.8402					& \textbf{0.15588}		\\
-        \hline
         \textbf{RawMsg PropT}       		& \textbf{1.3611}		& 1.8263					& 1.6678					& 1.0208					& -0.6678		\\
         RawMsg PropT NA           			& \textbf{2.5833}		& 2.8694					& 4.1168					& 1.9375					& -3.1168		\\
         \hline
-        \textbf{PreP.RawMsg UnconT}    		& 2.9466				& 3.7159					& 0.7437					& 0.8056					& \textbf{0.25627}		\\
-        PreP.RawMsg UnconT NA             	& 3.0733				& 3.9588					& 0.8441					& 0.8402					& \textbf{0.15588}		\\
+        \textbf{RawMsg UnconT }        		& 2.9   				& 3.8200					& 0.7859					& 0.7928					& \textbf{0.21402}		\\
+        RawMsg UnconT NA              		& 3.0733				& 3.9588					& 0.8441					& 0.8402					& \textbf{0.15588}		\\
         \hline
         \textbf{PreP.RawMsg PropT }  		& \textbf{0.5277}		& 0.6328					& 0.2002					& 0.3958					& \textbf{0.79976}		\\
         PreP.RawMsg PropT NA        		& \textbf{2.5833}		& 2.8694					& 4.1168					& 1.9375					& \textbf{-3.1168}		\\
+        \hline
+        \textbf{PreP.RawMsg UnconT}    		& 2.9466				& 3.7159					& 0.7437					& 0.8056					& \textbf{0.25627}		\\
+        PreP.RawMsg UnconT NA             	& 3.0733				& 3.9588					& 0.8441					& 0.8402					& \textbf{0.15588}		\\
         \hline
         RawMsg FHash PropT					& 3.7916				& 5.3078					& 2.6361					& 1.3787					& -1.6361		\\
         RawMsg FHash PropT NA        		& 4.0625				& 5.2026					& 2.5326					& 1.4772					& -1.5326		\\
@@ -236,7 +235,7 @@ Next,
 these chosen combinations are tested with different regression algorithm in the phase 2.
 
 \begin{table}[htb]
-    \begin{tabularx}{\textwidth}{|Y|L{0.08\textwidth}|L{0.10\textwidth}|L{0.08\textwidth}|L{0.08\textwidth}|L{0.1\textwidth}|}
+    \begin{tabularx}{\textwidth}{|Y|L{0.08\textwidth}|L{0.10\textwidth}|L{0.08\textwidth}|L{0.08\textwidth}|L{0.12\textwidth}|}
         \hline
         \textbf{Algorithm} &
         \textbf{MAE} &
@@ -276,12 +275,12 @@ these chosen combinations are tested with different regression algorithm in the 
         \hline
     \end{tabularx}
     \caption{Results of HML pipeline with different algorithms used in phase 2.
+        Feature hashing has been used with \textbf{message}-column in each case.
         \textbf{Poisson} means \textit{Poisson regression},
         \textbf{NeuralNet} indicates \textit{Neural Network regression},
         \textbf{Boosted} means \textit{Boosted Decision Tree regression},
         \textbf{Linear} means \textit{Linear regression}, and
         \textbf{DecFor} means \textit{Decision Forest regression}.
-        Feature hashing has been used with message-column in each case.
         Each algorithm is tested with unconventional (\textbf{UnconT}) vs. proper training (\textbf{PropT}),
         and with or without anomaly probability values from phase 1 (\textbf{NA} means NoAnomalies).
         The most promising results are bolded.
@@ -299,14 +298,208 @@ Thus,
 Decision Forest Regression is selected for the final validation
 with fresh test data.
 
-\todo{Couple of more tables coming with final results with fresh test data set!}
+With rawmessage,
+we were unable to execute tests with fresh data
+because the model score module failed with an error stating
+\textit{\enquote{Number of unique values in column: 'rawmessage' is greater than allowed}}.
+This happened
+even though the rawmessage field was cleaned from the unique data values
+such as timestamp and fingerprint.
+For this reason,
+we could not acquire test results of pipeline component combinations
+that did not include rawmessage preprocessing.
 
 
-\todo{In final results, explain that mostly default component parameters were used, and show what they were}
+\begin{table}[htb]
+    \begin{tabularx}{\textwidth}{|Y|L{0.10\textwidth}|L{0.10\textwidth}|L{0.08\textwidth}|L{0.08\textwidth}|L{0.12\textwidth}|}
+        \hline
+        \textbf{Algorithm} &
+        \textbf{MAE} &
+        \textbf{RMSE} &
+        \textbf{RSE} &
+        \textbf{RAE} &
+        \textbf{CoD} \\ \hline
+        Poisson PropT		                & 2.7528		& 2.9170		& 1.0348		& 1.1261		& -0.0348   \\
+        Poisson PropT NA	                & 2.7540		& 2.9185		& 1.0359		& 1.1266		& -0.0359	\\
+        \hline
+        Poisson UnconT                      & 2.2626		& 2.9650		& 0.8661		& 0.8927		& 0.13385 	\\
+        Poisson UnconT NA                   & 2.3380		& 2.9977		& 0.8853		& 0.9225		& 0.11464 	\\
+        \hline
+        NeuralNet PropT		                & 2.3926		& 2.5209		& 0.7729		& 0.9788		& 0.22704   \\
+        NeuralNet PropT NA	                & 2.3468		& 2.3981		& 0.6994		& 0.9600		& 0.30056   \\
+        \hline
+        NeuralNet UnconT                    & 2.8173		& 3.5439		& 1.2373		& 1.1116		& -0.2373 	\\
+        NeuralNet UnconT NA                 & 2.3270		& 2.9708		& 0.8694		& 0.9181		& 0.13050 	\\
+        \hline
+        Boosted PropT		                & 2.75  		& 3.0103		& 1.1021		& 1.125 		& -0.1021   \\
+        Boosted PropT NA	                & 2.75  		& 3.0103		& 1.1021		& 1.125 		& -0.1021   \\
+        \hline
+        Boosted UnconT                      & 2.8929		& 3.6821		& 1.3357		& 1.1414		& -0.3357 	\\
+        Boosted UnconT NA                   & 2.7651		& 3.5996		& 1.2765		& 1.0910		& -0.2765 	\\
+        \hline
+        Linear PropT		                & 2.6982		& 2.8526		& 0.9896		& 1.1038		& 0.01030   \\
+        Linear PropT NA		                & 2.6796		& 2.8188		& 0.9663		& 1.0962		& 0.03361   \\
+        \hline
+        Linear UnconT                       & 2.4777		& 3.0516		& 0.9174		& 0.9776		& 0.08254 	\\
+        Linear UnconT NA                    & 2.3310		& 2.9720		& 0.8702		& 0.9197		& 0.12976 	\\
+        \hline
+        \textbf{DecFor RawMsg UnconT }      & 2.9   			& 3.8200		& 0.7859	    & 0.7928	& \textbf{0.21402}		\\
+        DecFor RawMsg UnconT NA             & 3.0733			& 3.9588		& 0.8441		& 0.8402	& \textbf{0.15588}		\\
+        \hline
+        \textbf{DecFor RawMsg PropT}       	& \textbf{1.3611}	& 1.8263		& 1.6678		& 1.0208	& -0.6678		\\
+        DecFor RawMsg PropT NA           	& \textbf{2.5833}	& 2.8694		& 4.1168		& 1.9375	& -3.1168		\\
+        \hline
+        \textbf{DecFor RawMsg UnconT }      & 2.9   			& 3.8200		& 0.7859		& 0.7928	& \textbf{0.21402}		\\
+        DecFor RawMsg UnconT NA             & 3.0733			& 3.9588		& 0.8441		& 0.8402	& \textbf{0.15588}		\\
+        \hline
+
+    \end{tabularx}
+    \caption{Results of HML pipeline with different algorithms used in phase 2.
+    Each case uses pure \textbf{rawmessage}-column without preprocessing.
+    \textbf{Poisson} means \textit{Poisson regression},
+        \textbf{NeuralNet} indicates \textit{Neural Network regression},
+        \textbf{Boosted} means \textit{Boosted Decision Tree regression},
+        \textbf{Linear} means \textit{Linear regression}, and
+        \textbf{DecFor} means \textit{Decision Forest regression}.
+        Each algorithm is tested with unconventional (\textbf{UnconT}) vs. proper training (\textbf{PropT}),
+        and with or without anomaly probability values from phase 1 (\textbf{NA} means NoAnomalies).
+        The most promising results are bolded.
+    }
+    \label{tab:results-rawmsg-fhash-algorithm-comparison}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{table}[htb]
+    \begin{tabularx}{\textwidth}{|Y|L{0.10\textwidth}|L{0.10\textwidth}|L{0.08\textwidth}|L{0.08\textwidth}|L{0.1\textwidth}|}
+        \hline
+        \textbf{Algorithm} &
+        \textbf{MAE} &
+        \textbf{RMSE} &
+        \textbf{RSE} &
+        \textbf{RAE} &
+        \textbf{CoD} \\ \hline
+        Decision Forest, message, feature hashing, proper training              & 1.7333		& 2.2899		& 1.2341		& 1.1470		& -0.2341   \\
+        \hline
+        Decision Forest, preprocessed rawmessage, unconventional training       & 3.4888		& 3.8921		& 3.5654		& 2.3088		& -2.5654	\\
+        \hline
+        Decision Forest, preprocessed rawmessage, proper training               & 4.25		    & 4.6840		& 5.1637		& 2.8125		& -4.1637 	\\
+        \hline
+    \end{tabularx}
+    \caption{Final HML results with fresh test data.
+    CoD-value in each case is negative,
+        which means that the estimation power of the trained algorithms is weaker than random.
+        Thus, these component combinations are not able to find the connection we were aiming for.
+    }
+    \label{tab:final-results}
+\end{table}
+
+
 
 
 %% ************************************************************************************************************
 
+\subsection{Improvement discussion}\label{subsec:discussion}
+
+This research encountered several problems
+that could not be anticipated beforehand.
+Most notable of the problems was the memory issue
+with Azure ML modules.
+This,
+along with the bureaucratic challenges regarding the data security,
+forced us to limit the study scope in regards to the schedule of the thesis.
+Thus,
+several possibilities could not be examined thoroughly.
+
+In order to use the results of this study in production,
+the ML pipelines with trained algorithms should be published as online endpoints.
+The data in production needed a great deal of processing before
+it could be exported to the cloud environment.
+To be able to use live production data for real time ticket estimation,
+a solution for data processing and exporting would have been needed.
+
+The data format proved challenging,
+not only because of the mixed type of data that included both CSV and JSON,
+but also because of multiple different types of sensitive information
+that had to be taken into account.
+With more simple and consistent log formatting,
+further insight of the data could have been acquired.
+One major improvement could be the possibility to utilize One-Class Support Vector Machine.
+This, however,
+would have needed a manually constructed dataset
+including only "normal" log events,
+or such events that can be reasonably assured
+not to be related to the ticket inducing issues.
+With better preformatted data,
+more informative log metrics could be found
+which may prove useful for algorithm estimations.
+
+Time frame compression was inevitably losing some information.
+We attempted to minimize the drawbacks
+by calculating multiple statistical values along with the compression.
+Different approaches could still have been experienced with.
+One way would be calculating anomaly probability metrics per job ID
+to increase the understanding of anomaly distribution inside time frames.
+Due to the working week effects on the tickets,
+shifting the time frames from Monday-Sunday to Saturday-Friday
+could also change the results,
+as it is presumable that tickets received early on Monday
+are related to issues on weekend.
+
+The original hypothesis was
+that anomalous events in the logs
+were clearly linked to the tickets received.
+However,
+as memory errors due to the size of data forced us to skip info-typed rows,
+it is possible the data anomalies did not reflect to the tickets.
+As stated before,
+multiple error lines in the log may be linked to a single issue,
+which could make the ticket inducing events
+more common log feature.
+Thus,
+it could have been possible to get better results
+by tuning the statistical values used,
+so that more common error messages would have been taken into account.
+
+In this study,
+we decided to skip some corners
+and selected pipeline component combinations to continue with
+based on the initial results of Decision Forest regression algorithm.
+Other algorithms were tested with the best combinations
+that worked on Decision Forest regression.
+It is possible
+that with different algorithms,
+other component combinations would have worked better.
+Also,
+all of the algorithms have multiple tunable parameters
+that affect greatly on the results.
+Most of the algorithms, however,
+were used with default parameters
+to save time and computing costs.
+Model hyperparameter tuning and parameter combination testing
+could still provide further results.
+
+Finally,
+without the memory issue limiting our data amount and component selection,
+n-gram feature extraction could have been utilized in full extent.
+Other data preprocessing methods were bound to lose valuable information,
+and anomaly detection from the textual features in this study case
+was not possible with the algorithms available.
 
 
 \clearpage

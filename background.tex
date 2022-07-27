@@ -594,9 +594,17 @@ and computing its
     The higher the error, the more anomalous the instance is}~\cite{azure2022pca}.
 Normalized error means,
 that each anomaly score is between zero and one.
+Figure~\ref{fig:pca-nutshell} illustrates the steps
+from data standardizing to PCA reconstruction error calculating.
 
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{./appendices/pca-nutshell}
+    \caption{PCA anomaly detection explained step by step.
+    The normalized reconstruction error is the final anomaly probability score.
+        \label{fig:pca-nutshell}}
+\end{figure}
 
-%% TODO: picture of anomaly detection with PCA?
 
 %% ............................................................................................................
 
