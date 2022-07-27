@@ -150,6 +150,8 @@ whereas with CoD bigger is better.
 \begin{table}[htb]
     \begin{tabularx}{\textwidth}{|Y|L{0.091\textwidth}|L{0.096\textwidth}|L{0.077\textwidth}|L{0.077\textwidth}|L{0.105\textwidth}|}
         \hline
+        \multicolumn{6}{|c|}{\textit{Component combinations with Decision Forest regression}} \\
+        \hline
         \textbf{Combination} &
         \textbf{MAE} &
         \textbf{RMSE} &
@@ -227,15 +229,12 @@ the most promising results have been received by using:
     \item rawmessage data, preprocessed, proper training, and
     \item rawmessage data, preprocessed, unconventional training.
 \end{itemize}
-
-We have made another assumption,
-that with different algorithms
-the same component combinations would give the best results.
-Next,
-these chosen combinations are tested with different regression algorithm in the phase 2.
+Next, these chosen combinations are tested with different regression algorithms in the phase 2.
 
 \begin{table}[htb]
     \begin{tabularx}{\textwidth}{|Y|L{0.08\textwidth}|L{0.10\textwidth}|L{0.08\textwidth}|L{0.08\textwidth}|L{0.12\textwidth}|}
+        \hline
+        \multicolumn{6}{|c|}{\textit{Message with feature hashing}} \\
         \hline
         \textbf{Algorithm} &
         \textbf{MAE} &
@@ -300,7 +299,8 @@ with fresh test data.
 
 With rawmessage,
 we were unable to execute tests with fresh data
-because the model score module failed with an error stating
+because the model scoring module failed with an error,
+stating that
 \textit{\enquote{Number of unique values in column: 'rawmessage' is greater than allowed}}.
 This happened
 even though the rawmessage field was cleaned from the unique data values
@@ -308,10 +308,13 @@ such as timestamp and fingerprint.
 For this reason,
 we could not acquire test results of pipeline component combinations
 that did not include rawmessage preprocessing.
-
+With text preprocessing,
+this issue did not occur.
 
 \begin{table}[htb]
     \begin{tabularx}{\textwidth}{|Y|L{0.10\textwidth}|L{0.10\textwidth}|L{0.08\textwidth}|L{0.08\textwidth}|L{0.12\textwidth}|}
+        \hline
+        \multicolumn{6}{|c|}{\textit{Pure rawmessage}} \\
         \hline
         \textbf{Algorithm} &
         \textbf{MAE} &
@@ -343,16 +346,12 @@ that did not include rawmessage preprocessing.
         Linear UnconT                       & 2.4777		& 3.0516		& 0.9174		& 0.9776		& 0.08254 	\\
         Linear UnconT NA                    & 2.3310		& 2.9720		& 0.8702		& 0.9197		& 0.12976 	\\
         \hline
-        \textbf{DecFor RawMsg UnconT }      & 2.9   			& 3.8200		& 0.7859	    & 0.7928	& \textbf{0.21402}		\\
-        DecFor RawMsg UnconT NA             & 3.0733			& 3.9588		& 0.8441		& 0.8402	& \textbf{0.15588}		\\
+        \textbf{DecFor UnconT }      & 2.9   			& 3.8200		& 0.7859	    & 0.7928	& \textbf{0.21402}		\\
+        DecFor UnconT NA             & 3.0733			& 3.9588		& 0.8441		& 0.8402	& \textbf{0.15588}		\\
         \hline
-        \textbf{DecFor RawMsg PropT}       	& \textbf{1.3611}	& 1.8263		& 1.6678		& 1.0208	& -0.6678		\\
-        DecFor RawMsg PropT NA           	& \textbf{2.5833}	& 2.8694		& 4.1168		& 1.9375	& -3.1168		\\
+        \textbf{DecFor PropT}       	& \textbf{1.3611}	& 1.8263		& 1.6678		& 1.0208	& -0.6678		\\
+        DecFor PropT NA           	& \textbf{2.5833}	& 2.8694		& 4.1168		& 1.9375	& -3.1168		\\
         \hline
-        \textbf{DecFor RawMsg UnconT }      & 2.9   			& 3.8200		& 0.7859		& 0.7928	& \textbf{0.21402}		\\
-        DecFor RawMsg UnconT NA             & 3.0733			& 3.9588		& 0.8441		& 0.8402	& \textbf{0.15588}		\\
-        \hline
-
     \end{tabularx}
     \caption{Results of HML pipeline with different algorithms used in phase 2.
     Each case uses pure \textbf{rawmessage}-column without preprocessing.
@@ -369,24 +368,97 @@ that did not include rawmessage preprocessing.
 \end{table}
 
 
+\begin{table}[htb]
+    \begin{tabularx}{\textwidth}{|Y|L{0.10\textwidth}|L{0.10\textwidth}|L{0.08\textwidth}|L{0.08\textwidth}|L{0.12\textwidth}|}
+        \hline
+        \multicolumn{6}{|c|}{\textit{Preprocessed rawmessage}} \\
+        \hline
+        \textbf{Algorithm} &
+        \textbf{MAE} &
+        \textbf{RMSE} &
+        \textbf{RSE} &
+        \textbf{RAE} &
+        \textbf{CoD} \\ \hline
+        Poisson PropT		                & 2.7540		& 2.9186		& 1.0360		& 1.1266		& -0.0360 	\\
+        Poisson PropT NA	                & 2.7540		& 2.9185		& 1.0359		& 1.1266		& -0.0359 	\\
+        \hline
+        Poisson UnconT                      & 2.3714		& 3.0466		& 0.9144		& 0.9357		& 0.08556  \\
+        Poisson UnconT NA                   & 2.3380		& 2.9977		& 0.8853		& 0.9225		& 0.11464  \\
+        \hline
+        NeuralNet PropT		                & 2.5653		& 2.6747		& 0.8701		& 1.0494		& 0.12986 	\\
+        NeuralNet PropT NA	                & 2.3468		& 2.3981		& 0.6994		& 0.9600		& 0.30056 	\\
+        \hline
+        NeuralNet UnconT                    & 2.7686		& 3.4396		& 1.1656		& 1.0924		& -0.1656  \\
+        NeuralNet UnconT NA                 & 2.3270		& 2.9708		& 0.8694		& 0.9181		& 0.13050  \\
+        \hline
+        Boosted PropT		                & 2.75  		& 3.0103		& 1.1021		& 1.125 		& -0.1021 	\\
+        Boosted PropT NA	                & 2.75  		& 3.0103		& 1.1021		& 1.125 		& -0.1021 	\\
+        \hline
+        Boosted UnconT                      & 2.9566		& 3.6357		& 1.3022		& 1.1666   	    & -0.3022 \\
+        Boosted UnconT NA                   & 2.7651		& 3.5996		& 1.2765		& 1.0910		& -0.2765 \\
+        \hline
+        Linear PropT		                & 2.6992		& 2.8546		& 0.9910		& 1.1042		& 0.00890 	\\
+        Linear PropT NA		                & 2.6796		& 2.8188		& 0.9663		& 1.0962		& 0.03361 	\\
+        \hline
+        Linear UnconT                       & 2.2808		& 2.9685		& 0.8681		& 0.8999		& 0.13182  \\
+        Linear UnconT NA                    & 2.3310		& 2.9720		& 0.8702		& 0.9197		& 0.12976  \\
+        \hline
+        \textbf{DecFor PropT }  		& \textbf{0.5277}		& 0.6328		& 0.2002	& 0.3958		& \textbf{0.79976}		\\
+        DecFor PropT NA        		    & \textbf{2.5833}		& 2.8694	    & 4.1168	& 1.9375		& \textbf{-3.1168}		\\
+        \hline
+        \textbf{DecFor UnconT}    		& 2.9466				& 3.7159		& 0.7437	& 0.8056		& \textbf{0.25627}		\\
+        DecFor UnconT NA             	& 3.0733				& 3.9588		& 0.8441	& 0.8402		& \textbf{0.15588}		\\
+        \hline
+    \end{tabularx}
+    \caption{Results of HML pipeline with different algorithms used in phase 2.
+    Each case uses preprocessed \textbf{rawmessage}-column.
+    \textbf{Poisson} means \textit{Poisson regression},
+        \textbf{NeuralNet} indicates \textit{Neural Network regression},
+        \textbf{Boosted} means \textit{Boosted Decision Tree regression},
+        \textbf{Linear} means \textit{Linear regression}, and
+        \textbf{DecFor} means \textit{Decision Forest regression}.
+        Each algorithm is tested with unconventional (\textbf{UnconT}) vs. proper training (\textbf{PropT}),
+        and with or without anomaly probability values from phase 1 (\textbf{NA} means NoAnomalies).
+        The most promising results are bolded.
+    }
+    \label{tab:results-prepros-rawmsg-fhash-algorithm-comparison}
+\end{table}
 
+As seen in tables~\ref{tab:results-rawmsg-fhash-algorithm-comparison} and~\ref{tab:results-prepros-rawmsg-fhash-algorithm-comparison},
+Decision Forest regression gives the most promising results when using rawmessage-column,
+with or without text preprocessing.
+Thus,
+the initial component combinations were selected to further experimentation.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+The final testing was executed with freshly acquired production data.
+In the end,
+only three most promising pipeline component combinations got tested in this phase.
+The results are listed in the table~\ref{tab:final-results}.
+As seen from the final comparison metrics,
+the results were not convincing.
+Coefficient of determination was a negative number in each case,
+meaning that our ML model did not find any sensible relationship between log data and ticket timestamps.
+The negative value means also,
+that even a random model would have performed better in ticket count estimation
+than our trained algorithms.
+Further examination of the score values behind these results
+reveal a possible reason for this.
+In case of preprocessed rawmessage, proper training and Decision Forest algorithm,
+the MAE-value was 0.5277 and CoD-value 0.79976.
+Without context,
+these values would have been excellent,
+meaning that an average error in ticket count estimations would have been just a little over 0.5 in time frame.
+However,
+because the memory issue forced us to trim the data amount,
+and the time frame compression condensed the training data in phase 2 even more,
+the final evaluation was executed with just 3 rows of data.
+Obviously,
+this is not a sufficient amount of data to get reliable results.
 
 \begin{table}[htb]
     \begin{tabularx}{\textwidth}{|Y|L{0.10\textwidth}|L{0.10\textwidth}|L{0.08\textwidth}|L{0.08\textwidth}|L{0.1\textwidth}|}
+        \hline
+        \multicolumn{6}{|c|}{\textit{Results with fresh test data}} \\
         \hline
         \textbf{Algorithm} &
         \textbf{MAE} &
@@ -409,8 +481,12 @@ that did not include rawmessage preprocessing.
     \label{tab:final-results}
 \end{table}
 
-
-
+After considering the results of all the results,
+it was determined that our initial goal to find a connection between log anomalies and technical ticket timestamps
+did not succeed.
+Even though we were not able to find the connection with the methods used in this study,
+it should not be ruled out that this connection does not exist.
+Our final verdict is that further studying is needed.
 
 %% ************************************************************************************************************
 
