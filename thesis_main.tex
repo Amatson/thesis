@@ -295,23 +295,44 @@ log analyzing\spc Hybrid machine learning}
 %% as the abstract page.
 %%
 \thesisabstract{
-%% TODO !!!! Lorem ipsum, replace
-Your abstract in English.
-Keep the abstract short.
-The abstract explains your research topic,
-the methods you have used,
-and the results you obtained.
-In the PDF/A format of this thesis,
-in addition to the abstract page,
-the abstract text is written into the pdf file's metadata.
-Write here the text that goes into the metadata.
-The metadata cannot contain special characters,
-linebreak or paragraph break characters,
-so these must not be used here.
-If your abstract does not contain
-special characters and it does not require paragraphs,
-you may take advantage of the abstracttext macro (see the comment below).
-Otherwise, the metadata abstract text must be identical to the text on the abstract page.
+  Samlink develops robotic process algorithms for its banking customers
+  to perform mechanical tasks and improve business efficiency.
+  Unfortunately, these robots often encounter errors,
+  and bank clerks have to manually complete
+  the tasks they leave behind.
+  This results in a technical support ticket written by the clerks to Samlink's technical support team,
+  and the development team begins to investigate the problem.
+  The logs written by the robotic process algorithms are essential for debugging.
+
+  Due to the number and size of the logs,
+  debugging is very laborious.
+  This thesis explores the possibility of
+  utilizing a cloud-based machine learning environment
+  to find the connection between support tickets and log events.
+  This will be used to develop a machine learning system that reads production logs,
+  capable of alerting developers of a potential incoming ticket
+  even before bank clerks themselves detect the error.
+
+  The data used in the study will be first anonymized in a production environment
+  in order to preserve data privacy.
+  The data is then pre-processed into a cleaner format,
+  so that it can be processed by a machine learning algorithm.
+
+  In the machine learning phase, anomaly detection will be applied
+  to identify possible log events leading to a support ticket.
+  Random delay between the robotic process algorithm log entries and the tickets sent by the clerks
+  is addressed by time frame compression and hybrid machine learning,
+  which uses two algorithms at different stages of the machine learning pipeline.
+
+  These studies could not prove,
+  that there is a link between log entries and technical tickets,
+  that the algorithm is able to detect.
+  The numerous problems encountered affected the components chosen
+  and parameters used.
+  If these problems can be solved,
+  it is possible to find that connection.
+  It is also suspected that improving the format of the logging will improve the results.
+  In any case, further research is needed.
 }
 
 %% Copyright text. Copyright of a work is with the creator/author of the work
@@ -394,30 +415,44 @@ Otherwise, the metadata abstract text must be identical to the text on the abstr
   lokien analysointi}
 %% Abstract text
 \begin{abstractpage}[finnish]
-
   Samlink kehittää pankkiasiakkailleen ohjelmistorobotteja
   suorittamaan mekaanisia tehtäviä ja tehostamaan liiketoimintaa.
   Valitettavan usein kyseiset robotit kohtaavat virheen,
-  ja pankkivirkailijoitten on suoritettava käsin loppuun
+  ja pankkivirkailijoiden on suoritettava käsin loppuun
   niiden jättämät tehtävät.
-  Tästä seuraa Samlinkin tekniselle tuelle vikatiketti,
+  Tästä seuraa Samlinkin tekniselle tuelle virkailijoiden kirjoittama vikatiketti,
   jonka perusteella kehitystiimi alkaa tutkia ongelmaa.
+  Vianselvityksessä oleellisen tärkeitä ovat ohjelmistorobottien kirjoittamat lokit.
 
-  Ohjelmistorobotit kirjoittavat ajon aikana lokia,
-  joka sisältää
+  Lokien määrästä ja laajuudest johtuen
+  vianselvitys on hyvin työlästä.
+  Tässä diplomityössä tutkitaan mahdollisuutta
+  hyödyntää pilvipalvelun koneoppimisympäristöä
+  vikatikettien ja lokitapahtumien välisen yhteyden löytämiseksi.
+  Tämän avulla pyritään kehittämään tuotantolokeja lukeva koneoppimisjärjestelmä,
+  joka kykenee varoittamaan kehittäjiä mahdollisesti saapuvasta tiketistä
+  jo ennen kuin pankkivirkailijat itse havaitsevat vian.
 
+  Tutkimuksessa käytetty data anonymisoidaan ensin tuotantoympäristössä
+  tietosuojan säilyttämiseksi.
+  Tämän jälkeen dataa esikäsitellään siistimpään muotoon,
+  jotta se olisi koneoppimisalgoritmin käsiteltävissä.
 
-  Koneoppimisalgoritmeja käytetään monilla aloilla
-  selittämään dataa ja paljastamaan siitä niin yhteyksiä kuin ongelmiakin.
+  Koneoppimisvaiheessa pyritään soveltamaan anomaliatunnistusta
+  mahdollisten tikettiin johtavien lokitapahtumien tunnistamiseksi.
+  Satunnainen viive ohjelmistorobotin lokimerkinnän ja virkailijan lähettämän tiketin välillä
+  yritetään ratkaista aikaikkunakompressiolla ja hybridimuotoisella koneoppimisketjulla,
+  jossa hyödynnetään kahta algoritmia ketjun eri vaiheissa.
 
-
-  %% TODO !!!!!! DUMMY, REPLACE
-
-
-
-  Tiivistelmässä on lyhyt selvitys kirjoituksen tärkeimmästä sisällöstä:
-  mitä ja miten on tutkittu,
-  sekä mitä tuloksia on saatu. 
+  Näiden tutkimusten perusteella ei voitu osoittaa,
+  että lokimerkintöjen ja tikettien välillä on yhteys,
+  jonka algoritmi kykenee havaitsemaan.
+  Lukuisat kohdatut ongelmat vaikuttivat valittuihin komponentteihin
+  ja käytettyihin parametreihin.
+  Mikäli nämä ongelmat voidaan ratkaista,
+  on tuo yhteys mahdollista löytää.
+  Myös lokituksen muotoilun parantamisen epäillään parantavan tuloksia.
+  Lisätutkimuksille on joka tapauksessa tarvetta.
 \end{abstractpage}
 
 %% Preface
