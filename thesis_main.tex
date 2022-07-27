@@ -304,35 +304,35 @@ log analyzing\spc Hybrid machine learning}
   and the development team begins to investigate the problem.
   The logs written by the robotic process algorithms are essential for debugging.
 
-  Due to the number and size of the logs,
+  Due to the number and extent of the logs,
   debugging is very laborious.
   This thesis explores the possibility of
   utilizing a cloud-based machine learning environment
-  to find the connection between support tickets and log events.
+  to find the connection between the support tickets and log events.
   This will be used to develop a machine learning system that reads production logs,
   capable of alerting developers of a potential incoming ticket
   even before bank clerks themselves detect the error.
 
-  The data used in the study will be first anonymized in a production environment
+  The data used in the study is first anonymized in a production environment
   in order to preserve data privacy.
   The data is then pre-processed into a cleaner format,
   so that it can be processed by a machine learning algorithm.
 
-  In the machine learning phase, anomaly detection will be applied
+  In the machine learning phase, anomaly detection is applied
   to identify possible log events leading to a support ticket.
   Random delay between the robotic process algorithm log entries and the tickets sent by the clerks
   is addressed by time frame compression and hybrid machine learning,
   which uses two algorithms at different stages of the machine learning pipeline.
 
-  These studies could not prove,
-  that there is a link between log entries and technical tickets,
+  This study could not prove,
+  that there is a connection between log entries and technical support tickets,
   that the algorithm is able to detect.
   The numerous problems encountered affected the components chosen
   and parameters used.
   If these problems can be solved,
-  it is possible to find that connection.
-  It is also suspected that improving the format of the logging will improve the results.
-  In any case, further research is needed.
+  it is possible to find that connection between logs and support tickets.
+  It is also suspected that enhancing the format of the logging will improve the results.
+  Nonetheless, further research is needed.
 }
 
 %% Copyright text. Copyright of a work is with the creator/author of the work
@@ -444,14 +444,14 @@ log analyzing\spc Hybrid machine learning}
   yritetään ratkaista aikaikkunakompressiolla ja hybridimuotoisella koneoppimisketjulla,
   jossa hyödynnetään kahta algoritmia ketjun eri vaiheissa.
 
-  Näiden tutkimusten perusteella ei voitu osoittaa,
-  että lokimerkintöjen ja tikettien välillä on yhteys,
+  Tämän tutkimuksen perusteella ei voitu osoittaa,
+  että lokimerkintöjen ja vikatikettien välillä on yhteys,
   jonka algoritmi kykenee havaitsemaan.
   Lukuisat kohdatut ongelmat vaikuttivat valittuihin komponentteihin
   ja käytettyihin parametreihin.
   Mikäli nämä ongelmat voidaan ratkaista,
-  on tuo yhteys mahdollista löytää.
-  Myös lokituksen muotoilun parantamisen epäillään parantavan tuloksia.
+  on tuo yhteys lokien ja tikettien mahdollista löytää.
+  Myös lokituksen muotoilun kohentamisen epäillään parantavan tuloksia.
   Lisätutkimuksille on joka tapauksessa tarvetta.
 \end{abstractpage}
 
@@ -496,7 +496,7 @@ Jyväskylä, {\today}
 \begin{tabularx}{\textwidth}{l X}
   $A^{\mathbf{T}}$    & Transpose of vector $\mathbf{A}$ \\
   $\mathbf{f}(X_{n},Y_{n})$    & Undefined algebraic equation between operands $X_{n},Y_{n}$,
-  for example $X_{1}^{Y_{1}}-X_{2}^{Y_{2}}-...-X_{n}^{Y_{n}}$
+  for example $X_{1}^{Y_{1}}-X_{2}^{Y_{2}}-\dots-X_{n}^{Y_{n}}$
 \end{tabularx}
 
 \subsection*{Abbreviations}
