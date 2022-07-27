@@ -172,13 +172,12 @@ The reason for this is explained further in section~\ref{subsec:pipe-unconventio
 
 %% ************************************************************************************************************
 
-%% TODO: continue grammatics here!
 
 \subsection{Cloud ML platforms}\label{subsec:bg-cloud-ml-platforms}
 
 Machine learning algorithms are not light to operate.
 ML is at its best with big data
-where amount of data points
+where the large amount of data points
 makes it easier for algorithms
 to find repeating patterns more reliably.~\cite{zhou2017machine}
 Data amount, however,
@@ -189,11 +188,11 @@ with small latency,
 cloud computing can make a big difference
 in terms of processing speed.
 
-Online market offers several solutions for ML computing in cloud.
+The online market offers several solutions for ML computing in cloud.
 Most notable service providers for
 MLaaS (Machine Learning as a Service)
 are Google, Amazon, IBM, and Microsoft.
-Differences of each service provider are listed in a table~\ref{fig:mlaas-comparison}.
+Differences of each service provider are listed in table~\ref{fig:mlaas-comparison}.
 
 \begin{figure}[htb]
     \centering
@@ -206,10 +205,10 @@ Amazon's new SageMaker service
 has replaced the old Amazon Machine Learning service,
 and is very much like Azure Machine Learning service
 produced by Microsoft.
-Compared to SageMaker and Azure,
+Compared to SageMaker and Azure, the
 Google AI Platform is missing anomaly detection and ranking abilities.
 IBM Watson has even less features,
-as demonstrated in the table~\ref{fig:mlaas-comparison}.~\cite{altexsoft2021mlaas}
+as demonstrated in table~\ref{fig:mlaas-comparison}.~\cite{altexsoft2021mlaas}
 
 Azure, however,
 has one major advantage compared to SageMaker and other competitors,
@@ -230,20 +229,20 @@ full ML pipelines with drag-and-drop user interface.~\cite{altexsoft2021mlaas,mi
     \label{fig:azure-ml-studio-example}}
 \end{figure}
 
-Each component in pipeline designer can be tuned
-to a certain extent.
+Each component in the pipeline designer can be tuned
+to certain extent.
 ML Studio has a predefined set of ready algorithms to use.
-Example of Azure ML Studio interface
+An example of Azure ML Studio interface
 is shown in figure~\ref{fig:azure-ml-studio-example}.
 Data to the ML Studio environment
 can be imported from local storage,
 but also from various other Azure services
 such as storage accounts with table and blob data.
 Trained ML pipeline can be published as a cloud endpoint
-and inserted into wider operation chain
-combining other Azure services to it,
+and inserted into a wider operation chain
+combining it with other Azure services,
 like data storages and cloud computing resources.
-This allows designer to use ML computing capabilities
+This allows the designer to use ML computing capabilities
 with existing production environments
 utilizing services such as IoT, API, or Kubernetes.
 
@@ -252,13 +251,13 @@ utilizing services such as IoT, API, or Kubernetes.
 
 \subsection{Regression analysis}\label{subsec:bg-regression-ml}
 
-Regression analysis is typical approach in statistical science,
+Regression analysis is a typical approach in statistical science,
 and thus, in machine learning too.
 Algorithms based on regression analysis
 are used to find relationships between a set of variables,
 providing the means to \enquote{predict values of one variable
 when given values of the others}
-making them a fundamental component in ML field.~\cite{merriam2022regression}
+making them a fundamental component in the ML field.~\cite{merriam2022regression}
 
 Regression algorithms intend to create a mathematical model
 that explains the relations of the data.
@@ -283,8 +282,7 @@ As an example,
 one of the best known principles for coefficient value solving
 is the least square principle,
 which aims to minimize the sum of squared errors (SSE).
-Now,
-the smaller the $SSE$ is,
+The smaller the $SSE$ is,
 the closer each data point is to the suggested model,
 and the better the model explains the data
 and can be used to make predictions.
@@ -296,7 +294,7 @@ derived from the generalized form,
 \end{equation}
 Exact solution for this does not usually exist
 as there can be more coefficients than independent variables $(p>m))$,
-and minimizing the $SSE$ does not always result into linear equation.
+and minimizing the $SSE$ does not always result into a linear equation.
 This is typically the case in ML,
 and thus the model must be found
 by iterative search process.
@@ -304,7 +302,7 @@ As mentioned in the section~\ref{subsec:bg-machine-learning},
 this is what algorithms are build for.
 
 To improve the efficiency of algorithm calculations,
-general regression model can be converted into a matrix form.
+the general regression model can be converted into matrix form.
 The same function in equation~\ref{eqn:general-regression-model}
 can thus be represented as,
 \begin{equation}
@@ -336,16 +334,16 @@ Ultimately,
 there usually is no one perfect model to describe real world data.
 As an example,
 the function $f$ in the general regression model
-can describe the relation of $X_{i}$ and $\beta_{i}$ as product of both terms.
+can describe the relation of $X_{i}$ and $\beta_{i}$ as a product of both terms.
 This would mean, that
 \begin{equation}
     f(X_{1},...,X_{m},\beta_{1},...,\beta_{m})=\beta_{0}+\beta_{1}x_{1}+...+\beta_{m}x_{m}
 \end{equation}
 which would be a linear regression model.
 Example of an algorithm using this method
-is visualized in the picture~\ref{fig:linear-regression-example}.
+is visualized in figure ~\ref{fig:linear-regression-example}.
 However,
-real world problems cannot always be explained with linear model.
+real world problems cannot always be explained with a linear model.
 Fitting a polynomial curve to the data
 may improve the results of regression to a certain degree,
 but it also has its limits.
@@ -369,15 +367,15 @@ We might have constant parameters such as
 wind effect, continuous error of the wheel axes, and tilt of the road.
 However,
 we also have parameters that change over time
-and are dependent from other factors,
+and are dependent on other factors,
 such as the weight of the car,
-and temperature and wear of the tires.
-So, with the same location at the road,
+and the temperature and wear of the tires.
+Therefore, with the same location at the road,
 same car and same weather conditions,
 our result could be different
-depending on how long has been driven before that current moment
+depending on how long has been driven before the current moment
 which affects the tire temperature and thus pressure.
-Finding a model that fits the best to the data
+Finding a model that best fits the data
 depends also on the type of problem.
 There are numerous algorithms to suit different situations,
 and usually the best algorithm can be found
@@ -390,7 +388,7 @@ only by trial and error.
 
 Principal Component Analysis, or PCA,
 is a machine learning technique
-used to analyze data and explain the variance inside it.
+used to analyze data and explain the variance in it.
 PCA analyzes data with multiple variables
 and looks for correlations among them.
 The final output PCA gives
@@ -402,7 +400,7 @@ In other words,
 PCA works by reducing the dimensionality of the data.
 First,
 data must be standardized
-so that mean of each variable is zero
+so that the mean of each variable is zero
 and the scale of each feature is the same.
 \begin{equation}
     Standardized\; data\; point = \frac{data\; point\; value - mean\; value\; of\; the\; feature}{standard\; deviation\; of\; the\; feature}
@@ -412,7 +410,7 @@ the data points of each variable, or column,
 is shifted so that their center is at 0
 and the scale is adjusted to match all the variables.
 
-Next, covariance matrix for all the columns is determined.
+Next, a covariance matrix for all the columns is determined.
 As it is known,
 covariance value between variables (or dimensions)
 is calculated with
@@ -427,7 +425,7 @@ and so $X_{i}$ is the $i$th data point in the column $X$.~\cite{smith2002tutoria
 Covariance matrix is formed
 by calculating the covariance value between each of the dimensions (including self).
 For example,
-for 3 dimensional data with dimensions $x$, $y$, and $z$,
+for 3 dimensional data with dimensions $x$, $y$, and $z$, the
 covariance matrix would be
 \begin{equation}
     C =
@@ -438,7 +436,7 @@ covariance matrix would be
     \end{pmatrix}.
 \end{equation}
 Generally,
-covariance matrix for $n$ dimensions would be then, of course
+the covariance matrix for $n$ dimensions would then be, of course
 \begin{equation}
     C =
     \begin{pmatrix}
@@ -448,7 +446,7 @@ covariance matrix for $n$ dimensions would be then, of course
     \end{pmatrix}.
 \end{equation}
 
-We next find the eigenvectors and eigenvalues
+Next, we find the eigenvectors and eigenvalues
 for the square-shaped covariance matrix.
 As defined,
 for $n\times n$ dimensional matrix $A$,
@@ -464,11 +462,9 @@ forming the \textit{eigenpair} of $(\lambda,x)$.~\cite{borm2012numerical}
 Eigenvectors have a property,
 that either a matrix has zero of them,
 or there are $n$ eigenvectors for $n\times n$ dimensional matrix.
-As being formed for the covariance matrix of the original (standardized) data,
-eigenvectors create,
-in fact,
-a new feature space made of principal components.
-More over,
+Because in this case the eigenvectors are for the covariance matrix of the original (standardized) data,
+they actually create a new feature space made of principal components.
+More over, %% TODO: Continue grammar here Julia
 eigenvalues describe their importance,
 so that the greater the eigenvalue is,
 the more significant the eigenvector is describing the original data
