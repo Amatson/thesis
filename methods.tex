@@ -5,17 +5,17 @@
 
 \section{Research material and methods}\label{sec:research-material-and-methods}
 
-In the next section
+In this section
 we explain in more detail
 what the data used in the study
 consists of
 and what methods were used
-in attempt to answer the research goals.
+in an attempt to answer the research goals.
 The content of the section is briefly described below,
-and the steps of the research are explained.
+after which the steps of the research are explained.
 
 The data in the research is mainly made of two parts.
-The most important part is, obviously,
+The most important part is
 the log data produced by the numerous RPA processes.
 The second data part,
 complementing the study,
@@ -31,7 +31,7 @@ the data was preprocessed into a better format
 to make it more usable by algorithms.
 More processing was done inside the pipeline
 as ML Studio offered several usable components for this
-but main cleaning was easier to execute in local environment.
+but the main cleaning was easier to execute in a local environment.
 This was also done with PowerShell scripting.
 
 The actual ML pipeline structure
@@ -45,19 +45,19 @@ Like all other software,
 RPA components fail from time to time.
 As described before,
 RPA logs are verbose
-making possible error identification from among them hard.
+making error identification difficult.
 Due to that,
 it is not feasible to create log parsers
 that would be able to identify critical errors
 from within thousands of lines of log.
-When critical error happens
+When a critical error occurs
 causing the RPA process to fail,
-the banking clerks need to finish manually
-the job left by the RPA robot.
+the banking clerks need to finish the job that
+was left by the RPA robot manually.
 Every time this happens,
-these clerks then send a support request ticket
+the clerks then send a support request ticket
 to Samlink technical help desk
-and ask to fix the issue.
+and request a fix for the issue.
 
 When clerks send the ticket to technical support,
 a verbose description of the situation is written
@@ -67,19 +67,18 @@ like bank account details and social security numbers.
 To avoid privacy issues when processing this data,
 it was decided to use only timestamps of the tickets.
 The resulting data was practically a list of date and time values.
-More about the issue from privacy point of view
-is described in section~\ref{subsec:meth-data-anonymization}.
+The issue is described further from a privacy point of view in section~\ref{subsec:meth-data-anonymization}.
 
 %% ************************************************************************************************************
 
 \subsection{RPA log data}\label{subsec:meth-rpa-log-data}
 Robotic process algorithms used in Samlink
 are designed to ease the workload of bank clerks.
-RPA robots work in behalf of bank clerks
+RPA robots work on behalf of bank clerks
 executing routine tasks that require mostly manual labor.
 
 Like other software,
-RPA also produces log data during runtime.
+RPA also produces log data during its runtime.
 As dozens of RPA automations are running
 in several bank environments
 the amount of log entries produced is also significant,
@@ -88,25 +87,25 @@ This log data is not in consistent structure
 as it is formed out of typical CSV data
 and injected with even more inconsistent JSON data
 that varies in contents vastly.
-Example of log data after anonymization phase
+An example of log data after the anonymization phase
 can be seen in the appendix~\ref{sec:app-log-data-input}.
 
-RPA log data is stored in SQL database.
+RPA log data is stored in an SQL database.
 The database is split in live production log
 that is gathered for two weeks
-and then moved to archive
+and then moved to an archive
 that has several years worth of log.
 In this study we used archived data
 as it was easier to acquire in one run
 without the need to merge different parts together.
-Archive also had amount of data
+The archive also had an amount of data
 that was considered sufficient
 for machine learning algorithm training,
 with data entries spanning almost two and a half years
 and rowcount exceeding 80 million.
 
 Samlink RPA logs have few standard fields.
-These are listed in a table~\ref{tab:log-row-fields}.
+These are listed in table~\ref{tab:log-row-fields}.
 The most notable aspects here
 are the fields named message and rawmessage.
 
@@ -120,12 +119,12 @@ and possible stack trace of the error.
 of all the default features,
 including the message
 and multiple other additional features
-that RPA agent is able to output regarding the log event.
+that the RPA agent is able to output regarding the log event.
 These additional fields are what vary from log entry to log entry.
-Some of the possible fields are shown in a table~\ref{tab:log-row-fields},
+Some of the possible fields are shown in table~\ref{tab:log-row-fields},
 but several other field types exist.
-JSON data in them can be nested in multiple layers,
-as seen in the appendix~\ref{sec:app-log-data-input}.
+The JSON data in them can be nested in multiple layers,
+as seen in appendix~\ref{sec:app-log-data-input}.
 
 \begin{table}[]
     \centering
@@ -171,14 +170,14 @@ and could have been more easily processable from the start.
 However,
 it was not certain
 that rawmessage would not hold usable data for ML
-as in some cases plain message-field did not include
+as in some cases the plain message-field did not include
 all the most interesting keywords that were present
 in the extra fields of rawmessage.
 Nevertheless,
 using rawmessage in anomaly detection
 posed another problem.
 
-When feeding the log data to anomaly detection algorithm,
+When feeding the log data to the anomaly detection algorithm,
 it was crucial that all the rows were as minimally unique as possible
 in order to use the pattern finding abilities of the algorithm.
 Too unique data points would have made all of them anomalies
@@ -190,10 +189,10 @@ as they could not be extracted easily
 with tools in Azure ML Studio
 during ML pipeline execution.
 Thus,
-it was seen easier to preprocess the data
-with another script in local environment
+it deemed easier to preprocess the data
+with another script in a local environment
 before exporting it to the cloud.
-The final script is presented in the appendix~\ref{sec:app-data-cleaning-script}.
+The final script is presented in appendix~\ref{sec:app-data-cleaning-script}.
 When training ML algorithm with rawmessage,
 timestamp and job ID values were included retrospectively
 from their corresponding columns outside rawmessage.
@@ -207,23 +206,23 @@ from their corresponding columns outside rawmessage.
 Samlink handles highly sensitive banking customer data in its processes,
 such as personal identification numbers, home addresses, email addresses and bank account numbers.
 All possibly sensitive data had to be removed
-before data could be transferred out from production environment to cloud.
+before data could be transferred out of the production environment and into cloud.
 Due to bureaucratic reasons,
 technical support tickets were under more strict policies.
 Because of this,
 they were allowed to be used in the research
-on condition that no business critical nor customer sensitive information
+on the condition that no business critical nor customer sensitive information
 was processed in the first place.
-Only way to assure this
+The only way to assure this,
 was to select solely timestamp fields from ticket data.
 Thus, no sanitation for ticket data was needed
-as ticket data consisted of only list of datetime values.
+as ticket data consisted of only a list of datetime values.
 
 %% ............................................................................................................
 
 \subsubsection*{RPA log data sanitization}
-Information privacy is one of the key values in Samlink business promise
-as company develops high security banking applications
+Information privacy is one of the key values in Samlink's business promise
+as the company develops high security banking applications
 and processes sensitive customer data.
 Thus, several aspects were needed to take into consideration
 before log data could be authorized for thesis study usage.
@@ -231,11 +230,11 @@ To improve privacy,
 it was decided to assume
 that personal customer details are not critical information
 for ML algorithm training
-if goal is to find possible problems in RPA runtime
+if the goal is to find possible problems in RPA runtime
 and not detect individual customer related problems.
 Also,
 as mentioned in section~\ref{subsec:bg-data-sensitivity},
-all customer and user related information was excluded from support ticket data,
+all customer and user related information was excluded from the support ticket data,
 making individual customer information redundant in the log data.
 Thus,
 it was not necessary to achieve just adequate security
@@ -243,12 +242,12 @@ by less safe and more effort consuming ways
 such as pseudonymization or k-anonymization
 (explained in the section~\ref{subsec:bg-data-sensitivity}),
 which would have also required strict inspections
-before data could have been approved for cloud processing.
+before the data could have been approved for cloud processing.
 
-During thesis kickoff,
+During the beginning of this thesis study,
 several sensitive information types were recognized from the log data,
 and all possible types and their different forms were considered
-before anonymization script was approved to be used in production environment.
+before anonymization script was approved to be used in the production environment.
 Anonymization was executed by replacing sensitive information
 with general pattern describing the replaced information type.
 With this,
@@ -259,9 +258,9 @@ Thus,
 it was theoretically still possible to recognize repeating anomalies
 that had, for example,
 social security number included in the log event.
-List of considered sensitive info types, their examples,
-as well as values replacing the sensitive data
-has been listed in the table~\ref{tab:regex-sensitive-info}.
+A list of considered sensitive info types, their examples,
+as well as the values replacing the sensitive data
+can be seen in table~\ref{tab:regex-sensitive-info}.
 
 \begin{table}[]\small
     \tabcolsep=0.11cm
@@ -359,7 +358,7 @@ has been listed in the table~\ref{tab:regex-sensitive-info}.
     \label{tab:regex-sensitive-info}
 \end{table}
 
-Script searched for repeating patterns related to sensitive information types.
+A script searched for repeating patterns related to sensitive information types.
 This was done with regular expression, or regex, searching.
 With regular expressions,
 different repeating patterns can be extracted and replaced from the data.
@@ -375,7 +374,7 @@ possibly one letter or more in case of 'apartment' or 'apt', more numbers \etc).
 Still,
 most of the cases could be considered to a degree
 that was deemed satisfying from a security point of view.
-All regex search clauses are listed in the table~\ref{tab:regex-sensitive-regex}
+All regex search clauses are listed in table~\ref{tab:regex-sensitive-regex}
 
 \begin{table}[]
     \begin{tabularx}{\textwidth}{|L{0.18\textwidth}|Y|}
@@ -449,7 +448,7 @@ All regex search clauses are listed in the table~\ref{tab:regex-sensitive-regex}
     \label{tab:regex-sensitive-regex}
 \end{table}
 
-As production environment is built on Microsoft Server based solution,
+As the production environment is built on a Microsoft Server based solution,
 and because it was highly unrecommended
 to install additional software to the production server,
 data acquiring and anonymization tools were chosen
@@ -464,13 +463,13 @@ Thus, stream editing was necessary
 for finding and replacing
 sensitive information from the data.
 
-Anonymization took good proportion of the time in workdays
+Anonymization took a good portion of the research time
 as processes were slow,
 the amount of data was huge
 and multiple re-runs were needed
-before the results were seemed adequate.
+before the results were deemed adequate.
 The final anonymization script
-is introduced in the appendix~\ref{sec:app-anonymization-script}.
+is introduced in appendix~\ref{sec:app-anonymization-script}.
 
 %% ************************************************************************************************************
 
@@ -479,15 +478,15 @@ is introduced in the appendix~\ref{sec:app-anonymization-script}.
 Azure provides a vast set of tools and resources
 for different kinds of cloud projects.
 Resources needed for Azure ML Studio usage
-depends on the subscription used
-and security restrictions set by subscription manager.
+depend on the subscription used
+and the security restrictions set by the subscription manager.
 When starting this study,
 due to these restrictions,
 all resources used for ML training in this project
 needed to be inside the same virtual network.
-Azure ML Studio environment could be opened from any network,
+The Azure ML Studio environment could be opened from any network,
 but most of the features were unavailable
-if computer browsing web UI of the studio was outside this virtual network.
+if the computer browsing web UI of the studio was outside this virtual network.
 Thus,
 a virtual machine had to be acquired as Azure resource
 from within the same network as other resources
@@ -498,12 +497,12 @@ could be configured to allow public access
 making it possible to access ML Studio UI from all networks.
 
 Resources needed for Azure ML Studio usage and their relations
-are shown in the picture~\ref{fig:azure-diagram}.
+are shown in figure~\ref{fig:azure-diagram}.
 This is the configuration required
-with the existing subscription models of the Samlink,
+with the existing subscription models of Samlink,
 albeit different configuration combinations could be possible
 depending on the subscription and network restrictions.
-Most crucial parts were
+The most crucial parts were
 the storage account, private endpoint and virtual network.
 
 \begin{figure}[htb]
@@ -513,17 +512,17 @@ the storage account, private endpoint and virtual network.
     \label{fig:azure-diagram}}
 \end{figure}
 
-Storage account \textit{worspacemlrpa}
+The storage account \textit{worspacemlrpa}
 was linked to the Azure Machine Learning workspace.
 This storage is the main disk
 that stores all the input data used for algorithm training
 as well as the result data from said algorithms.
 Virtual network \textit{vnet-test-machine-learning}
 is the mentioned network
-that includes both ML workspace and virtual machine
+that includes both ML workspace and the virtual machine
 used to access the ML Studio web UI\@.
 Private endpoint \textit{endpoint-ml-nic01}
-acted as a final link between ML workspace and virtual network.
+acted as a final link between ML workspace and the virtual network.
 
 
 %% ............................................................................................................
@@ -533,7 +532,7 @@ acted as a final link between ML workspace and virtual network.
 The actual machine learning pipeline design and algorithm training
 is done with ML Studio portal,
 which is a graphic web user interface.
-It is a separate tool usable outside usual Azure environment
+It is a separate tool usable outside the usual Azure environment
 after configuring the workspace in Azure resources.
 Inside ML Studio,
 there are two important resources needed to set up
@@ -543,22 +542,22 @@ First,
 the data have to be registered as an usable asset.
 Multiple pre-existing data sources are available to choose
 from online sources,
-and designer can also choose to use
+and the designer can also choose to use
 other accessible web file sources.
-Besides these,
+In addition to these,
 datasets can be imported from Azure datastore accounts.
-Data can be uploaded from local machine through the Studio UI
+Data can be uploaded from a local machine through the Studio UI
 so it is saved to the chosen datastore.
 As datastores are usable with all Azure service resources,
 it is possible to use data gathered from any other Azure service
 for machine learning training.
 In this study,
-the data anonymized and preprocessed in local machine
-was imported with a separate Azure software to the storage account
-and registered as ML dataset from Studio UI.
+the data that was anonymized and preprocessed in local machine
+was then imported with a separate Azure software to the storage account
+and registered as an ML dataset from Studio UI.
 
 In addition to the data we used to train the algorithm,
-we needed to set up computing instance
+we needed to set up a computing instance
 in Azure ML studio.
 Some predefined resource limitations
 affected the computing instance choosing.
@@ -566,13 +565,13 @@ After encountering some memory related issues in pipeline training,
 we were encouraged to pick memory prioritized instances.
 Single computing instance did not work,
 but we needed to choose a computing cluster instead
-to be able to run ML training pipeline.
+to be able to run an ML training pipeline.
 After choosing suitable virtual machine properties for compute cluster instances,
-a number of nodes is possible to set.
+it is possible to set a number of nodes.
 Each of these nodes are a copy of the virtual machine
 chosen in the previous step.
 If more than one node is chosen,
-computing cluster scales to use more nodes
+the computing cluster scales to use more nodes
 depending on the ML training demands.
 
 For the purposes of this study,

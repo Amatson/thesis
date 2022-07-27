@@ -464,7 +464,7 @@ that either a matrix has zero of them,
 or there are $n$ eigenvectors for $n\times n$ dimensional matrix.
 Because in this case the eigenvectors are for the covariance matrix of the original (standardized) data,
 they actually create a new feature space made of principal components.
-More over, %% TODO: Continue grammar here Julia
+More over,
 eigenvalues describe their importance,
 so that the greater the eigenvalue is,
 the more significant the eigenvector is describing the original data
@@ -473,12 +473,12 @@ When finding eigenpairs,
 we actually find the largest possible variance in the data.
 Each eigenvector describes a principal component
 that is a linear combination of the original variables.
-In the picture~\ref{fig:pca-example} we can see an example of
+In figure ~\ref{fig:pca-example} we can see an example of
 how eigenvectors of the covariance matrix define a new axis system
 or new feature dimensions.~\cite{zhu2019dimension}
 Each eigenvector, or a principal component,
 is perpendicular with one another.
-Thus, data can be represented
+Thus, the data can be represented
 in the new axis system formed by eigenvectors.
 
 \begin{figure}[htb]
@@ -499,18 +499,19 @@ in the new axis system formed by eigenvectors.
 By comparing the eigenvalues,
 we can determine a set of eigenvectors,
 or principal components,
-that form a new feature space with fewer dimensions than original data,
-without losing significant amount of information.
+that form a new feature space with fewer dimensions than the original data,
+without losing a significant amount of information.
 We can calculate a comparison value for each eigenvalue $\lambda_{i}$ with
 \begin{equation}
     Percentage\; of\; variance = \frac{\lambda_{i}}{\Sigma\lambda}\cdot100
 \end{equation}
 Organized from highest to lowest,
-we can make a scree plot to visualize their relationship.
-Example of an 8 dimensional data,
-thus 8 principal components,
+we can make a scree plot to visualize the eigenvalue ratios
+for all principal component.
+Example of an 8 dimensional data
+(which thus has 8 principal components),
 with their eigenvalue variances ordered
-can be seen in a picture~\ref{fig:pc-variance-values}.
+can be seen in figure~\ref{fig:pc-variance-values}.
 
 \begin{figure}[htb]
     \centering
@@ -534,12 +535,12 @@ can be seen in a picture~\ref{fig:pc-variance-values}.
             };
         \end{axis}
     \end{tikzpicture}
-\caption{Principal components significance.
+\caption{Significance of principal components.
 In this example, eigenvalues, or the variance of each principal component,
     are ordered on a scree plot.
     Values are first converted to a percentage of the sum of all values
     in order to visualize both their relationship to each other
-    and their total share of information the corresponding eigenvectors hold.
+    and their total share of information held by the corresponding eigenvectors.
     \label{fig:pc-variance-values}}
 \end{figure}
 
@@ -548,16 +549,16 @@ as principal component space describes the data
 and eigenvalues describe the importance of each component,
 the percentage of variance is the portion of the total information each principal component holds.
 Simply put,
-in our example picture~\ref{fig:pc-variance-values},
-first two principal components hold almost 70\% of the original information,
-first three over 80\%,
-and last seven hold less than 20\% of the information.
+in our example in figure~\ref{fig:pc-variance-values},
+the first two principal components hold almost 70\% of the original information,
+the first three over 80\%,
+and the last seven hold less than 20\% of the information.
 Thus,
-by creating a new data set using first three components,
+by creating a new data set using the first three components,
 we can keep 80\% of the information
 while reducing the dimensions from 8 to 3,
 which would be significant improvement
-in terms of computing resources needed.
+in terms of needed computing resources.
 The amount of top principal components we choose to keep
 depends on the situation,
 but one guideline is to select all components
@@ -610,9 +611,8 @@ from data standardizing to PCA reconstruction error calculating.
 
 \subsection{Other anomaly detection algorithms}\label{bg-other-ada}
 
-Azure ML Studio has,
-or used to have,
-also another anomaly detection algorithm to use besides PCA-based one.
+Azure ML Studio has
+also another anomaly detection algorithm to use besides the PCA-based one.
 This module is called One-Class Support Vector Machine.
 However,
 it was not usable in the renewed ML Studio environment,
@@ -633,10 +633,10 @@ we will not discuss other anomaly detection algorithms (ADAs) further.
 
 As discussed before,
 features are the key elements in ML algorithm training.
-As textual input does not have any meaning to computers as itself,
+As textual input does not have any meaning to computers by itself,
 it is necessary to create a connection between words and features for algorithm.
 In ML training,
-one typical approach is to convert textual input to numerical features.
+one typical approach is to convert textual input into numerical features.
 For example, by creating a dictionary of words used in the input
 and assigning each word an identification number,
 we can express sentences as a count of certain words used.
@@ -649,7 +649,7 @@ has the opposite meaning than "errors without success"
 where same words exist in a different order.
 We can add more information for the algorithm
 by creating word pairs and groups in the dictionary.
-These groups are referred as word grams,
+These groups are referred to as word grams,
 where \textbf{n} in n-gram refers to the maximum number of words
 in a group of consecutive words in the input sentence.~\cite{furnkranz1998study}
 
@@ -664,11 +664,11 @@ two word grams \textit{bigrams}, \etc.
 To compose the sentence \textit{"Lorem ipsum dolor sit amet, quisquam est, qui dolor ipsum qui dolor sit amet"}
 with different n-gram dictionaries,
 we could make, for example,
-the following presentation with unigram dictionary:
+the following representation with unigram dictionary:
 \begin{equation}
     1,2,3,4,5,6,7,8,3,2,8,3,4,5
 \end{equation}
-where each number represents the index of a word in unigram dictionary from table~\ref{tab:bg-n-gram-example}.
+where each number represents the index of a word in a unigram dictionary from table~\ref{tab:bg-n-gram-example}.
 
 \begin{table}[htb]
     \begin{tabularx}{\textwidth}{|L{0.1\textwidth}|L{0.17\textwidth}|L{0.25\textwidth}|Y|}
@@ -705,7 +705,7 @@ because in order to present text as numerical features,
 we need to create a new feature space out of the n-gram dictionary.
 Consider our unigram dictionary from the previous example.
 This would convert one text column into 8 unigram features,
-as seen in the table~\ref{tab:bg-n-gram-features}.
+as seen in table~\ref{tab:bg-n-gram-features}.
 
 \begin{table}[htb]\small
 \begin{tabularx}{\textwidth}{|L{0.07\textwidth}|L{0.09\textwidth}|L{0.09\textwidth}|L{0.08\textwidth}|L{0.07\textwidth}|L{0.07\textwidth}|Y|L{0.07\textwidth}|L{0.07\textwidth}|}
@@ -729,9 +729,9 @@ Each new word in the n-gram dictionary adds a new feature and thus a dimension t
 
 As the number of word grams in a dictionary can increase significantly
 in complex input cases,
-it is necessary to limit the resource usage by decreasing the features analyzed.
-In order to compress the dimensions,
-one way is to use feature hashing for n-gram features.~\cite{azure2021fhash}
+it is necessary to limit the resource usage by decreasing the features that are analyzed.
+One way to compress the dimensions is to use
+feature hashing for n-gram features.~\cite{azure2021fhash}
 This means that instead of pure n-gram features representing a single n-gram instance,
 we use hashed value of several n-grams
 thus reducing the amount of features.
@@ -754,12 +754,13 @@ is used to automate mechanical tasks executed on computer software.
 Usually it operates on the UI level
 and can be used to repeat meaningful functions
 instead of mechanical actions.
-For example, with screen recording macros
-only position at the screen and mechanical key pressing is recorded and repeated.
+For example, with screen recording macros,
+only mouse position at the screen and actual pressing of the keyboard
+is recorded and repeated.
 RPA automation, however,
 is able to repeat the functionalities those actions trigger,
 such as inputting text to a certain named field on the UI,
-or logging in with given username and password
+or logging in with a given username and password
 regardless of the location of those fields on the layout.~\cite{tripathi2018learning}
 
 In Samlink,
@@ -769,14 +770,14 @@ supervises the RPA processes.
 RPA process is executed by following
 an \textit{RPA automation},
 a predefined operation instruction build by RPA developer.
-The software responsible of the automation execution
-is called an \textit{RPA agent}.
+The software responsible for the automation execution
+is called \textit{RPA agent}.
 Agents are located in the \textit{workstations},
 where a single agent is running in one workstation.
 Each agent executes one automation at a time,
 given by the Orchestrator,
 and communicates with Orchestrator during the execution.
-This hierarchy is visualized in the picture~\ref{fig:rpa-hierarchy}.
+This hierarchy is visualized in figure~\ref{fig:rpa-hierarchy}.
 
 \begin{figure}[htb]
     \centering
@@ -795,10 +796,10 @@ it was necessary to make sure no sensitive data
 was moved out of the production environment.
 This was mostly due to restrictions imposed by GDPR\@.
 In order to maintain the data security,
-data had to be anonymized
+the data had to be anonymized
 before it could be exported to the cloud environment.
 After anonymization,
-data would not include any information
+the data would not include any information
 that can be connected to real individuals.
 Three different anonymization methods were considered,
 which were pseudonymization, k-anonymization and full anonymization.
@@ -809,11 +810,11 @@ This means,
 that each sensitive piece of information
 is replaced with an encrypted value
 so that no information is lost
-but human cannot identify individuals
+but a human cannot identify individuals
 when reading the data.
 Encryption and de-identification
 could be reversed, \ie data could be re-identified,
-with decryption key which tells computer
+with a decryption key which tells a computer
 how to convert the replaced value back to the original form.
 As machine learning algorithms do not care about the meanings
 behind personal identification information,
@@ -821,58 +822,58 @@ such as phone numbers or addresses,
 pseudonymization would preserve the information in the data unchanged
 for ML algorithms to use so that no information would be lost.~\cite{noumeir2007pseudonymization}
 
-As pseudonymization is reversible operation with encryption key,
+As pseudonymization is a reversible operation with an encryption key,
 it is not the safest way to anonymize the data
-because encryption key leaking is always a risk.
-K-anonymization is the next step to secure the data sensitivity.
+because the encryption key leaking is always a risk.
+K-anonymization is the next step in securing the data sensitivity.
 Excluding all unique identifiers such as full name or social security number,
 information like home street, age, workplace or last name
-are not on their own enough to identify certain individual,
+are not on their own enough to identify a certain individual,
 but combined they can single out a person.
-K-anonymization is unreversable anonymization approach
+K-anonymization is an unreversable anonymization approach
 where identifying information is generalized
-to mask individuals into crowd.
+to mask individuals into a crowd.
 With k-anonymization,
-algorithm replaces single informative details
+an algorithm replaces single informative details
 with more general variants,
 for instance,
 address to hometown or age to age range.
 K-anonymization loses information
 as it cannot be reversed.
-If personal information is essential for the use case of ML algorithm,
+If personal information is essential for the use case of the ML algorithm,
 this method weakens the algorithm results.~\cite{byun2007efficient}
 
 Eventually,
 due to high customer data sensitivity and strict data safety policies,
 it was determined that individual information in the log data used in this study
-was not relevant for connecting the log events to technical support ticket timestamps,
-and full anonymization was decided to execute on the log data.
+was not relevant for connecting the log events to technical support ticket timestamps.
+Thus full anonymization was decided to execute on the log data.
 This way,
 each personal information was replaced with a general token
 disclosing only what type of information (phone number, email address \etc) was anonymized.
 Frankly,
-it was not certain if identifiable personal data had improved algorithm results,
+it is not certain if identifiable personal data would have improved the algorithm results,
 but because corresponding support ticket data
 was stripped from all other information except timestamps,
 any possible connections between personal data in logs and in tickets
-were lost in any case.
+were lost nonetheless.
 
-Data anonymization was executed in production environment
+Data anonymization was executed in the production environment
 with PowerShell script.
 Several predefined identification features were searched with
 regular expression (or regex) patterns and replaced with
 default keys.
-Anonymization scripts and data format
-is described more in the section~\ref{subsec:meth-data-anonymization}.
+Anonymization scripts and the data format
+is described in more detail in the section~\ref{subsec:meth-data-anonymization}.
 
 
 %% ************************************************************************************************************
 
-\subsection{Log data analyzing and anomaly detection with ML}\label{subsec:bg-log-data-analyzing-and-anomaly-detection-with-ml}
+\subsection{Log data analysis and anomaly detection with ML}\label{subsec:bg-log-data-analysis-and-anomaly-detection-with-ml}
 
-Using machine learning for log data analyzing
+Using machine learning for log data analysis
 is not a new field of study.~\cite{rantala2019applying,allagi2019analysis,kondo2017early,cao2017machine}
-Key issue tends to be the format of the log data
+The key issue tends to be the format of the log data
 which shifts the dilemma to natural language processing.
 Some studies also combine anomaly detection using machine learning
 to log data analysis.~\cite{liu2019loganomaly, zhang2019robust}
@@ -880,9 +881,9 @@ Comparing existing studies to our case
 raises at least one major suggestion for improvement:
 log data refining.
 
-When log data has consistent format,
+When log data has a consistent format,
 multiple different algorithms can be utilized
-for anomaly detection and log analyzing.
+for anomaly detection and log analysis.
 Log events can be clustered
 and different types of events can be counted
 if the amount of types is finite and known.~\cite{liu2019loganomaly}
@@ -898,7 +899,7 @@ supervised learning methods can improve the results of the algorithm forecast ab
 As explained in the section~\ref{subsec:meth-efecte-ticket-data},
 data features connected to anomaly detection results
 are pure datetime values.
-With more insight to ticket data properties than just timestamps,
+With more insight into ticket data properties than just timestamps,
 ML algorithms could be able to extract more valuable information
 from the log data.
 

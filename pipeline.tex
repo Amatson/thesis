@@ -9,7 +9,7 @@ The full component chain from input to output
 with algorithm training and result validating
 is called a machine learning pipeline.
 In this section,
-we discuss how ML pipeline was created in Azure ML Studio.
+we discuss how the ML pipeline was created in Azure ML Studio.
 Several ML algorithms were compared
 in order to find the most feasible set for our goal in mind.
 ML training was organized in two different phases
@@ -18,7 +18,7 @@ log anomalies and technical tickets.
 Although, the Azure environment and ML Studio requirements
 were the objectives of the study and therefore part of the outcome of the results,
 these results were also a prerequisite for solving the final objective
-considering the ML algorithm possibilities.
+considering the possibilities of the ML algorithm.
 Therefore,
 the resulting Azure resources and ML Studio pipeline components
 are demonstrated in this section.
@@ -32,20 +32,20 @@ These results are presented later in the section~\ref{sec:results}.
 Azure ML Studio makes ML pipeline creation easy
 and comparing different methods and algorithms effortless.
 Nevertheless,
-with hybrid approach having two different phases,
-and result comparison being done against anomaly hypothesis,
+with a hybrid approach having two different phases,
+and result comparison being done against the anomaly hypothesis,
 the pipeline drafts started to accumulate in content.
 
 When starting the ML pipeline testing,
-the initial plan was to feed the log data to anomaly detection algorithm
+the initial plan was to feed the log data to the anomaly detection algorithm
 and try to get some sort of estimate of possible anomaly count.
 This plan had several problems.
 First, as stated, logging is very abundant
 and several thousands of rows is logged
 during a single day.
-Some errors encountered are not critical
+Some encountered errors are not critical
 and RPA agent is able to recover from them
-finalizing the initial task.
+and finalize the initial task.
 This means,
 that errors which could be deemed anomalous
 may not result to a ticket in the end.
@@ -53,19 +53,18 @@ may not result to a ticket in the end.
 In addition,
 one single error case noticed by bank clerks
 may be linked to several problems in runtime,
-meaning that one ticket received is,
-in fact, linked to multiple, dozens, or
+meaning that one ticket is might be linked to multiple, dozens, or
 even hundreds of log rows.
 
 Two different algorithms were needed.
 In phase 1,
-algorithm defines how likely one datapoint, or log row,
+the algorithm defines how likely one datapoint, or log row,
 is to be considered an anomaly.
 In phase 2,
 another algorithm aims to predict
-how many tickets are to be expected to receive
+how many tickets are expected to be received
 within a time frame.
-This dual algorithm utilization is referred as a hybrid machine learning approach.~\cite{tsai2010credit}
+This dual algorithm utilization is referred to as a hybrid machine learning approach.~\cite{tsai2010credit}
 
 
 %% ************************************************************************************************************
@@ -79,28 +78,28 @@ where two or more ML methods are combined
 to overcome the limitations of
 or to boost the estimation capabilities of
 a single method alone.~\cite{Anifowose2020hml}
-Hybrid machine learning is not rare technique in ML field.~\cite{shon2007hybrid,tsai2010credit,mohan2019effective,
+Hybrid machine learning is not a rare technique in the ML field.~\cite{shon2007hybrid,tsai2010credit,mohan2019effective,
     hsieh2005hybrid,jain2007hybrid,kim2007hybrid,lee2002credit,malhotra2002differentiating}
 In this study,
-we combine PCA-based anomaly detection algorithm
-with regression algorithm
+we combine a PCA-based anomaly detection algorithm
+with a regression algorithm
 in order to amplify the prediction powers of our ML algorithm
 when trying to determine the possible ticket count
 based on log events.
 
 We use two different algorithms and two particular data sets
-in two separate phases as visualized in the picture~\ref{fig:hybrid-ml-model}.
+in two separate phases as visualized in figure~\ref{fig:hybrid-ml-model}.
 The results of the first ML algorithm are combined
 with the second set of data,
-and this combination is used to train the ML algorithm in second phase.
-In order to clarify whether hybrid approach is suitable for the current study problem
-we will compare the results of hybrid ML technique
+and this combination is used to train the ML algorithm in the second phase.
+In order to clarify whether a hybrid approach is suitable for the current study problem
+we will compare the results of the hybrid ML technique
 with a single ML algorithm usage.
 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.5\textwidth,]{./appendices/hybrid-ml-model}
-    \caption{Simplistic example of hybrid machine learning model.
+    \caption{Simplistic example of a hybrid machine learning model.
     The first algorithm learns from the initial data,
         and the results are used with a second data set to train another algorithm.
         \label{fig:hybrid-ml-model}}
@@ -115,13 +114,13 @@ would possibly give some results with a single algorithm,
 but only if the amount of log events correlates strongly with tickets received.
 We can, however,
 amplify our ticket estimating algorithm with anomaly feature values.
-As we first count the anomaly numbers with anomaly detection algorithm
+As we first count the anomaly numbers with the anomaly detection algorithm
 and use the statistical features of the results in another algorithm,
 like regression algorithm,
 we get more relative information to use
 when creating the final ticket number estimations.
 This is explained in more detail
-later in the section~\ref{subsec:pipe-random-delay-and-timeframe-compression}.
+later in section~\ref{subsec:pipe-random-delay-and-timeframe-compression}.
 
 
 %% ************************************************************************************************************
@@ -133,14 +132,12 @@ later in the section~\ref{subsec:pipe-random-delay-and-timeframe-compression}.
 %% ............................................................................................................
 
 \subsubsection*{PCA-ADA input feature formatting}
-In Azure ML Studio
-there is only one module selectable
-for anomaly detecting,
-the PCA-based anomaly detection algorithm (PCA-ADA) module,
-the basics of which is explained in the section~\ref{subsec:bg-pca-ada}.
+In Azure ML Studio, the only selectable module for
+anomaly detection is the PCA-based anomaly detection
+algorithm (PCA-ADA), which is explained in section~\ref{subsec:bg-pca-ada}.
 However,
 with textual input like logs
-it can be used at least in two ways.
+it can be used in at least two ways.
 
 First,
 input data can be fed to
@@ -156,7 +153,7 @@ making each row in the input
 a feature as a whole to consider.
 As we discussed in the section~\ref{subsec:meth-data-anonymization},
 unique values should be removed from the log rows
-and the data should be somewhat clean,
+and the data should be somewhat clean.
 PCA should be able to find similar values
 and create anomaly score with purely textual features.
 However,
@@ -165,22 +162,22 @@ PCA defines two rows as completely different.
 
 Second option is to convert the textual features into numerical features.
 This can be done
-either with "Extract N-Gram Features from Text" component,
-or "Feature Hashing" component which uses n-gram feature extraction behind the scenes.
+either with the "Extract N-Gram Features from Text" component,
+or the "Feature Hashing" component which uses n-gram feature extraction behind the scenes.
 With n-gram feature extracting,
 as explained in the section~\ref{subsec:bg-ngram-features-and-hashing},
 each word or n-gram is converted to a number of said instance found on the row being processed,
 and each row can be presented as a sequence of numbers
 indicating the number of those features.
 
-N-gram feature can in addition have a weight
+An N-gram feature can in addition have a weight
 based on the frequency the n-grams appear
 in the entire data.
 Different weights usable in Azure ML component
-are listed in the table~\ref{tab:n-gram-weights}.
+are listed in table~\ref{tab:n-gram-weights}.
 During this study,
 only binary weight was used,
-so it is possible that improved results could have been acquired with different weight method.
+so it is possible that improved results could have been acquired with a different weight method.
 
 \begin{table}[htb]
     \begin{tabularx}{\textwidth}{|L{0.25\textwidth}|X|}
@@ -199,7 +196,7 @@ As stated,
 a vast dictionary of n-grams demands resources from the ML computing instances
 as every new n-gram in the dictionary adds another column to the training dataset.
 To reduce the amount of memory needed,
-"Feature Hashing" component can be used.
+the "Feature Hashing" component can be used.
 By hashing the n-gram features,
 the amount of resources needed by the pipeline
 can be significantly reduced.
@@ -274,37 +271,39 @@ As stated in section~\ref{subsec:bg-machine-learning},
 the approach we attempt in this study is,
 if expression is allowed, unorthodox.
 Typically,
-data points used in ML algorithm training and validating
+the data points used in ML algorithm training and validating
 should always be different.
 Acting otherwise leads to algorithm processing with
 same data it was trained with,
 thus creating a situation
 where algorithm already knows what to do with the current data point.
 If the results were validated after this
-the algorithm would get unreliably good score
+the algorithm would get an unreliably good score
 as it had the validation data already in the training phase.
 This could be compared to
-giving some right answers to students during test
+giving some right answers to students during a test
 and scoring test results as if no help was given.
 However,
 due to the nature of the study problem and contents of the data,
 it was decided to test whether bending this rule
 would provide better results in algorithm training.
 
-Even though the amount of data was large enough
-to cause issues with memory,
-the hybrid approach and the time frame compression discussed later in this section (section~\ref{subsec:pipe-random-delay-and-timeframe-compression})
-resulted in a significant reduction in data in phase 2.
+The large amount of data was enough
+to cause issues with memory.
+Although this problem was succesfully circumvented,
+the hybrid approach and the time frame compression
+(discussed later in section~\ref{subsec:pipe-random-delay-and-timeframe-compression})
+resulted in a significant data loss in phase 2.
 As a general rule of thumb in ML training,
 only 20--30\% of the data is used to validate the algorithm.
 With the hybrid ML approach,
 the validation results in phase 1
-are what actually form the data used in the phase 2.
+are what actually form the data used in phase 2.
 This data is further compressed to time frame groups
 leading to only a few dozen data points in phase 2 ML training
 compared to millions of rows in phase 1.
 
-Because of the way the PCA-based anomaly detection algorithm work,
+Because of the way the PCA-based anomaly detection algorithm works,
 the over-lapping data points are not as big of an issue
 as it would be with other types of algorithms
 like regression algorithms.
@@ -320,12 +319,12 @@ overfitting in phase 1 may not cause issues.
 To verify if this unconventional training method gives good results without issues,
 the trained algorithms were tested with new production data
 that had zero overlapping data points with training and validation data.
-This training method was also compared to traditionally trained algorithm
+This training method was also compared to a traditionally trained algorithm
 to see the differences in results of both training styles.
 This way we were able to compare different training approaches
 to determine the best overall pipeline structure.
 
-One more thing worth to mention considering
+Kind of informal mention considering
 the traditional training approach in our study case
 is the data splitting of the log data for algorithm training.
 Because of the hybrid model,
@@ -336,7 +335,7 @@ Purely for training
 the random splitting can be done,
 but if data in phase 1 is split randomly for validation,
 some anomalous rows could be skipped from a time frame
-that would be crucial information for the estimations in the phase 2.
+that would be crucial information for the estimations in phase 2.
 This is why we must make sure the possible data splitting for validation data
 is chronological in phase 1.
 
@@ -345,23 +344,23 @@ is chronological in phase 1.
 
 \subsection{Input data random delay and time frame compression}\label{subsec:pipe-random-delay-and-timeframe-compression}
 
-As mentioned previously in the section~\ref{sec:introduction},
-it takes time for bank clerk to notice the error in RPA process,
+As mentioned previously in section~\ref{sec:introduction},
+it takes time for a bank clerk to notice the error in the RPA process,
 send a technical support ticket considering the issue,
-and support team to redirect the request to corresponding developer team.
+and for the support team to redirect the request to the corresponding developer team.
 As several steps of human interaction and workday schedules
-are in between the event logging and ticket receiving,
+are in between the event of logging and ticket receiving,
 the random delay of such may span from hours to days.
 Random delay in input data features
-is not unusual aspect in time-series forecasting.
-Time-series in ML context
-refers to data features that varies over time
+is not an unusual aspect in time-series forecasting.
+Time-series in the context of ML
+refers to data features that vary over time
 and can be affected by past values.~\cite{palma2016time}
 As an example,
-ML algorithm could try to predict future weather
+an ML algorithm could try to predict future weather
 based on measured temperature and air pressure.
 Both these features change over time
-and also affect to their own future values.
+and also affect their own future values.
 
 This study, however,
 is not about time-series
@@ -394,7 +393,7 @@ were determined to be the log row count,
 amount of unique job IDs, and anomaly probability metrics.
 
 The amount of log rows describes
-how much logged issues happened in a time frame.
+how many logged issues occured in a time frame.
 Alone,
 this feature may not give much insight
 as the amount of logs is possibly not linearly comparable
@@ -404,31 +403,31 @@ it may, however,
 provide additional value for ticket forecasting.
 Job ID is the identification information of a specific RPA automation execution run.
 It means,
-that job ID is not unique for each log row,
+that the job ID is not unique for each log row,
 but it binds together all the log entries on the same RPA automation execution.
 By counting the amount of unique job IDs in a time frame
 we can get insight about the amount of automation jobs executed during the time frame.
 This metric is important with the total row count:
 low number of unique jobs with high number of total rows
-indicates that plenty of loggable events and possibly errors happened during the time frame,
+indicates that plenty of loggable events and possible errors happened during the time frame,
 whereas high number of unique jobs combined to low number of rows
 imply that not much happened (or perhaps executions were completely crashed).
 
 By the original hypothesis,
 anomalies in the logs are linked closely to the support tickets received.
-Anomaly detection algorithm produces a probability value of
+The anomaly detection algorithm produces a probability value of
 how strongly a row is considered to be an anomaly,
 thus,
-mean and median values of the anomaly probabilities in a time frame
-indicate how anomalous all the executions on a time frame has statistically been.
+the mean and median values of the anomaly probabilities in a time frame
+indicate how anomalous all the executions within a time frame have statistically been.
 However,
 when compressing the anomaly probability metrics in a time frame,
 some information is bound to be lost.
-Mean and median values do not provide information
+The mean and median values do not provide information
 about the anomaly probability value distribution.
 There may be few very high values and a lot of low probabilities,
 and it would lead to the same mean value
-as there were a lot of slightly higher probabilities and just few very low values.
+as if there were a lot of slightly higher probabilities and just few very low values.
 By adding more statistical values
 we can reduce the loss of information caused by time frame compression.
 If the original hypothesis is correct,
@@ -452,15 +451,15 @@ should improve the estimation abilities of the algorithm.
     \label{tab:statistic-features}
 \end{table}
 
-In the table~\ref{tab:statistic-features},
+In table~\ref{tab:statistic-features},
 all the statistic metrics considered interesting and valuable
 from time frame compression of the log rows
 are listed with short explanation.
 In the pipeline,
 the statistical values are calculated
-using R-script executing component.
+using the R-script executing component.
 An example of such script executed by the "Execute R Script" component
-is presented in the appendix~\ref{sec:app-r-script}.
+is presented in appendix~\ref{sec:app-r-script}.
 
 
 %% ************************************************************************************************************
