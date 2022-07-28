@@ -126,7 +126,7 @@ later in section~\ref{subsec:pipe-random-delay-and-timeframe-compression}.
 %% ************************************************************************************************************
 
 
-\subsection{HML phase 1: PCA-based anomaly detection algorithm}\label{subsec:pipe-pca-ada-input-output}
+\subsection{HML phase 1: PCA-based anomaly detection}\label{subsec:pipe-pca-ada-input-output}
 
 
 %% ............................................................................................................
@@ -244,7 +244,7 @@ More about the memory issue is discussed
 in the section~\ref{subsec:res-memory-issues}.
 
 
-%% ............................................................................................................
+%% ************************************************************************************************************
 
 
 \subsubsection*{PCA output and anomaly probability}
@@ -265,7 +265,7 @@ are discussed later in the section~\ref{subsec:pipe-random-delay-and-timeframe-c
 %% ************************************************************************************************************
 
 
-\subsection{Unconventional training approach}\label{subsec:pipe-unconventional-training}
+\subsubsection*{Unconventional training approach}\label{subsec:pipe-unconventional-training}
 
 As stated in section~\ref{subsec:bg-machine-learning},
 the approach we attempt in this study is,
@@ -342,7 +342,13 @@ is chronological in phase 1.
 
 %% ************************************************************************************************************
 
-\subsection{Input data random delay and time frame compression}\label{subsec:pipe-random-delay-and-timeframe-compression}
+
+\subsection{HML phase 2: Ticket count estimation with regression}\label{subsec:pipe-regression-estimating}
+
+
+%% ............................................................................................................
+
+\subsubsection*{Input data random delay and time frame compression}\label{subsec:pipe-random-delay-and-timeframe-compression}
 
 As mentioned previously in section~\ref{sec:introduction},
 it takes time for a bank clerk to notice the error in the RPA process,
@@ -393,7 +399,7 @@ were determined to be the log row count,
 amount of unique job IDs, and anomaly probability metrics.
 
 The amount of log rows describes
-how many logged issues occured in a time frame.
+how many logged issues occurred in a time frame.
 Alone,
 this feature may not give much insight
 as the amount of logs is possibly not linearly comparable
@@ -461,24 +467,19 @@ using the R-script executing component.
 An example of such script executed by the "Execute R Script" component
 is presented in appendix~\ref{sec:app-r-script}.
 
+The result values of the anomaly detection algorithm
+are time-frame-compressed along with the technical ticket timestamps,
+which form our second part of the data.
+The timestamp data, however,
+gets compressed simply into a count of tickets received in the defined time frame.
+Now we have a comparable feature
+that is usable by regression algorithms.
+
 
 %% ************************************************************************************************************
 
 
-\subsection{HML phase 2: Regression based estimating}\label{subsec:pipe-regression-estimating}
-
-With the time frame compressed values
-formed from the algorithm results in the phase 1,
-we move on to the second phase in our HML pipeline
-to estimate the ticket count.
-Our second part of the data,
-the technical ticket timestamps,
-are compressed in same way as the result data in phase 1.
-This time, however,
-the timestamp data gets compressed
-into a count of tickets received in the defined time frame.
-Now we have a comparable feature
-that is usable by regression algorithms.
+\subsubsection*{Regression algorithm options}\label{subsec:pipe-regression-algorithm-options}
 
 Azure ML Studio has six regression algorithms usable.
 One of them,

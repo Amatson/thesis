@@ -7,21 +7,21 @@
 \thesisappendix
 
 \section{Final pipeline structure}\label{sec:app-final-pipeline-structure}
-
+{
+    \scriptsize
+    Final pipeline includes message and rawmessage branches, their pure, preprocessed and feature hashing combinations,
+    two algorithm comparison blocks, and a three final test branches using fresh data for for model scoring.
+}
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=180mm,angle=90]{./appendices/pipeline-draft}
-    \caption{Final pipeline structure.
-    It includes message and rawmessage branches, their pure, preprocessed and feature hashing combinations,
-    two algorithm comparison blocks, and a three final test branches using fresh data for for model scoring.
-    \label{fig:app-pipeline-structure}}
+    \includegraphics[width=202mm,height=\textwidth,angle=90]{./appendices/pipeline-draft}
 \end{figure}
 
 \clearpage
 
 %% ************************************************************************************************************
 
-\section{RPA log data example 1}\label{sec:app-log-data-input}
+\section{RPA log data example}\label{sec:app-log-data-input}
 
 RPA log data in raw format after anonymizing and exporting to local environment.
 Here are four lines of log events with different log levels,
@@ -475,7 +475,7 @@ exit
 
 \section{Example of R-script}\label{sec:app-r-script}
 R-script is responsible for the time frame compression.
-It is done by summarizing various values in a time frame into new features.
+It works by summarizing various values in a time frame into new features.
 
 \begin{Verbatim}[fontsize=\small]
 
