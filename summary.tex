@@ -18,34 +18,34 @@ settled us to choose full anonymization,
 which was carried out with PowerShell script in production environment.
 
 Next,
-local data preprocessing was needed
+local data preprocessing was required
 before the data was deemed suitable for ML training.
-As data consisted of miscellaneous types of input,
+As the data consisted of miscellaneous types of input,
 we had to create another script to reformat the data in a consistent form.
 
 After this,
 the proper ML training steps in Azure ML Studio environment could begin.
 One of the main problems we had to solve
-was how to combine log events with simple timestamp data of the technical tickets
+was the issue of how to combine log events with simple timestamp data of the technical tickets
 with an unknown span of random delay.
 We decided to use hybrid machine learning
-fused with time frame compression method
+fused with a time frame compression method
 to avoid the random delay issue.
 This, however,
 leaned heavily on the hypothesis that most anomalous log events
 are related to technical tickets received.
 This hypothesis had to be validated
 by comparing the results of the final algorithm training
-with an ML pipeline branch where anomaly values had been removed.
+with the results of an ML pipeline branch where anomaly values had been removed.
 
-In order to find the best possible combination of ML components for hybrid machine learning
+In order to find the best possible combination of ML components for hybrid machine learning,
 both in terms of suitable algorithms and input data features,
 several combinations were tested and compared with each other.
 In the end, however,
 it became clear that
 either our original hypothesis had to be assumed incorrect
 and anomalous events are not linked to technical support tickets,
-or more studying is required to find the connection between the log events and ticket timestamps.
+or more research is required to find the connection between the log events and ticket timestamps.
 
 
 

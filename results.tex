@@ -4,11 +4,11 @@
 
 \section{Results}\label{sec:results}
 
-This section presents the results of HML pipeline combinations.
+This section presents the results of the HML pipeline combinations.
 The values of algorithm evaluations are compared
 and the results are judged.
 Before that,
-we discuss about the memory issue encountered
+we discuss the encountered memory issue
 that affected our pipeline component choices.
 
 After presenting the results,
@@ -21,10 +21,10 @@ and suggestions for improvement are made.
 
 \subsection{Memory issues and limitations}\label{subsec:res-memory-issues}
 
-Memory is crucial resource in ML training.
+Memory is a crucial resource in ML training.
 Algorithms take multiple steps while iterating the data
 and intermediate results are stored in the RAM rather than on the disk.
-While building ML pipeline in Azure ML Studio,
+While building an ML pipeline in Azure ML Studio,
 a memory issue emerged
 that affected several components
 and caused serious limitations
@@ -32,52 +32,51 @@ in terms of usable components and data size.
 Due to the time limits of this study,
 this issue was not resolved
 and the problem causing it was not found.
-As several conditions
-considering the environment costs
+As several conditions related to the environment costs
 were already issued by the company,
-the issue was supposed to be linked with
-compute instance property limitations
-and thus could not be resolved without cost overruns.
-However, this was not certain.
+we could not acquire more expensive computing instances
+with more memory capacity to confirm
+whether the issue was related to compute instance property limitations.
 
 In order to complete some of the ML pipeline runs
 the data amount had to be reduced to 600 megabytes.
 This was considerably less than what was assumed to be sufficient
 for reliable results,
-as this size of data would cover for just a few months of logging.
+as this size of data would cover just a few months of logging.
 To increase the time span of log data,
-it was decided to trim info-type log messages from the data.
+it was decided that the info-type log messages were to be trimmed from the data.
 This way we were able to reduce the data to 8.6 million log rows
 which was about 10\% of the original data size.
-Before final cleaning operations,
+Before the final cleaning operations,
 the data took 8.1GB of disk space,
 and after cleaning the rawmessage-field with the script in appendix~\ref{sec:app-data-cleaning-script},
-the final size in disk was 6.6GB\@.
+the final size of the data on the disk was 6.6GB\@.
 Even with this data size,
-some Azure ML components still faced this memory issue
-and forced us to choose such components
+some Azure ML components still ran into memory issue
+and we were forced to choose components
 that were able to handle these data amounts.
 
 One of the most sensitive components for this issue
-was n-gram feature extraction module.
+was the n-gram feature extraction module.
 As we explained in section~\ref{subsec:bg-ngram-features-and-hashing},
 each new n-gram or word creates a new column in the data.
 This module suffered greatly from the memory exhaustion,
 especially while processing rawmessage
-which it included more data in the JSON structure than pure message-field.
+which included more data in the JSON structure than the pure message-field.
 With rawmessage,
 n-gram feature extraction was able to handle
 less than 1\% of the data amount,
 resulting to more than 1000 columns of n-gram feature columns.
 With message data,
-this situation was just slightly better,
-as the limit of data amount was in 2\%.
+the situation was just slightly better,
+as the limit of data amount was at 2\%.
 
-Feature hashing component was able to process more data than pure n-gram feature extracting module,
+The feature hashing component was able to process more data than the pure n-gram feature extracting module,
 but this required the compression level to be quite high.
 The main parameter to tune in feature hashing was the bitsize of the hashing.
 The smaller the hashing bitsize was,
-the greater the level of compression was thus resulting to more lost information.
+the greater the level of compression was,
+which resulted to more lost information.
 In order to utilize this module at all,
 the hashing bitsize had to be set to 7
 which produced approximately 130 hashed feature columns.
@@ -86,7 +85,7 @@ With some component combinations,
 additional data split modules were needed
 in order to finish the ML pipeline.
 For example,
-with rawmessage-data, feature hashing and unconventional training,
+with the rawmessage-data, feature hashing and unconventional training,
 the validation data had to be trimmed to 70\%
 so that the model scoring could be executed.
 
@@ -96,52 +95,53 @@ so that the model scoring could be executed.
 \subsection{Algorithm estimation results}\label{subsec:res-algorithm-estimation-results}
 
 Based on the first pipeline experiments,
-the Decision Forest Regression algorithm gave the most promising results,
-so the values listed in this section are based on the use of this algorithm unless otherwise stated.
+the Decision Forest Regression algorithm gave the most promising results.
+For this reason,
+the values listed in this section are based on the use of this algorithm unless otherwise stated.
 However, this first impression was a misinterpretation,
 as the final results show.
 For unknown reasons,
 when time frame compression was carried out with SQL queries instead of R-script,
 the results were considerably better.
-However, these results could not be relied upon,
-as further investigation showed that the time frame compression was incorrect.
+However, these results could not be relied on,
+as further investigation showed that the time frame compression was done incorrectly.
 This was verified by calculating the total number of log rows
 and comparing it to the sum of the line counts in all time frames.
 As something did not work as intended with SQL queries,
-SQL-based time frame compression was decided to reject.
+the SQL-based time frame compression was decided to reject.
 It was also much easier to include more statistical metrics
 with R-scripting than with SQL queries.
 
-As explained in the section~\ref{subsec:pipe-branching},
-the amount of pipeline component combinations to compare was significant.
-It was decided to run initial experiments with a few basic component combinations
+As explained in section~\ref{subsec:pipe-branching},
+the number of pipeline component combinations to compare was significant.
+Initial experiments were decided to run with a few basic component combinations
 and select the most promising branches to continue with.
 For this reason,
-it was decided to reject pure n-gram feature extraction in the final analysis
-because the memory issue affected so much its reliability in terms of the amount of data.
+pure n-gram feature extraction was rejected in the final analysis
+because the memory issue greatly affected its reliability in terms of the amount of data.
 Feature hashing, however,
 could be included.
 The amount of data was seen sufficient to consider the results reliable,
 although, to make this possible,
 a lot of information was lost due to the level of compression used.
 
-In the table~\ref{tab:results-decision-forest-all},
+In table~\ref{tab:results-decision-forest-all},
 the final results of the pipelines using Decision Forest Regression algorithm in phase 2
 are listed for comparison.
 When interpreting the comparison metrics,
-it was decided to focus on the coefficient of determination (CoD-value),
+the focus was on the coefficient of determination (CoD-value),
 mean absolute error (MAE-value),
 and their difference with the corresponding metrics
 in cases where the anomaly probability value was omitted from phase 2.
-Like we explained in the section~\ref{subsec:pipe-branching},
+Like we explained in section~\ref{subsec:pipe-branching},
 we assumed that anomaly probability values calculated by the anomaly detection algorithm
-provides valuable information for ticket count estimating.
+provide valuable information for ticket count estimation.
 Thus,
-if these values are removed before the phase 2 algorithm training,
+if these values are removed before phase 2 algorithm training,
 the estimation capabilities of the algorithm should weaken.
 Hence,
-we decided to experiment more with those pipeline component combinations
-which resulted in noticeably better results
+we decided to experiment more with the pipeline component combinations
+that resulted in noticeably better results
 than their anomaly-probability-omitted counterparts.
 As mentioned in the previous section,
 with MAE smaller is better,
@@ -207,7 +207,7 @@ whereas with CoD bigger is better.
         PreP.RawMsg FHash UnconT NA	    	& 2.5384				& 3.1784					& 0.7149					& 0.9050					& 0.28503		\\
         \hline
     \end{tabularx}
-    \caption{Results of HML pipeline with Decision Forest regression algorithm in the phase 2.
+    \caption{Results of HML pipeline with Decision Forest regression algorithm in phase 2.
         \textbf{FHash} means \textit{Feature Hashing},
         \textbf{PropT} indicates \textit{proper training},
         \textbf{UnconT} that \textit{unconventional training} is done in phase 1,
@@ -218,8 +218,8 @@ whereas with CoD bigger is better.
     \label{tab:results-decision-forest-all}
 \end{table}
 
-As highlighted in the table\ref{tab:results-decision-forest-all},
-the most promising results have been received by using:
+As highlighted in table~\ref{tab:results-decision-forest-all},
+the most promising results were achieved by using:
 \begin{itemize}
     \setlength\itemsep{0pt}
     \setlength{\parskip}{0pt}
@@ -229,7 +229,7 @@ the most promising results have been received by using:
     \item rawmessage data, preprocessed, proper training, and
     \item rawmessage data, preprocessed, unconventional training.
 \end{itemize}
-Next, these chosen combinations are tested with different regression algorithms in the phase 2.
+Next, these chosen combinations are tested with different regression algorithms in phase 2.
 
 \begin{table}[htb]
     \begin{tabularx}{\textwidth}{|Y|L{0.08\textwidth}|L{0.10\textwidth}|L{0.08\textwidth}|L{0.08\textwidth}|L{0.12\textwidth}|}
@@ -287,7 +287,7 @@ Next, these chosen combinations are tested with different regression algorithms 
     \label{tab:results-msg-fhash-algorithm-comparison}
 \end{table}
 
-In the table~\ref{tab:results-msg-fhash-algorithm-comparison},
+In table~\ref{tab:results-msg-fhash-algorithm-comparison},
 we can see the results of different regression algorithms
 with message data and feature hashing.
 However,
@@ -425,20 +425,20 @@ this issue did not occur.
 \end{table}
 
 As seen in tables~\ref{tab:results-rawmsg-fhash-algorithm-comparison} and~\ref{tab:results-prepros-rawmsg-fhash-algorithm-comparison},
-Decision Forest regression gives the most promising results when using rawmessage-column,
+Decision Forest regression gives the most promising results when using the rawmessage-column,
 with or without text preprocessing.
 Thus,
 the initial component combinations were selected to further experimentation.
 
 The final testing was executed with freshly acquired production data.
 In the end,
-only three most promising pipeline component combinations got tested in this phase.
-The results are listed in the table~\ref{tab:final-results}.
+only three of the most promising pipeline component combinations got tested in this phase.
+The results are listed in table~\ref{tab:final-results}.
 As seen from the final comparison metrics,
 the results were not convincing.
 Coefficient of determination was a negative number in each case,
 meaning that our ML model did not find any sensible relationship between log data and ticket timestamps.
-The negative value means also,
+The negative value also indicates,
 that even a random model would have performed better in ticket count estimation
 than our trained algorithms.
 Further examination of the score values behind these results
@@ -447,7 +447,7 @@ In case of preprocessed rawmessage, proper training and Decision Forest algorith
 the MAE-value was 0.5277 and CoD-value 0.79976.
 Without context,
 these values would have been excellent,
-meaning that an average error in ticket count estimations would have been just a little over 0.5 in time frame.
+meaning that an average error in ticket count estimations would have been slightly over 0.5 within a time frame.
 However,
 because the memory issue forced us to trim the data amount,
 and the time frame compression condensed the training data in phase 2 even more,
@@ -481,12 +481,12 @@ this is not a sufficient amount of data to get reliable results.
     \label{tab:final-results}
 \end{table}
 
-After considering the results of all the results,
+After considering all the results,
 it was determined that our initial goal to find a connection between log anomalies and technical ticket timestamps
 did not succeed.
 Even though we were not able to find the connection with the methods used in this study,
-it should not be ruled out that this connection does not exist.
-Our final verdict is that further studying is needed.
+it should not be ruled out whether this connection exists or not.
+Our final verdict is that further research is needed.
 
 %% ************************************************************************************************************
 
@@ -507,35 +507,35 @@ the ML pipelines with trained algorithms should be published as online endpoints
 The data in production needed a great deal of processing before
 it could be exported to the cloud environment.
 To be able to use live production data for real time ticket estimation,
-a solution for data processing and exporting would have been needed.
+a solution for data processing and exporting would be needed.
 
 The data format proved challenging,
 not only because of the mixed type of data that included both CSV and JSON,
 but also because of multiple different types of sensitive information
 that had to be taken into account.
 With more simple and consistent log formatting,
-further insight of the data could have been acquired.
-One major improvement could be the possibility to utilize One-Class Support Vector Machine.
+further insight into the data could have been acquired.
+One major improvement could be the possibility to utilize the One-Class Support Vector Machine.
 This, however,
 would have needed a manually constructed dataset
 including only "normal" log events,
 or such events that can be reasonably assured
 not to be related to the ticket inducing issues.
-With better preformatted data,
+With more carefully preformatted data,
 more informative log metrics could be found
-which may prove useful for algorithm estimations.
+which may have proven useful for algorithm estimations.
 
-Time frame compression was inevitably losing some information.
+The time frame compression inevitably lost some information.
 We attempted to minimize the drawbacks
 by calculating multiple statistical values along with the compression.
-Different approaches could still have been experienced with.
-One way would be calculating anomaly probability metrics per job ID
+Different approaches could still have been experimented with.
+One possible approach could be calculating anomaly probability metrics per job ID
 to increase the understanding of anomaly distribution inside time frames.
-Due to the working week effects on the tickets,
+Due to the effects of the working week on the tickets,
 shifting the time frames from Monday-Sunday to Saturday-Friday
 could also change the results,
 as it is presumable that tickets received early on Monday
-are related to issues on weekend.
+are related to issues occurring during the weekend.
 
 The original hypothesis was
 that anomalous events in the logs
@@ -549,21 +549,21 @@ which could make the ticket inducing events
 more common log feature.
 Thus,
 it could have been possible to get better results
-by tuning the statistical values used,
-so that more common error messages would have been taken into account.
+by tuning the statistical values that were used
+in a way that more common error messages would have been taken into account.
 
 In this study,
 we decided to skip some corners
-and selected pipeline component combinations to continue with
+and selected pipeline component combinations to continue
 based on the initial results of Decision Forest regression algorithm.
-Other algorithms were tested with the best combinations
-that worked on Decision Forest regression.
+The other algorithms were tested with
+the combinations that worked best for the Decision Forest regression.
 It is possible
 that with different algorithms,
 other component combinations would have worked better.
-Also,
+Additionally,
 all of the algorithms have multiple tunable parameters
-that affect greatly on the results.
+that affect the results greatly.
 Most of the algorithms, however,
 were used with default parameters
 to save time and computing costs.
@@ -572,7 +572,7 @@ could still provide further results.
 
 Finally,
 without the memory issue limiting our data amount and component selection,
-n-gram feature extraction could have been utilized in full extent.
+n-gram feature extraction could have been utilized to full extent.
 Other data preprocessing methods were bound to lose valuable information,
 and anomaly detection from the textual features in this study case
 was not possible with the algorithms available.

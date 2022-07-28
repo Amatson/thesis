@@ -300,15 +300,15 @@ log analyzing\spc Hybrid machine learning}
     Unfortunately, these robots often encounter errors,
     and bank clerks have to manually complete
     the tasks they leave behind.
-    This results in a technical support ticket written by the clerks to Samlink's technical support team,
-    and the development team begins to investigate the problem.
-    The logs written by the robotic process algorithms are essential for debugging.
+    The errors are reported by the bank clerks to Samlink's technical support team
+    as technical support tickets which are then investigated by the development team.
+    Logs written by the robotic process algorithms are essential for fixing the issues.
     Due to the number and extent of the logs,
     debugging is very laborious.
     This thesis explores the possibility of
     utilizing a cloud-based machine learning environment
-    to find the connection between the support tickets and log events.
-    This will be used to develop a machine learning system that reads production logs,
+    to find a connection between the support tickets and log events.
+    This will be used to develop a log monitoring machine learning system,
     capable of alerting developers of a potential incoming ticket
     even before bank clerks themselves detect the error.
     The data used in the study is first anonymized in a production environment
@@ -320,14 +320,14 @@ log analyzing\spc Hybrid machine learning}
     Random delay between the robotic process algorithm log entries and the tickets sent by the clerks
     is addressed by time frame compression and hybrid machine learning,
     which uses two algorithms at different stages of the machine learning pipeline.
-    This study could not prove,
-    that there is a connection between log entries and technical support tickets,
-    that the algorithm is able to detect.
-    The numerous problems encountered affected the components chosen
-    and parameters used.
+    This study could not prove the existence of a connection
+    between log entries and technical support tickets,
+    that the algorithm could detect.
+    The numerous problems that were encountered affected the choice of components
+    and the use of parameters.
     If these problems can be solved,
-    it is possible to find that connection between logs and support tickets.
-    It is also suspected that enhancing the format of the logging will improve the results.
+    it is possible that a connection between logs and support tickets is found.
+    It is also suspected that enhancing the format of the logging would improve the results.
     Nonetheless, further research is needed.
 }
 
@@ -388,16 +388,16 @@ log analyzing\spc Hybrid machine learning}
       Unfortunately, these robots often encounter errors,
       and bank clerks have to manually complete
       the tasks they leave behind.
-      This results in a technical support ticket written by the clerks to Samlink's technical support team,
-      and the development team begins to investigate the problem.
-      The logs written by the robotic process algorithms are essential for debugging.
+      The errors are reported by the bank clerks to Samlink's technical support team
+      as technical support tickets which are then investigated by the development team.
 
+      Logs written by the robotic process algorithms are essential for fixing the issues.
       Due to the number and extent of the logs,
       debugging is very laborious.
       This thesis explores the possibility of
       utilizing a cloud-based machine learning environment
-      to find the connection between the support tickets and log events.
-      This will be used to develop a machine learning system that reads production logs,
+      to find a connection between the support tickets and log events.
+      This will be used to develop a log monitoring machine learning system,
       capable of alerting developers of a potential incoming ticket
       even before bank clerks themselves detect the error.
 
@@ -412,14 +412,14 @@ log analyzing\spc Hybrid machine learning}
       is addressed by time frame compression and hybrid machine learning,
       which uses two algorithms at different stages of the machine learning pipeline.
 
-      This study could not prove,
-      that there is a connection between log entries and technical support tickets,
-      that the algorithm is able to detect.
-      The numerous problems encountered affected the components chosen
-      and parameters used.
+      This study could not prove the existence of a connection
+      between log entries and technical support tickets,
+      that the algorithm could detect.
+      The numerous problems that were encountered affected the choice of components
+      and the use of parameters.
       If these problems can be solved,
-      it is possible to find that connection between logs and support tickets.
-      It is also suspected that enhancing the format of the logging will improve the results.
+      it is possible that a connection between logs and support tickets is found.
+      It is also suspected that enhancing the format of the logging would improve the results.
       Nonetheless, further research is needed.
 \end{abstractpage}
 
@@ -495,11 +495,71 @@ log analyzing\spc Hybrid machine learning}
 %\mysection{Esipuhe}
 %% TODO !!!!!!!! DUMMY, REPLACE
 
-Terve,
+\textbf{\textit{Terve,}}
 
-ja kiitos kaloista.
 
-\vspace{5cm}
+\bigskip
+\bigskip
+
+\noindent
+Neljä viimeistä vuotta kymmenestä yliopisto-opiskeluvuodesta
+onnistui kulumaan tämän työn saattamiseksi maaliin.
+Aihe vaihtui moneen otteeseen, ja siinä sivussa asuinkaupunki, työpaikka, siviilisääty sekä sukunimikin.
+Siispä ensimmäisenä ja erityisesti haluan kiittää niitä, jotka eivät vaihtuneet:\\
+Kiitos vaimolleni ja vanhemmilleni kaikesta tuesta ja jaksamisesta.
+Ilman sitä apua olisin jättänyt leikin kesken.
+
+\bigskip
+
+\noindent
+Kiitokset AS:lle ja rakkaille kiltalaisille kaikista railakkaista kokemuksista.
+Erityisesti, kiitos Yöjäynäjoukkue'12, sekä SorsAShtajat'12, Graniittiset Pakarat'13 ja TaASh Mennään Saatana'14.
+Teidän kanssanne opinnot olivat sekä opiskelun arvoisia, että piirun verran kevyempiä.
+Olen teille valmistumiseni velkaa.
+Kiitos myös NAKS Aasien KimbleSeurue lukemattomista peleistä,
+jotka opettivat yhden elämän perusasian: "Korottamatta voittaminen on kuin voittaisi ilman korotusta".
+
+\bigskip
+
+\noindent
+Kiitos entisille ja nykyisille kollegoilleni Samlinkissa.
+Etenkin lopputyöryhmäpainetyöryhmän jäsenet:
+olitte se viimeinen naula arkkiin jota tarvittiin lentoonlähtemiseen.
+
+\bigskip
+
+\noindent
+Kiitokset ohjaajalleni Petri Pyöriälle ja valvojalleni Arto Visalalle tuesta ja ohjeista tämän työn aikana.
+Kiitos Heikki ja Aino, jotka autoitte kielentarkistuksessa,
+sekä kiitos Otto, jonka ansiosta tutkimuksella oli dataa käytössä ensinkään.
+
+\bigskip
+
+\noindent
+Kiitos kaikille jotka uskoitte tämän päivän vielä saapuvan.
+Autoitte minua uskomaan itseeni.
+Kiitos myös kaikille niille jotka ääneen eivät tähän uskoneet.
+Autoitte minua ylittämään itseni.
+Ihan kiusallani teitä ajatellen.
+
+\bigskip
+
+\noindent
+Kiitos Annika Salamalle, jota ilman kukaan meistä ei olisi valmistunut.
+
+\bigskip
+
+\noindent
+Kuten eräs viisas mies sanoi: \\
+"Tärkeintä ei ole määränpää, vaan se, että matka on ohi."
+
+\bigskip
+\bigskip
+
+\textbf{\textit{ja kiitos kaloista.}}
+
+
+\vspace{4.5cm}
 Jyväskylä, {\today}
 
 \vspace{5mm}
@@ -543,9 +603,11 @@ Jyväskylä, {\today}
   JSON        & JavaScript Object Notation \\
   CSV         & Comma-Separated Values \\
   GDPR        & General Data Protection Regulation \\
+  PCA         & Principal Component Analysis \\
   ADA         & Anomaly Detection Algorithm \\
   IoT         & Internet of Things \\
-  UI          & User Interface
+  UI          & User Interface \\
+  API         & Application Programming Interface
 \end{tabular}
 
 

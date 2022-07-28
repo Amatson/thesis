@@ -186,7 +186,7 @@ special string tokens were added at the beginning and the end of each row
 for anonymizing script to separate each row.
 This was because of the rawmessage-field
 which included line breaks
-and thus span of one log entry could be over dozens of rows in CSV file.
+and thus the span of one log entry could be over dozens of rows in CSV file.
 
 As data size was multiple gigabytes,
 it was impossible to read it to memory in one go.
@@ -369,7 +369,7 @@ exit
 
 \section{CSV data cleaning script}\label{sec:app-data-cleaning-script}
 
-Next script was mainly used to
+The following script was mainly used to
 clean unique data values from rawmessage-field.
 As rawmessage was JSON formatted text data
 and included log entry specific identifiers,
@@ -378,11 +378,11 @@ such values were necessary to clean from the rawmessage
 before data could be given to anomaly algorithm to parse.
 
 This script is used for data
-that has been already anonymized
+that has already been anonymized
 and is thus in proper CSV format,
 one row per log entry.
-Script works much like anonymization script
-working with stream reading and editing
+The script works much like the anonymization script,
+with stream reading and editing
 in order to avoid unnecessary memory loading.
 
 \begin{Verbatim}[fontsize=\small]

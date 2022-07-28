@@ -210,7 +210,7 @@ to reduce the need for resources.
 
 Before the n-gram operations,
 the textual data can be preformatted in Azure ML Studio
-with \enquote{Preprocess text} -component.
+with "Preprocess text" -component.
 This component includes several options to choose from
 in order to clean text to more processable form.
 Most useful options to select from are
@@ -378,7 +378,7 @@ with ML algorithms,
 a simple method to solve this was used
 where log rows were grouped by time stamp
 into certain time frame groups.
-We call this method \enquote{time frame compression method}.
+We call this method "time frame compression method".
 
 Time frame compression means,
 that in order to eliminate the effects of random delay
@@ -469,9 +469,9 @@ is presented in appendix~\ref{sec:app-r-script}.
 
 The result values of the anomaly detection algorithm
 are time-frame-compressed along with the technical ticket timestamps,
-which form our second part of the data.
+which form the second part of our data.
 The timestamp data, however,
-gets compressed simply into a count of tickets received in the defined time frame.
+is compressed simply into a count of tickets received in the defined time frame.
 Now we have a comparable feature
 that is usable by regression algorithms.
 
@@ -481,14 +481,14 @@ that is usable by regression algorithms.
 
 \subsubsection*{Regression algorithm options}\label{subsec:pipe-regression-algorithm-options}
 
-Azure ML Studio has six regression algorithms usable.
+Azure ML Studio has six usable regression algorithms.
 One of them,
-\textit{Fast Forest Quantile Regression},
-is used to explain the distribution of value being predicted.\cite{azure2021fastforestquantile}
+Fast Forest Quantile Regression,
+is used to explain the distribution of the value being predicted.\cite{azure2021fastforestquantile}
 In our case, however,
-this is does not provide any use for us
+this does not provide any use for us
 as we are predicting the ticket count per time frame.
-The distribution of tickets on each time frame is irrelevant.
+The distribution of tickets within each time frame is irrelevant.
 
 The remaining five algorithms are presented below:
 \begin{enumerate}
@@ -499,29 +499,31 @@ The remaining five algorithms are presented below:
     \item Poisson regression~\cite{azure2021poisson}
 \end{enumerate}
 
-Linear regression is the simplest one,
+Linear regression is the simplest of the algorithms,
 and even though it can be easily explained with the least square principle
-explained in the section~\ref{subsec:bg-regression-ml},
-linear regression component is capable of more advanced methods,
+described in section~\ref{subsec:bg-regression-ml},
+the linear regression component is capable of more advanced methods,
 such as gradient descent.
 Poisson regression works only for Poisson distributed data.
 As the distribution of the anomalies or ticket inducing log events is not certain,
 we cannot rule this method out before seeing the results.
 
-Other components with a \textit{tree} or \textit{forest} in their name
+The other components with \textit{tree} or \textit{forest} in their name
 are based on the same algorithm model called \textit{decision trees}.
 Decision trees are models
 which run a series of simple tests
 for all data points in each branching node.
 The data is moved on like water along the tree from trunk to branches
 until it reaches the leaf node which marks the decision-making point.
-When multiple trees are placed in serial,
+When multiple trees are placed in a series,
 the decision tree becomes a forest.~\cite{azure2021decisionforest}
 
-When decision searching tree branches do not trickle from few to many
-but the flow can contract and widen again,
-or multiple nodes can reach same child nodes,
-the model becomes a neural network.
+Neural network mimics the way the human brain operates.
+Multiple layers of neurons form a network,
+where data is passed to the next node for further processing.
+Unlike with decision tree nodes,
+neurons in neural network do not form separate branches,
+but each node can be reached via multiple paths.~\cite{mahesh2020machine}
 
 All of these regression algorithm models
 were tested and their results validated with new data
@@ -530,13 +532,12 @@ in order to find the one with the most promising results.
 
 %% ************************************************************************************************************
 
-
 \subsection{Pipeline branching}\label{subsec:pipe-branching}
 
 In order to find the best possible combination of components,
 all different combinations must be compared.
 As the pipeline is structured in a tree-like flow,
-each node which includes more than one possible choices
+each node that includes more than one possible choice
 diverges the pipeline into branches.
 Several diverging points have been mentioned before in this study,
 and in this section we join the information together.
@@ -548,17 +549,18 @@ We could either use simple \textit{message},
 or more verbose \textit{rawmessage}.
 This textual data could be fed to the ADA-component in several forms.
 Most straightforward way was using textual data without any preformatting or modification.
-Text could also be run through \enquote{Preprocess text} -component.
-N-gram features could have been extracted from the original or preprocessed text
+Text could also be run through the "Preprocess text" -component.
+N-gram features could have been extracted from the original or the preprocessed text
 and these features could have been used instead.
 Instead of n-gram features,
-textual data could be converted to numeric
-also with \enquote{Feature Hashing} -component.
-After getting the ADA-component results,
-the anomaly probabilities were compressed with R-code or SQL.\@
-This concludes the phase 1.
+the textual data could be converted to numeric
+also with the "Feature Hashing" -component.
 
-In the next phase,
+After getting the ADA-component results,
+phase 1 is finished.
+At the beginning of the next phase,
+the anomaly probabilities were compressed with R-code or SQL query.\@
+In this phase,
 branching of the pipeline was due to
 comparing results without the anomaly probability values calculated in phase 1,
 and then utilizing different regression algorithms in phase 2.
@@ -569,13 +571,13 @@ such as row count and unique job ID count
 without anomaly probabilities,
 to determine whether anomaly metrics provided any insight regarding the ticket data.
 When using n-gram features or hashed features,
-these additional column features were also included for this comparison
+these additional column features were also included for this comparison,
 as forming them does not depend on the anomaly properties of the log instance.
 
 Each branching step, or layer,
 multiplies the amount of comparable values used in final comparison
 that would determine the best possible pipeline combination.
-These layers are simplified in the table~\ref{tab:ml-pipeline-branching}.
+These layers are simplified in table~\ref{tab:ml-pipeline-branching}.
 
 \begin{table}[htb]
     \centering
@@ -619,12 +621,11 @@ based on initial test run results of some of the divergent options.
 For example,
 n-gram feature component suffered greatly from the memory problem
 (which we discuss more in section~\ref{subsec:res-memory-issues}),
-and the data amount that the \textit{Extract N-Gram Features from Text} -component was able to handle
+and the data amount that the "Extract N-Gram Features from Text" -component was able to handle
 comprised of only 2\% of the original data.
-This was deemed as too small amount for training an ML algorithm
-as it would be extremely likely with 98\% of the data skipped
-that also possible rows relevant to the ticket anomalies
-would get trimmed out too.
+This was deemed as too small of an amount for training an ML algorithm
+as it is extremely likely that with 98\% of the data skipped,
+some possibly relevant rows for the ticket anomalies would also get trimmed out.
 
 The flowchart of pipeline with branching options visualized
 is illustrated in figure~\ref{fig:pipeline-flowchart}.
@@ -644,18 +645,18 @@ can be seen in the appendix~\ref{sec:app-final-pipeline-structure}.
 
 \subsection{Comparable metrics}\label{subsec:pipe-comparable-metrics}
 
-In previous sections we have discussed of different approaches that could be used
+In previous sections we have discussed different approaches that could be used
 to get the best results from the ML training.
 In order to find the best possible combination of components,
 we must compare different results,
 and for this we need comparable metrics.
 After training,
-Azure regression algorithms are scored with a validation data.
+the Azure regression algorithms are scored with validation data.
 The final output from this is a numeric \textit{Scored Labels} feature.
 In our study case,
-this value is what algorithm estimates the ticket count on the time frame to be.
+this value is what the algorithm estimates the ticket count on the time frame to be.
 Next,
-the \textit{Evaluate Model} component calculates a few evaluation metrics
+the "Evaluate Model" -component calculates a few evaluation metrics
 to be used for result comparison.
 These metrics for regression algorithm are listed
 in table~\ref{tab:comparable-metrics}.
@@ -680,27 +681,26 @@ in table~\ref{tab:comparable-metrics}.
             However, caution should be used in interpreting $R^{2}$ values,
             as low values can be entirely normal and high values can be suspect. \\ \hline
     \end{tabularx}
-    \caption{Comparable metrics provided by \textit{Evaluate Model} component for regression algorithm.\cite{azure2021evaluate}}
+    \caption{Comparable metrics provided by "Evaluate Model" component for regression algorithm.\cite{azure2021evaluate}}
     \label{tab:comparable-metrics}
 \end{table}
 
 Our goal is to find a connection
-between the log anomalies and the ticket timestamps.
+between the log anomalies and the ticket time\-stamps.
 Our initial hypothesis suggested
 that the most anomalous events in the logs
 would be more related to the ticket events than other rows.
-Thus,
-by comparing the algorithm evaluation metrics
-to the metrics produced by the neighboring pipeline branch
-where anomaly probabilities has been removed,
-we should find the best algorithm where evaluation values
-are significantly better than the same algorithm without those anomaly values.
-This would prove,
-that the anomaly probability values improve the algorithm estimations
-indicating that the hybrid algorithm combination has indeed found the connection
+By this logic,
+we compared the algorithm evaluation metrics
+with the metrics produced by the neighboring pipeline branch
+where anomaly probabilities had been removed.
+The best algorithm should be found in a branch
+where the evaluation values are significantly better
+than the neighboring branch from which the anomaly values have been removed.
+This proves, that the anomaly probability values improve the algorithm estimations,
+which indicates that the hybrid algorithm combination has indeed found the connection
 between anomalies and ticket timestamps.
 This will also be our logical basis when selecting certain algorithms for further tests.
-
 
 
 
