@@ -593,11 +593,10 @@ These layers are simplified in the table~\ref{tab:ml-pipeline-branching}.
             Linear regression\\
             Boosted decision tree regression \\
             Decision forest regression \\
-            Fast Forest Quantile regression \\
             Neural Network Regression \\
             Poisson regression \\
             \end{tabular}
-        &   6 \\ \hline
+        &   5 \\ \hline
     \end{tabularx}
     \caption{Pipeline divergent layers}
     \label{tab:ml-pipeline-branching}
@@ -607,7 +606,7 @@ The divergent count implies the number of branches
 diverging from the previous component.
 The total count of branch ends, or leaves,
 would then be the multiplication of all divergent counts,
-totaling to 288 comparable pipeline combinations.
+totaling to 240 comparable pipeline combinations.
 Moreover,
 n-gram feature extraction and feature hashing
 have several tunable parameters
@@ -626,48 +625,39 @@ as it would be extremely likely with 98\% of the data skipped
 that also possible rows relevant to the ticket anomalies
 would get trimmed out too.
 
-
-
-%% ************************************************************************************************************
-
-
-\todo{clearer pictures of pipeline parts}
-
-%% TODO: find place and something to say
+The flowchart of pipeline with branching options visualized
+is illustrated in figure~\ref{fig:pipeline-flowchart}.
+The final pipeline structure used for result acquiring
+can be seen in the appendix~\ref{sec:app-final-pipeline-structure}.
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=150mm]{./appendices/pipeline-draft}
-    \caption{TODO: Pipeline in all its glory. Find a better place and edit caption.
-    \label{fig:pipeline draft}}
+    \includegraphics[width=\textwidth]{./appendices/pipeline-flowchart.jpg}
+    \caption{Pipeline flowchart with branching steps illustrated.
+    HML phase boundaries are made visible for clarity.
+    \label{fig:pipeline-flowchart}}
 \end{figure}
 
 
-
-
-
-\todo{picture of all data processing steps from anonymizing to ml training}
-%% TODO: picture of all data processing steps from anonymizing to ml training
-
 %% ************************************************************************************************************
 
 
-
-\subsubsection*{Comparable metrics}
+\subsection{Comparable metrics}\label{subsec:pipe-comparable-metrics}
 
 In previous sections we have discussed of different approaches that could be used
 to get the best results from the ML training.
 In order to find the best possible combination of components,
 we must compare different results,
-and for this we need a comparable metric.
+and for this we need comparable metrics.
 After training,
 Azure regression algorithms are scored with a validation data.
 The final output from this is a numeric \textit{Scored Labels} feature.
 In our study case,
 this value is what algorithm estimates the ticket count on the time frame to be.
 Next,
-the \textit{Evaluate Model} component calculates few evaluation metrics
+the \textit{Evaluate Model} component calculates a few evaluation metrics
 to be used for result comparison.
-The
+These metrics for regression algorithm are listed
+in table~\ref{tab:comparable-metrics}.
 
 \setlength{\tabcolsep}{5pt}
 \begin{table}[htb]

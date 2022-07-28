@@ -221,7 +221,7 @@
 %%
 \code{ELEC3025}
 %%
- 
+
 %% Choose one of the three below
 %%
 %\univdegree{BSc}
@@ -295,44 +295,40 @@ log analyzing\spc Hybrid machine learning}
 %% as the abstract page.
 %%
 \thesisabstract{
-  Samlink develops robotic process algorithms for its banking customers
-  to perform mechanical tasks and improve business efficiency.
-  Unfortunately, these robots often encounter errors,
-  and bank clerks have to manually complete
-  the tasks they leave behind.
-  This results in a technical support ticket written by the clerks to Samlink's technical support team,
-  and the development team begins to investigate the problem.
-  The logs written by the robotic process algorithms are essential for debugging.
-
-  Due to the number and extent of the logs,
-  debugging is very laborious.
-  This thesis explores the possibility of
-  utilizing a cloud-based machine learning environment
-  to find the connection between the support tickets and log events.
-  This will be used to develop a machine learning system that reads production logs,
-  capable of alerting developers of a potential incoming ticket
-  even before bank clerks themselves detect the error.
-
-  The data used in the study is first anonymized in a production environment
-  in order to preserve data privacy.
-  The data is then pre-processed into a cleaner format,
-  so that it can be processed by a machine learning algorithm.
-
-  In the machine learning phase, anomaly detection is applied
-  to identify possible log events leading to a support ticket.
-  Random delay between the robotic process algorithm log entries and the tickets sent by the clerks
-  is addressed by time frame compression and hybrid machine learning,
-  which uses two algorithms at different stages of the machine learning pipeline.
-
-  This study could not prove,
-  that there is a connection between log entries and technical support tickets,
-  that the algorithm is able to detect.
-  The numerous problems encountered affected the components chosen
-  and parameters used.
-  If these problems can be solved,
-  it is possible to find that connection between logs and support tickets.
-  It is also suspected that enhancing the format of the logging will improve the results.
-  Nonetheless, further research is needed.
+    Samlink develops robotic process algorithms for its banking customers
+    to perform mechanical tasks and improve business efficiency.
+    Unfortunately, these robots often encounter errors,
+    and bank clerks have to manually complete
+    the tasks they leave behind.
+    This results in a technical support ticket written by the clerks to Samlink's technical support team,
+    and the development team begins to investigate the problem.
+    The logs written by the robotic process algorithms are essential for debugging.
+    Due to the number and extent of the logs,
+    debugging is very laborious.
+    This thesis explores the possibility of
+    utilizing a cloud-based machine learning environment
+    to find the connection between the support tickets and log events.
+    This will be used to develop a machine learning system that reads production logs,
+    capable of alerting developers of a potential incoming ticket
+    even before bank clerks themselves detect the error.
+    The data used in the study is first anonymized in a production environment
+    in order to preserve data privacy.
+    The data is then pre-processed into a cleaner format,
+    so that it can be processed by a machine learning algorithm.
+    In the machine learning phase, anomaly detection is applied
+    to identify possible log events leading to a support ticket.
+    Random delay between the robotic process algorithm log entries and the tickets sent by the clerks
+    is addressed by time frame compression and hybrid machine learning,
+    which uses two algorithms at different stages of the machine learning pipeline.
+    This study could not prove,
+    that there is a connection between log entries and technical support tickets,
+    that the algorithm is able to detect.
+    The numerous problems encountered affected the components chosen
+    and parameters used.
+    If these problems can be solved,
+    it is possible to find that connection between logs and support tickets.
+    It is also suspected that enhancing the format of the logging will improve the results.
+    Nonetheless, further research is needed.
 }
 
 %% Copyright text. Copyright of a work is with the creator/author of the work
@@ -343,7 +339,7 @@ log analyzing\spc Hybrid machine learning}
 %% of the pdf file as well.
 %% Syntax:
 %% \copyrigthtext{metadata text}{text visible on the page}
-%% 
+%%
 %% In the macro below, the text written in the metadata must have a \noexpand
 %% macro before the \copyright special character, and macros (\copyright and
 %% \year here) must be separated by the \ character (space chacter) from the
@@ -357,7 +353,7 @@ log analyzing\spc Hybrid machine learning}
 \copyrighttext{Copyright \noexpand\copyright\ \number\year\ \ThesisAuthor}
 {Copyright \copyright{} \number\year{} \ThesisAuthor}
 
-%% You can prevent LaTeX from writing into the xmpdata file (it contains all the 
+%% You can prevent LaTeX from writing into the xmpdata file (it contains all the
 %% metadata to be written into the pdf file) by setting the writexmpdata switch
 %% to 'false'. This allows you to write the metadata in the correct format
 %% directly into the file thesistemplate.xmpdata.
@@ -387,7 +383,44 @@ log analyzing\spc Hybrid machine learning}
 %% above.
 %%
 \begin{abstractpage}[english]
-	\abstracttext{}
+      Samlink develops robotic process algorithms for its banking customers
+      to perform mechanical tasks and improve business efficiency.
+      Unfortunately, these robots often encounter errors,
+      and bank clerks have to manually complete
+      the tasks they leave behind.
+      This results in a technical support ticket written by the clerks to Samlink's technical support team,
+      and the development team begins to investigate the problem.
+      The logs written by the robotic process algorithms are essential for debugging.
+
+      Due to the number and extent of the logs,
+      debugging is very laborious.
+      This thesis explores the possibility of
+      utilizing a cloud-based machine learning environment
+      to find the connection between the support tickets and log events.
+      This will be used to develop a machine learning system that reads production logs,
+      capable of alerting developers of a potential incoming ticket
+      even before bank clerks themselves detect the error.
+
+      The data used in the study is first anonymized in a production environment
+      in order to preserve data privacy.
+      The data is then pre-processed into a cleaner format,
+      so that it can be processed by a machine learning algorithm.
+
+      In the machine learning phase, anomaly detection is applied
+      to identify possible log events leading to a support ticket.
+      Random delay between the robotic process algorithm log entries and the tickets sent by the clerks
+      is addressed by time frame compression and hybrid machine learning,
+      which uses two algorithms at different stages of the machine learning pipeline.
+
+      This study could not prove,
+      that there is a connection between log entries and technical support tickets,
+      that the algorithm is able to detect.
+      The numerous problems encountered affected the components chosen
+      and parameters used.
+      If these problems can be solved,
+      it is possible to find that connection between logs and support tickets.
+      It is also suspected that enhancing the format of the logging will improve the results.
+      Nonetheless, further research is needed.
 \end{abstractpage}
 
 %% The text in the \thesisabstract macro is stored in the macro \abstractext, so
@@ -496,7 +529,7 @@ Jyväskylä, {\today}
 \begin{tabularx}{\textwidth}{l X}
   $A^{\mathbf{T}}$    & Transpose of vector $\mathbf{A}$ \\
   $\mathbf{f}(X_{n},Y_{n})$    & Undefined algebraic equation between operands $X_{n},Y_{n}$,
-  for example $X_{1}^{Y_{1}}-X_{2}^{Y_{2}}-\dots-X_{n}^{Y_{n}}$
+  for example $X_{1}^{Y_{1}}-X_{2}^{Y_{2}}-\ldots-X_{n}^{Y_{n}}$
 \end{tabularx}
 
 \subsection*{Abbreviations}
