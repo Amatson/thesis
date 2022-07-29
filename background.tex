@@ -293,7 +293,7 @@ derived from the generalized form,
     SSE = \Sigma\epsilon^{2} = \Sigma[(Y-f(X_{1},...,X_{m},\beta_{1},...,\beta_{p}))]^{2}.
 \end{equation}
 Exact solution for this does not usually exist
-as there can be more coefficients than independent variables $(p>m))$,
+as there can be more coefficients than independent variables $(p>m)$,
 and minimizing the $SSE$ does not always result into a linear equation.
 This is typically the case in ML,
 and thus the model must be found
@@ -319,13 +319,9 @@ that is to be minimized can be written as
 \end{equation}
 In order to minimize this, we can take the derivative of matrix $B$,
 \begin{equation}
-    \frac{\partial(E^{T}E)}{\partial B} = -2X^{T}Y + 2X^{T}XB
+    \frac{\partial(E^{T}E)}{\partial B} = -2X^{T}Y + 2X^{T}XB.
 \end{equation}
-and equating to zero gives
-\begin{equation}
-    (X^{T}X)\hat{B} = X^{T}Y.
-\end{equation}
-The solutions of coefficient parameters are thus
+Equating to zero gives the solutions of coefficient parameters
 \begin{equation}
     \hat{B} = (X^{T}X)^{-1}X^{T}Y.
 \end{equation}
@@ -623,7 +619,7 @@ as the documentation mentioned that
 \enquote{The dataset that you use for training
 can contain all or mostly normal cases.}
 Because the content of the data used did not meet this requirement,
-the usage possibilities of this component were not decided to investigate.~\cite{azure2021oneclasssvm}
+the usage possibilities of this component were not investigated.~\cite{azure2021oneclasssvm}
 To limit the scope of this study to reasonable proportions,
 we will not discuss other anomaly detection algorithms (ADAs) further.
 
